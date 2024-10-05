@@ -1,0 +1,59 @@
+﻿@model InventoryManagementSystem.BLL.sln.Dto.LoginDto
+@{
+   Layout = "/Views/Shared/_AccountLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - Login</title>
+    <link rel="stylesheet" href="~/css/LogIn.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Left Side (Graphic / Branding Area) -->
+        <div class="left-side">
+            <h1>Manage Your Inventory</h1>
+            <p>Efficient, Reliable, and Fast</p>
+        </div>
+
+        <!-- Right Side (Login Form) -->
+        <div class="right-side">
+            <div class="login-container">
+                <h2>Login to Inventory System</h2>
+
+                <form asp-action="Login" method="post" class="form-horizontal">
+
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" type="email" id="email" placeholder="Enter your email address" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+
+
+                    <label asp-for="Password" type="password" id="password" placeholder="Enter your password" required></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember Me</label>
+                    </div>
+
+
+                    <a href="/Views/Account/ChangePassword.cshtml" class="forgot-password">Forgot Password?</a>
+
+
+
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+
+                <div class="divider">OR</div>
+
+                <button class="create-account-btn" onclick="window.location.href='/Account/Register'">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

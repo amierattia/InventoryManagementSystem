@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\ALJAZEERA\source\repos\InventoryManagementSystem\DataAccessLayer\InventoryManagementSystem.DAL.csproj" />
+    <ProjectReference Include="C:\Users\ALJAZEERA\source\repos\InventoryManagementSystem\InventoryManagementSystem.EntitiesLayer\InventoryManagementSystem.EntitiesLayer.csproj" />
+  </ItemGroup>
+
+</Project>
