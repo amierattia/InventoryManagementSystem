@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryManagementSystem.PL.sln.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DashboardController : Controller
     {
         private readonly IInventoryService _inventoryService;
@@ -14,7 +15,6 @@ namespace InventoryManagementSystem.PL.sln.Controllers
             _inventoryService = inventoryService;
         }
 
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             var totalItems = await _inventoryService.GetTotalItemsAsync();

@@ -1,0 +1,67 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+
+<h2 class="text-center my-4">إضافة دور جديد</h2>
+
+<div class="container">
+    <form asp-action="Create" method="post" class="shadow p-4 rounded bg-white">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label asp-for="Name" class="font-weight-bold">اسم الدور</label>
+            <input asp-for="Name" class="form-control" placeholder="أدخل اسم الدور" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg px-5 mt-3">إضافة</button>
+            <a asp-action="Index" class="btn btn-secondary btn-lg px-5 mt-3 ml-2">إلغاء</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Cairo', sans-serif;
+    }
+
+    h2 {
+        color: #17a2b8;
+        font-weight: bold;
+    }
+
+    .form-group label {
+        color: #343a40;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        border-radius: 50px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-secondary {
+        border-radius: 50px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    form {
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+</style>

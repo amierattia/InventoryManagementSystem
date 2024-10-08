@@ -1,66 +1,86 @@
-using InventoryManagementSystem.BLL.sln.Services;
-using InventoryManagementSystem.DAL.Db;
-using InventoryManagementSystem.EntitiesLayer.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+    using InventoryManagementSystem.BLL;
+    using InventoryManagementSystem.BLL.sln.Services;
+    using InventoryManagementSystem.DAL.Db;
+    using InventoryManagementSystem.EntitiesLayer.Models;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+    var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+    // Add services to the container.
+    builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationContext>(op => op.UseSqlServer(
-    builder.Configuration.GetConnectionString("DefultConection")));
+    // Configure the DbContext
+    builder.Services.AddDbContext<ApplicationContext>(op =>
+        op.UseSqlServer(builder.Configuration.GetConnectionString("DefultConection")));
 
-// DI
-builder.Services.AddScoped<IInventoryService, InventoryService>();
+    // add policy
+    builder.Services.AddAuthorization(op => op.AddPolicy(
+        "AdminRole", p=> p.RequireClaim("Admin", "Admin")));
 
+    // Identity setup
+    builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationContext>()
+        .AddDefaultTokenProviders();
 
-// Identity setup
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationContext>()
-    .AddDefaultTokenProviders();
+    // DI for services
+    builder.Services.AddScoped<IInventoryService, InventoryService>();
+    builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-// Authentication setup
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+    // Authentication setup
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+            options.AccessDeniedPath = "/Account/AccessDenied";
+        });
+
+    // Configure Identity options
+    builder.Services.Configure<IdentityOptions>(options =>
     {
-        options.LoginPath = "/Account/Login";
-        options.AccessDeniedPath = "/Account/AccessDenied"; 
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequireUppercase = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequiredLength = 6;
     });
 
-// Configure Identity options
-builder.Services.Configure<IdentityOptions>(options =>
+
+    var app = builder.Build();
+
+
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Home/Error");
+        app.UseHsts();
+    }
+
+using (var scope = app.Services.CreateScope())
 {
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 6;
-});
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roleNames = { "Admin", "User" };
 
-// Register custom services
-builder.Services.AddScoped<IUserService, UserService>();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
 }
 
+
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+    app.UseStaticFiles();
+    app.UseRouting();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-app.UseRouting();
-app.UseAuthentication(); 
-app.UseAuthorization();
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
+    app.Run();

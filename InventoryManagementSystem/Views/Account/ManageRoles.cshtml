@@ -1,0 +1,48 @@
+﻿@model List<InventoryManagementSystem.BLL.UserRoleDto>
+
+@{
+    ViewData["Title"] = "Manage Roles";
+}
+
+<h2>Manage Roles</h2>
+
+<form asp-action="UpdateRoles" method="post">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <input type="hidden" name="[@Model.IndexOf(user)].UserId" value="@user.UserId" />
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="[@Model.IndexOf(user)].Roles" value="Admin" @(user.Roles.Contains("Admin") ? "checked" : "") />
+                            <label class="form-check-label">Admin</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="[@Model.IndexOf(user)].Roles" value="Manager" @(user.Roles.Contains("Manager") ? "checked" : "") />
+                            <label class="form-check-label">Manager</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="[@Model.IndexOf(user)].Roles" value="User" @(user.Roles.Contains("User") ? "checked" : "") />
+                            <label class="form-check-label">User</label>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Update Roles</button>
+</form>

@@ -1,0 +1,47 @@
+﻿
+@using InventoryManagementSystem.BLL.Dto
+@model List<UserDto>
+
+@{
+    ViewData["Title"] = "User Roles Management";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">User Roles Management</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Role Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>
+                        @user.Name
+                    </td>
+
+                    <td>
+                        @string.Join(" , ", user.Roles.ToList())
+                    </td>
+
+
+                    <td>
+
+                        <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn btn-primary">Manage Roles</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

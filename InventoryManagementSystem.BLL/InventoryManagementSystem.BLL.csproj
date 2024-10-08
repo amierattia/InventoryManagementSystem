@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="BCrypt" Version="1.0.0" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="C:\Users\ALJAZEERA\source\repos\InventoryManagementSystem\DataAccessLayer\InventoryManagementSystem.DAL.csproj" />
     <ProjectReference Include="C:\Users\ALJAZEERA\source\repos\InventoryManagementSystem\InventoryManagementSystem.EntitiesLayer\InventoryManagementSystem.EntitiesLayer.csproj" />
   </ItemGroup>

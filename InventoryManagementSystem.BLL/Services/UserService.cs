@@ -20,8 +20,16 @@ namespace InventoryManagementSystem.BLL.sln.Services
         public async Task<IdentityResult> RegisterCustomerAsync(User user, string password)
         {
             var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                if (!await _userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+            }
             return result;
         }
+
 
 
         public async Task<User> LoginCustomerAsync(string email, string password, bool rememberMe)

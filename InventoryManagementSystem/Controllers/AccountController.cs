@@ -1,4 +1,6 @@
-﻿using InventoryManagementSystem.BLL.sln.Dto;
+﻿using InventoryManagementSystem.BLL;
+using InventoryManagementSystem.BLL.Dto;
+using InventoryManagementSystem.BLL.sln.Dto;
 using InventoryManagementSystem.BLL.sln.Services;
 using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.EntitiesLayer.Models;
@@ -12,25 +14,18 @@ namespace InventoryManagementSystem.Pl.Controllers
 {
     public class AccountController : Controller
     {
-
-        // create Account 
-
-        // Log In 
-
-        // Forget Pass 
-
-        // Find mail
-
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
         private readonly IUserService _customerService;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationContext _context;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IUserService _customerService, ApplicationContext _context)
+        public AccountController(RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, UserManager<User> userManager, IUserService _customerService, ApplicationContext _context)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this._context = _context;
+            this.roleManager = roleManager;
             this._customerService = _customerService;
         }
 
@@ -69,12 +64,7 @@ namespace InventoryManagementSystem.Pl.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Rgister model)
         {
-            if (!await _context.Roles.AnyAsync(r => r.RoleId == 1))
-            {
-                var role = new Role { Name = "Admin" };
-                await _context.Roles.AddAsync(role);
-                await _context.SaveChangesAsync();
-            }
+           
             if (!ModelState.IsValid) return View(model);
 
             var User = new User
@@ -115,6 +105,7 @@ namespace InventoryManagementSystem.Pl.Controllers
 
             return View(model);
         }
+
         public IActionResult VerifyEmail()
         {
             return View();
@@ -161,18 +152,18 @@ namespace InventoryManagementSystem.Pl.Controllers
                     if (result.Succeeded)
                     {
                         result = await userManager.AddPasswordAsync(user, model.NewPassword);
-                        return RedirectToAction("Login", "Account");
-                    }
-                    else
-                    {
-
-                        foreach (var error in result.Errors)
+                        if (result.Succeeded)
                         {
-                            ModelState.AddModelError("", error.Description);
+                            return RedirectToAction("Login", "Account");
                         }
-
-                        return View(model);
                     }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+
+                    return View(model);
                 }
                 else
                 {
@@ -187,12 +178,18 @@ namespace InventoryManagementSystem.Pl.Controllers
             }
         }
 
+        // تسجيل الخروج
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
     }
-
 }
-
