@@ -9,7 +9,8 @@ using System.Data;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize( Roles ="Admin,User")]
+
     public class RoleManagementController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -23,20 +24,24 @@ namespace InventoryManagementSystem.Pl.Controllers
 
         public async Task<IActionResult> Index()
         {
-           
-                var users= await _userManager.Users.Select( user => new UserDto
-                {
-                    //  UserId = user.Id,
-                    Email = user.Email,
-                    Name = user.Name,
-                    Id = user.Id.ToString(),
-                    Roles =  _userManager.GetRolesAsync(user).Result.ToList(),
+            var users = await _userManager.Users.ToListAsync();
+            var userDtos = new List<UserDto>();
 
-                }).ToListAsync();
-                
-            
-            return View(users);
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                userDtos.Add(new UserDto
+                {
+                    Id=user.Id.ToString(),
+                    Name = user.UserName,   
+                    Email = user.Email,     
+                    Roles = roles.ToList() 
+                });
+            }
+
+            return View(userDtos);
         }
+
 
         public async Task<IActionResult> ManageRoles(string userId)
         {
@@ -51,13 +56,13 @@ namespace InventoryManagementSystem.Pl.Controllers
             {
                 UserName = user.UserName,
                 UserId = user.Id.ToString(),
-                Roles = new List<RoleDto>() // Ensure this is RoleDto if that's what your model requires
+                Roles = new List<RoleDto>() 
             };
 
             foreach (var role in roles)
             {
-                var isSelected = await _userManager.IsInRoleAsync(user, role.Name); // Check if user is in role
-                oUserRolesDto.Roles.Add(new RoleDto // Ensure you are adding the correct type
+                var isSelected = await _userManager.IsInRoleAsync(user, role.Name);
+                oUserRolesDto.Roles.Add(new RoleDto 
                 {
                     RoleId = role.Id,
                     RoleName = role.Name,

@@ -64,7 +64,12 @@ namespace InventoryManagementSystem.Pl.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Rgister model)
         {
-           
+            if (!await _context.Roles.AnyAsync(r => r.RoleId == 1))
+            {
+                var role = new Role { Name = "Admin" };
+                await _context.Roles.AddAsync(role);
+                await _context.SaveChangesAsync();
+            }
             if (!ModelState.IsValid) return View(model);
 
             var User = new User
@@ -106,6 +111,8 @@ namespace InventoryManagementSystem.Pl.Controllers
             return View(model);
         }
 
+
+
         public IActionResult VerifyEmail()
         {
             return View();
@@ -145,6 +152,7 @@ namespace InventoryManagementSystem.Pl.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var user = await userManager.FindByNameAsync(model.Email);
                 if (user != null)
                 {
@@ -178,7 +186,6 @@ namespace InventoryManagementSystem.Pl.Controllers
             }
         }
 
-        // تسجيل الخروج
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
