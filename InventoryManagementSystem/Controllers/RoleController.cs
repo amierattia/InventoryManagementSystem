@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin,User")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

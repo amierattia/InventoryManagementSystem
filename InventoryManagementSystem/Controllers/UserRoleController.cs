@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
- 
 
     namespace InventoryManagementSystem.Pl.Controllers
     {
+        [Authorize(Roles = "Admin,User")]
         public class UserRoleController : Controller
         {
             private readonly UserManager<User> _userManager; 

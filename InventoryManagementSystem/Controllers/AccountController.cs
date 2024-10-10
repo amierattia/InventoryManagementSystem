@@ -1,6 +1,4 @@
-﻿using InventoryManagementSystem.BLL;
-using InventoryManagementSystem.BLL.Dto;
-using InventoryManagementSystem.BLL.sln.Dto;
+﻿using InventoryManagementSystem.BLL.Dto;
 using InventoryManagementSystem.BLL.sln.Services;
 using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.EntitiesLayer.Models;
@@ -28,6 +26,29 @@ namespace InventoryManagementSystem.Pl.Controllers
             this.roleManager = roleManager;
             this._customerService = _customerService;
         }
+
+        public async Task<IActionResult> UserProfile(string Id)
+        {
+            var user = await userManager.FindByIdAsync(Id);
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Invalid Id");
+
+                return View();
+            }
+
+
+
+            var UserView = new UserDto
+            {
+                Name = user.Name ?? "Name not available",
+                Email = user.Email ?? "Email not available",
+            };
+
+            return View(UserView);
+        }
+
+
 
         public IActionResult Login()
         {
@@ -112,7 +133,6 @@ namespace InventoryManagementSystem.Pl.Controllers
         }
 
 
-
         public IActionResult VerifyEmail()
         {
             return View();
@@ -152,7 +172,6 @@ namespace InventoryManagementSystem.Pl.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var user = await userManager.FindByNameAsync(model.Email);
                 if (user != null)
                 {
@@ -160,18 +179,18 @@ namespace InventoryManagementSystem.Pl.Controllers
                     if (result.Succeeded)
                     {
                         result = await userManager.AddPasswordAsync(user, model.NewPassword);
-                        if (result.Succeeded)
-                        {
-                            return RedirectToAction("Login", "Account");
-                        }
+                        return RedirectToAction("Login", "Account");
                     }
-
-                    foreach (var error in result.Errors)
+                    else
                     {
-                        ModelState.AddModelError("", error.Description);
-                    }
 
-                    return View(model);
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+
+                        return View(model);
+                    }
                 }
                 else
                 {
@@ -185,6 +204,7 @@ namespace InventoryManagementSystem.Pl.Controllers
                 return View(model);
             }
         }
+
 
         public async Task<IActionResult> Logout()
         {

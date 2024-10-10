@@ -1,110 +1,95 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Role Management</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        body {
-            background-color: #f0f2f5;
-            font-family: 'Cairo', sans-serif;
-            color: #343a40;
-            padding: 30px;
-        }
 
-        h2 {
-            margin-bottom: 30px;
-            color: #17a2b8;
-            font-weight: 600;
-            text-align: center;
-        }
+<style>
 
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-            border-radius: 50px;
-            padding: 10px 30px;
-            font-size: 16px;
-        }
 
-        .btn {
-            border-radius: 50px;
-            transition: all 0.3s ease-in-out;
-        }
+    h2 {
+        margin-bottom: 30px;
+        color: #17a2b8;
+        font-weight: 600;
+        text-align: center;
+    }
 
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        border-radius: 50px;
+        padding: 10px 30px;
+        font-size: 16px;
+    }
 
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-        }
+    .btn {
+        border-radius: 50px;
+        transition: all 0.3s ease-in-out;
+    }
 
-        .btn:hover {
-            transform: scale(1.05);
-        }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
 
-        table {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
 
-        th, td {
-            text-align: center;
-            vertical-align: middle;
-        }
+    .btn:hover {
+        transform: scale(1.05);
+    }
 
-        th {
-            background-color: #343a40;
-            color: white;
-        }
+    table {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
 
-        td {
-            color: #495057;
-        }
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+    }
 
-        .table thead th {
-            border-bottom: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Role Management</h2>
-        <div class="text-center mb-4">
-            <a href="/Role/Create" class="btn btn-success"><i class="fas fa-plus-circle"></i> Add Role</a>
-        </div>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Role Name</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var role in Model)
-                {
-                    <tr>
-                        <td>@role.Name</td>
-                        <td>
-                            <a href="@Url.Action("Edit", new { id = role.Id })" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                            <a href="@Url.Action("Delete", new { id = role.Id })" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    th {
+        background-color: #343a40;
+        color: white;
+    }
+
+    td {
+        color: #495057;
+    }
+
+    .table thead th {
+        border-bottom: none;
+    }
+</style>
+
+<div class="container">
+    <h2>Role Management</h2>
+    <div class="text-center mb-4">
+        <a href="/Role/Create" class="btn btn-success"><i class="fas fa-plus-circle"></i> Add Role</a>
     </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Role Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.Name</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = role.Id })" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                        <a href="@Url.Action("Delete", new { id = role.Id })" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+

@@ -1,5 +1,6 @@
 ﻿@using InventoryManagementSystem.EntitiesLayer.Models
 @using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @inject SignInManager<User> signInManager
 
 <!DOCTYPE html>
@@ -65,10 +66,11 @@
                         {
                             <div class="Log-out">
                             <li class="nav-item welcome-message">
-                                <a class="nav-link text-dark">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="UserProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
                                     <i class="fas fa-user"></i> Welcome, @User.Identity.Name
                                 </a>
                             </li>
+
                             <li class="nav-item">
                                 <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
                                         @Html.AntiForgeryToken()

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagementSystem.BLL.sln.Dto
+namespace InventoryManagementSystem.BLL.Dto
 {
     public class VerifyEmailDto
     {

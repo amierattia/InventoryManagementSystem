@@ -1,5 +1,4 @@
-﻿/* General styles */
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,19 +7,18 @@
 
 body, html {
     height: 100%;
-}
+    background-color: #f0f2f5;
 
-/* Container */
 .container {
     display: flex;
     flex-direction: row;
     height: 100vh;
+    background-color: #f0f2f5;
 }
 
-/* Left Side */
 .left-side {
     flex: 1;
-    background: linear-gradient(135deg, #003366, #005f99); /* Modern dark blue gradient */
+    background: linear-gradient(135deg, #003366, #005f99);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,16 +28,20 @@ body, html {
 }
 
     .left-side h1 {
-        font-size: 3rem;
+        font-size: 3.5rem; 
         margin-bottom: 20px;
+        transition: all 0.3s ease;
     }
 
     .left-side p {
-        font-size: 1.2rem;
-        opacity: 0.8; /* Slight transparency for a sleek look */
+        font-size: 1.4rem; 
+        opacity: 0.9;
     }
 
-/* Right Side */
+    .left-side:hover h1 {
+        transform: scale(1.1); 
+    }
+
 .right-side {
     flex: 1;
     background-color: #f7f7f7;
@@ -52,20 +54,23 @@ body, html {
 .login-container {
     width: 100%;
     max-width: 400px;
-    text-align: center;
     background-color: white;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
+
+    .login-container:hover {
+        box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2); 
+    }
 
     .login-container h2 {
         margin-bottom: 20px;
-        font-size: 1.8rem;
-        color: #333; /* Darker font for modern feel */
+        font-size: 2rem;
+        color: #333;
     }
 
-/* Form Styles */
 form {
     display: flex;
     flex-direction: column;
@@ -74,91 +79,75 @@ form {
 label {
     text-align: left;
     margin-bottom: 5px;
-    color: #333; /* Dark gray for form labels */
-}
+    color: #333;
+    font-weight: bold;
 
 input {
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
     outline: none;
-    color: #333; /* Text inside the input */
+    color: #333;
+    transition: all 0.3s ease;
 }
 
-    input::placeholder {
-        color: #aaa; /* Lighter gray for placeholder */
+    input:hover {
+        background-color: #e9ecef; 
     }
 
     input:focus {
-        border-color: #005f99; /* Blue border on focus */
+        border-color: #005f99;
+        background-color: #f0f2f5;
     }
 
 .forgot-password {
     text-align: right;
     margin-bottom: 20px;
     font-size: 0.9rem;
-    color: #005f99; /* Updated to modern blue */
+    color: #005f99;
     text-decoration: none;
 }
 
     .forgot-password:hover {
         text-decoration: underline;
+        font-weight: bold; 
     }
 
-/* Remember Me Styles */
-.remember-me {
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Center items vertically */
-    margin-bottom: 20px; /* Space below the checkbox */
-   
-}
-
-    .remember-me input {
-        margin-right: 10px; /* Space between checkbox and label */
-        margin-top:10px;
-    }
-
-    /* Adjusting label text alignment */
-    .remember-me label {
-        text-align: left; /* Align the label text to the left */
-    }
-
-/* Buttons */
 .login-btn, .create-account-btn {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 1rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     margin-bottom: 15px;
+    transition: all 0.3s ease;
 }
 
 .login-btn {
-    background-color: #005f99; /* Modern blue */
+    background-color: #005f99;
     color: white;
-    transition: background-color 0.3s ease;
 }
 
     .login-btn:hover {
-        background-color: #003366; /* Darker blue on hover */
+        background-color: #003366;
+        transform: translateY(-2px);
     }
 
 .create-account-btn {
     background-color: transparent;
     color: #005f99;
     border: 2px solid #005f99;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
     .create-account-btn:hover {
         background-color: #005f99;
         color: white;
+        transform: translateY(-2px);
     }
 
-/* Divider */
 .divider {
     margin: 20px 0;
     color: #ccc;
@@ -183,52 +172,46 @@ input {
         right: 0;
     }
 
-/* Media Queries for Responsiveness */
 
-/* For tablet screens */
 @media (max-width: 768px) {
     .container {
-        flex-direction: column; /* Stack the sides vertically */
+        flex-direction: column;
     }
 
     .left-side, .right-side {
-        height: 50vh; /* Each takes half of the screen height */
-        padding: 20px; /* Reduced padding */
+        height: 50vh;
+        padding: 20px;
     }
 
-        .left-side h1 {
-            font-size: 2.5rem; /* Smaller font for h1 */
-        }
-
-        .left-side p {
-            font-size: 1rem; /* Smaller font for paragraph */
-        }
-
     .login-container {
-        padding: 30px; /* Reduced padding for the container */
+        padding: 30px;
     }
 }
 
-/* For mobile screens */
 @media (max-width: 480px) {
     .left-side h1 {
-        font-size: 2rem; /* Further reduce h1 font size */
+        font-size: 2.5rem;
     }
 
     .left-side p {
-        font-size: 0.9rem; /* Further reduce paragraph font size */
+        font-size: 1.1rem;
     }
 
     .login-container {
-        padding: 20px; /* Even smaller padding */
+        padding: 20px;
     }
 
     input {
-        font-size: 0.9rem; /* Smaller input font size */
+        font-size: 0.9rem;
     }
 
     .login-btn, .create-account-btn {
-        padding: 12px; /* Larger padding for buttons on mobile */
-        font-size: 1rem; /* Ensure button text is legible */
+        padding: 14px;
+        font-size: 1.1rem;
+    }
+
+    .Log-Out {
+        display: flex;
+        align-items: center;
     }
 }

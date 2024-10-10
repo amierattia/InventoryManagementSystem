@@ -9,7 +9,7 @@ using System.Data;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-    [Authorize( Roles ="Admin,User")]
+    [Authorize( Roles = "Admin,User")]
 
     public class RoleManagementController : Controller
     {

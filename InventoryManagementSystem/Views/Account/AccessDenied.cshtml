@@ -1,11 +1,40 @@
-﻿<h1>
-    رايح فييين
-</h1>
+﻿@{
+    Layout = null;
+}
+<style>
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #e74c3c;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
 
+    img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 30px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
+    .message {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        line-height: 1.5;
+        color: #555;
+        text-align: center;
+    }
 
-<video width="600" controls autoplay >
-    <source src="/Vid/video.mp4" type="video/mp4">
-    <source src="video.ogg" type="video/ogg">
-    المتصفح بتاعك مش بيدعم عرض الفيديو.
-</video>
+    a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+<h1>Access Denied</h1>
+<img src="/images/access-denied.png" alt="Access Denied">
+<div class="message">Sorry, you do not have permission to access this page.</div>
+<a href="/">Go Back Home</a>

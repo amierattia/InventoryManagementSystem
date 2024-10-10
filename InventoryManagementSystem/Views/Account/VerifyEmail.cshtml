@@ -1,0 +1,30 @@
+﻿@using InventoryManagementSystem.BLL.Dto
+@model VerifyEmailDto
+
+@{
+    ViewBag.Title = "Verify Email";
+}
+
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div class="account-box shadow-lg p-4 rounded bg-white">
+        <h2 class="text-center mb-4 text-primary">Verify Your Email</h2>
+        <form asp-action="VerifyEmail" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label fw-bold">Email Address</label>
+                <input asp-for="Email" class="form-control border-primary" placeholder="Enter your email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <input type="submit" value="Verify" class="btn btn-primary w-100 p-2" />
+            <div class="text-center mt-3">
+                <a asp-controller="Home" asp-action="Index" class="text-decoration-none">Back to Home</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

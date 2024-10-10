@@ -22,9 +22,9 @@ namespace InventoryManagementSystem.BLL.sln.Services
             var result = await _userManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
-                if (!await _userManager.IsInRoleAsync(user, "Admin"))
+                if (!await _userManager.IsInRoleAsync(user, "User"))
                 {
-                    await _userManager.AddToRoleAsync(user, "Admin");
+                    await _userManager.AddToRoleAsync(user, "User");
                 }
             }
             return result;
