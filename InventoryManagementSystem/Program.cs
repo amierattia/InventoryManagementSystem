@@ -15,12 +15,9 @@
     builder.Services.AddDbContext<ApplicationContext>(op =>
         op.UseSqlServer(builder.Configuration.GetConnectionString("DefultConection")));
 
-    // add policy
-    builder.Services.AddAuthorization(op => op.AddPolicy(
-        "AdminRole", p=> p.RequireClaim("Admin", "Admin")));
 
-    // Identity setup
-    builder.Services.AddIdentity<User, IdentityRole>()
+// Identity setup
+builder.Services.AddIdentity<User, IdentityRole>()
         .AddEntityFrameworkStores<ApplicationContext>()
         .AddDefaultTokenProviders();
 
@@ -58,6 +55,7 @@
         app.UseHsts();
     }
 
+    // Add role
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();

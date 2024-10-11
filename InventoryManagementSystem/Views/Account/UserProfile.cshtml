@@ -1,60 +1,163 @@
 ﻿@using InventoryManagementSystem.BLL.Dto
 @model UserDto
-<style>
+@{
+    Layout = null;
+}
 
-    .card {
-        border-radius: 1rem; /* Rounded corners for the card */
-    }
-
-    .card-header {
-        border-radius: 1rem 1rem 0 0; /* Round top corners only */
-    }
-
-    .btn-primary {
-        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effects */
-    }
-
-        .btn-primary:hover {
-            background-color: #0056b3; /* Darker shade on hover */
-            transform: translateY(-2px); /* Slight lift effect */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-    .form-control-plaintext {
-        padding: 0.5rem; /* Padding for better spacing */
-        border: 1px solid #dee2e6; /* Subtle border for clarity */
-        border-radius: 0.25rem; /* Rounded corners for plain text */
-        background-color: #fff; /* White background for readability */
-    }
-</style>
-@if (Model != null)
-{
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">@ViewData["Title"]</h2>
-        <div class="card shadow-sm border-0 rounded">
-            <div class="card-header bg-primary text-white text-center">
-                <h4>User Information</h4>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .profile-card {
+            background-color: #ffffff; /* White background for card */
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+            width: 320px;
+            text-align: center;
+            color: #212529; /* Dark text */
+        }
+
+        .profile-image-section {
+            display: flex;
+            justify-content: center;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #0d6efd; /* Primary color border */
+        }
+
+        .profile-name {
+            font-size: 24px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #212529; /* Dark text */
+        }
+
+        .profile-detail {
+            font-size: 14px;
+            color: #6c757d; /* Muted text */
+            margin-top: 5px;
+        }
+
+        .profile-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .btn {
+            width: 48%;
+            padding: 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-message {
+            background-color: #0d6efd; /* Primary button color */
+            color: #fff;
+        }
+
+            .btn-message:hover {
+                background-color: #0a58ca; /* Darker primary on hover */
+            }
+
+        .btn-follow {
+            background-color: #6c757d; /* Secondary button color */
+            color: #fff;
+        }
+
+            .btn-follow:hover {
+                background-color: #5a6268; /* Darker secondary on hover */
+            }
+
+        .skills-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+            .skills-section h4 {
+                color: #6c757d; /* Muted heading */
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .skill {
+            background-color: #e9ecef; /* Light skill tag background */
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: #212529; /* Dark text */
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-image-section">
+                <img src="~/images/working.png" alt="Profile Picture" class="profile-image" />
             </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label class="font-weight-bold">Name:</label>
-                    <p class="form-control-plaintext">@Model.Name</p>
-                </div>
 
-                <div class="mb-3">
-                    <label class="font-weight-bold">Email:</label>
-                    <p class="form-control-plaintext">@Model.Email</p>
-                </div>
+            <div class="profile-name">@Model.Name</div>
+           
 
-                <div class="text-center">
-                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">Back to Users List</a>
+            <div class="profile-actions">
+                <a class="btn btn-message" href="@Url.Action("ChangePassword", "Account")">Change Password</a>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-follow">Back</a>
+            </div>
+
+            <div class="skills-section">
+                <div class="skills">
+                    <div class="profile-detail">Phone: @Model.Phone</div>
+                    <div class="profile-detail">Email: @Model.Email</div>
                 </div>
             </div>
         </div>
     </div>
-}
-else
-{
-    <div class="alert alert-warning mt-3 text-center">
-        User information is not available.
-    </div>
-}
+
+</body>
+</html>

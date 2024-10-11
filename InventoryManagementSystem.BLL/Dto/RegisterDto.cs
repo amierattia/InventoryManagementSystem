@@ -5,26 +5,26 @@ namespace InventoryManagementSystem.BLL.Dto
 {
     public class RegisterDto
     {
-        [Required(ErrorMessage = "الاسم الكامل مطلوب")]
+        [Required(ErrorMessage = "Full name is required")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "البريد الإلكتروني مطلوب")]
-        [EmailAddress(ErrorMessage = "البريد الإلكتروني غير صحيح")]
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "رقم الهاتف مطلوب")]
-        [RegularExpression(@"^01[0-9]{9}$", ErrorMessage = "رقم الهاتف غير صحيح")]
+        [Required(ErrorMessage = "Phone number is required")]
+        [RegularExpression(@"^01[0-9]{9}$", ErrorMessage = "Invalid phone number")]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage = "كلمة المرور مطلوبة")]
-        [StringLength(50, MinimumLength = 6, ErrorMessage = "يجب أن تكون كلمة المرور 6 أحرف على الأقل")]
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters long")]
         [DataType(DataType.Password)]
-        [RegularExpression(@"^(?=.*[!@#$%^&*(),.?""':;{}|<>])(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$", ErrorMessage = "يجب أن تحتوي كلمة المرور على حرف خاص، وحرف أبجدي، ورقم.")]
+        [RegularExpression(@"^(?=.*[!@#$%^&*(),.?""':;{}|<>])(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$", ErrorMessage = "Password must contain a special character, a letter, and a number.")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "تأكيد كلمة المرور مطلوب")]
+        [Required(ErrorMessage = "Password confirmation is required")]
         [StringLength(100)]
-        [Compare("Password", ErrorMessage = "كلمات المرور لا تتطابق")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
@@ -38,7 +38,7 @@ namespace InventoryManagementSystem.BLL.Dto
                 Name = dto.FullName,
                 Email = dto.Email,
                 PhoneNumber = dto.Phone,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password) // تأكد من تشفير كلمة المرور
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };
         }
     }

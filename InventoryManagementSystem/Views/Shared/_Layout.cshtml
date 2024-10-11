@@ -48,16 +48,23 @@
 
                         <!-- Link to Manage Roles -->
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">
-                                <i class="fas fa-user-shield"></i> Manage Roles
-                            </a>
+                            @if(User.IsInRole("User"))
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">
+                                    <i class="fas fa-user-shield"></i> Manage Roles
+                                </a>
+                            }
+                           
                         </li>
 
                         <!-- Link to User Roles Management -->
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RoleManagement" asp-action="Index">
-                                <i class="fas fa-users-cog"></i> User Roles Management
-                            </a>
+                            @if (User.IsInRole("User"))
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="RoleManagement" asp-action="Index">
+                                    <i class="fas fa-users-cog"></i> User Roles Management
+                                </a>
+                            }
                         </li>
                     </ul>
 

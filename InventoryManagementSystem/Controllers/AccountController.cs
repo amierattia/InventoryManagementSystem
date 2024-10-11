@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.BLL.Dto;
+﻿using Humanizer;
+using InventoryManagementSystem.BLL.Dto;
 using InventoryManagementSystem.BLL.sln.Services;
 using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.EntitiesLayer.Models;
@@ -12,88 +13,91 @@ namespace InventoryManagementSystem.Pl.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<User> signInManager;
-        private readonly UserManager<User> userManager;
-        private readonly IUserService _customerService;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IUserService _userService;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationContext _context;
 
-        public AccountController(RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, UserManager<User> userManager, IUserService _customerService, ApplicationContext _context)
+        public AccountController(
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<User> signInManager,
+            UserManager<User> userManager,
+            IUserService userService,
+            ApplicationContext context)
         {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
-            this._context = _context;
-            this.roleManager = roleManager;
-            this._customerService = _customerService;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _context = context;
+            _roleManager = roleManager;
+            _userService = userService;
         }
 
-        public async Task<IActionResult> UserProfile(string Id)
+        public async Task<IActionResult> UserProfile(string id)
         {
-            var user = await userManager.FindByIdAsync(Id);
-            if (!ModelState.IsValid)
+            if (string.IsNullOrEmpty(id))
             {
-                ModelState.AddModelError("", "Invalid Id");
-
+                ModelState.AddModelError("", "Invalid user ID.");
                 return View();
             }
 
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User not found.");
+                return View();
+            }
 
-
-            var UserView = new UserDto
+            var userDto = new UserDto
             {
                 Name = user.Name ?? "Name not available",
                 Email = user.Email ?? "Email not available",
+                Phone = user.PhoneNumber
             };
 
-            return View(UserView);
+            return View(userDto);
         }
 
-
-
-        public IActionResult Login()
-        {
-            return View();
-        }
+        public IActionResult Login() => View();
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginDto model)
         {
-            if (ModelState.IsValid)
-            {
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            if (!ModelState.IsValid)
+                return View(model);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Email or password is incorrect.");
-                    return View(model);
-                }
-            }
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Home");
+
+            ModelState.AddModelError("", "Email or password is incorrect.");
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
+        public IActionResult Register() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(Rgister model)
+        public async Task<IActionResult> Register(RegisterDto model)
         {
-            if (!await _context.Roles.AnyAsync(r => r.RoleId == 1))
-            {
-                var role = new Role { Name = "Admin" };
-                await _context.Roles.AddAsync(role);
-                await _context.SaveChangesAsync();
-            }
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+                return View(model);
 
-            var User = new User
+            if (await _context.Users.AnyAsync(u => u.Email == model.Email))
+            {
+                ModelState.AddModelError("Email", "An account with this email already exists.");
+                return View(model);
+            }
+
+            if (!await _roleManager.RoleExistsAsync("Admin"))
+            {
+                var role = new IdentityRole("Admin");
+                await _roleManager.CreateAsync(role);
+            }
+
+            var user = new User
             {
                 Name = model.FullName,
                 Email = model.Email,
@@ -102,121 +106,108 @@ namespace InventoryManagementSystem.Pl.Controllers
                 RoleId = 1
             };
 
-            var result = await _customerService.RegisterCustomerAsync(User, model.Password);
+            var result = await _userService.RegisterCustomerAsync(user, model.Password);
             if (result.Succeeded)
             {
-                var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, User.Id.ToString()),
-                new Claim(ClaimTypes.Email, User.Email)
-            };
-
-                var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-                var authProperties = new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
-                };
-
-                await HttpContext.SignInAsync("Cookies", claimsPrincipal, authProperties);
+                await SignInUserAsync(user);
                 return RedirectToAction("Login", "Account");
             }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", "Something went wrong. try again.");
-            }
-
+            AddErrors(result);
             return View(model);
         }
 
-
-        public IActionResult VerifyEmail()
-        {
-            return View();
-        }
+        public IActionResult VerifyEmail() => View();
 
         [HttpPost]
         public async Task<IActionResult> VerifyEmail(VerifyEmailDto model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await userManager.FindByNameAsync(model.Email);
+            if (!ModelState.IsValid)
+                return View(model);
 
-                if (user == null)
-                {
-                    ModelState.AddModelError("", "Something is wrong!");
-                    return View(model);
-                }
-                else
-                {
-                    return RedirectToAction("ChangePassword", "Account", new { username = user.UserName });
-                }
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Email not found.");
+                return View(model);
             }
-            return View(model);
+
+            return RedirectToAction("ChangePassword", new { username = user.UserName });
         }
 
         public IActionResult ChangePassword(string username)
         {
             if (string.IsNullOrEmpty(username))
-            {
-                return RedirectToAction("VerifyEmail", "Account");
-            }
+                return RedirectToAction("VerifyEmail");
+
             return View(new ChangePasswordDto { Email = username });
         }
 
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
             {
-                var user = await userManager.FindByNameAsync(model.Email);
-                if (user != null)
-                {
-                    var result = await userManager.RemovePasswordAsync(user);
-                    if (result.Succeeded)
-                    {
-                        result = await userManager.AddPasswordAsync(user, model.NewPassword);
-                        return RedirectToAction("Login", "Account");
-                    }
-                    else
-                    {
+                ModelState.AddModelError("", "User not found.");
+                return View(model);
+            }
 
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError("", error.Description);
-                        }
+            var removePasswordResult = await _userManager.RemovePasswordAsync(user);
+            if (removePasswordResult.Succeeded)
+            {
+                var addPasswordResult = await _userManager.AddPasswordAsync(user, model.NewPassword);
+                if (addPasswordResult.Succeeded)
+                    return RedirectToAction("Login");
 
-                        return View(model);
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Email not found!");
-                    return View(model);
-                }
+                AddErrors(addPasswordResult);
             }
             else
             {
-                ModelState.AddModelError("", "Something went wrong. try again.");
-                return View(model);
+                AddErrors(removePasswordResult);
             }
-        }
 
+            return View(model);
+        }
 
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
-        public IActionResult AccessDenied()
+        public IActionResult AccessDenied() => View();
+
+        private async Task SignInUserAsync(User user)
         {
-            return View();
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+            };
+
+            await HttpContext.SignInAsync("Cookies", claimsPrincipal, authProperties);
         }
 
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+        }
     }
 }

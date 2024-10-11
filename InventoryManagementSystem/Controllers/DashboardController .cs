@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryManagementSystem.PL.sln.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,User")]
     public class DashboardController : Controller
     {
         private readonly IInventoryService _inventoryService;
@@ -17,17 +17,19 @@ namespace InventoryManagementSystem.PL.sln.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var totalItems = await _inventoryService.GetTotalItemsAsync();
-            var lowStockItems = await _inventoryService.GetLowStockItemsAsync();
-            var usersCount = await _inventoryService.GetUsersCountAsync();
-            var recentActivity = await _inventoryService.GetRecentActivityAsync();
+            var totalItemsTask = _inventoryService.GetTotalItemsAsync();
+            var lowStockItemsTask = _inventoryService.GetLowStockItemsAsync();
+            var usersCountTask = _inventoryService.GetUsersCountAsync();
+            var recentActivityTask = _inventoryService.GetRecentActivityAsync();
+
+            await Task.WhenAll(totalItemsTask, lowStockItemsTask, usersCountTask, recentActivityTask);
 
             var model = new DashboardDto
             {
-                TotalItems = totalItems,
-                LowStockItems = lowStockItems,
-                UsersCount = usersCount,
-                RecentActivities = recentActivity
+                TotalItems = await totalItemsTask,
+                LowStockItems = await lowStockItemsTask,
+                UsersCount = await usersCountTask,
+                RecentActivities = await recentActivityTask
             };
 
             return View(model);

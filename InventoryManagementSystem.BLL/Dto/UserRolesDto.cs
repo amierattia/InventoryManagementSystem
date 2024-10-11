@@ -13,7 +13,7 @@ namespace InventoryManagementSystem.BLL.Dto
       
             public string UserName { get; set; }
             public string UserId { get; set; }
-            public List<RoleDto> Roles { get; set; } // Ensure this matches with what you are assigning
+            public List<RoleDto> Roles { get; set; } 
         
 
     }
