@@ -31,11 +31,11 @@ namespace InventoryManagementSystem.BLL.Dto
 
     public static class RegisterDtoExtensions
     {
-        public static User ToUser(this RegisterDto dto)
+        public static Users ToUser(this RegisterDto dto)
         {
-            return new User
+            return new Users
             {
-                Name = dto.FullName,
+                FullName = dto.FullName,
                 Email = dto.Email,
                 PhoneNumber = dto.Phone,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)

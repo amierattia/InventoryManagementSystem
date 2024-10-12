@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin")]
     public class RoleManagementController : Controller
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<Users> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleManagementController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public RoleManagementController(UserManager<Users> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;

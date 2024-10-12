@@ -2,10 +2,12 @@
 using InventoryManagementSystem.BLL.sln.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using InventoryManagementSystem.DAL.Db;
+using Microsoft.EntityFrameworkCore; 
 
 namespace InventoryManagementSystem.PL.sln.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin")]
     public class DashboardController : Controller
     {
         private readonly IInventoryService _inventoryService;
@@ -17,22 +19,21 @@ namespace InventoryManagementSystem.PL.sln.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var totalItemsTask = _inventoryService.GetTotalItemsAsync();
-            var lowStockItemsTask = _inventoryService.GetLowStockItemsAsync();
-            var usersCountTask = _inventoryService.GetUsersCountAsync();
-            var recentActivityTask = _inventoryService.GetRecentActivityAsync();
-
-            await Task.WhenAll(totalItemsTask, lowStockItemsTask, usersCountTask, recentActivityTask);
+            var totalItems = await _inventoryService.GetTotalItemsAsync();
+            var lowStockItems = await _inventoryService.GetLowStockItemsAsync();
+            var usersCount = await _inventoryService.GetUsersCountAsync();
+            var recentActivities = await _inventoryService.GetRecentActivityAsync();
 
             var model = new DashboardDto
             {
-                TotalItems = await totalItemsTask,
-                LowStockItems = await lowStockItemsTask,
-                UsersCount = await usersCountTask,
-                RecentActivities = await recentActivityTask
+                TotalItems = totalItems,
+                LowStockItems = lowStockItems,  
+                UsersCount = usersCount,
+                RecentActivities = recentActivities
             };
 
             return View(model);
         }
+
     }
 }

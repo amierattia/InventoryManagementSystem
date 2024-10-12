@@ -1,0 +1,59 @@
+﻿@model Product
+@inject ISupplierService _isupplierService;
+@{
+    var suppliers = new SelectList(_isupplierService.GetAll(), nameof(Supplier.Id), nameof(Supplier.Name));
+
+    ViewData["Title"] = "Edit";
+
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="card p-4 shadow-lg">
+        <h1 class="text-center mb-4">Edit Product</h1>
+
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ProductName" class="form-label">Name</label>
+                <input asp-for="ProductName" class="form-control" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="form-label">Price</label>
+                <input asp-for="Price" class="form-control" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ProductDescription" class="form-label">Description</label>
+                <textarea asp-for="ProductDescription" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" asp-for="stockQuantity"></label>
+                <input asp-for="stockQuantity" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" asp-for="Supplier"></label>
+                <select class="form-control" asp-for="SupplierId" asp-items="@suppliers">
+                    <option value="Null"> -- Select Supplier Name -- </option>
+                </select>
+            </div>
+
+
+
+            <!-- Include the ProductId as a hidden input -->
+            <input asp-for="ProductId" hidden class="form-control" />
+
+            <!-- Include the CategoryId as a hidden input -->
+            <input asp-for="CategoryId" value="@Model.CategoryId" hidden class="form-control" />
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" value="Edit" class="btn btn-primary">Save</button>
+                <a asp-action="Index" class="btn btn-secondary" asp-route-id="@Model.CategoryId">Back To List</a>
+            </div>
+        </form>
+    </div>
+</div>

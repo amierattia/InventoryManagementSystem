@@ -23,7 +23,8 @@ namespace InventoryManagementSystem.BLL.sln.Services
 
         public async Task<int> GetLowStockItemsAsync()
         {
-            return await _context.Products.CountAsync(p => p.stockQuantity < 5);
+            var p = await _context.Products.CountAsync(p => p.stockQuantity < 5);
+            return p;
         }
 
         public async Task<int> GetUsersCountAsync()
@@ -31,7 +32,7 @@ namespace InventoryManagementSystem.BLL.sln.Services
             return await _context.Users.CountAsync();
         }
 
-        public async Task<List<ActivityModel>> GetRecentActivityAsync() 
+        public async Task<List<ActivityModel>> GetRecentActivityAsync()
         {
             return await _context.Activities.OrderByDescending(a => a.Date).Take(5).ToListAsync();
         }

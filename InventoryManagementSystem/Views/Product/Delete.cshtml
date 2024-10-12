@@ -1,0 +1,52 @@
+﻿@model Product
+@inject ISupplierService _isupplierService;
+@{
+    var suppliers = new SelectList(_isupplierService.GetAll(), nameof(Supplier.Id), nameof(Supplier.Name));
+    ViewData["Title"] = "Delete";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="card p-4 shadow-lg">
+        <h1 class="alert alert-warning text-center">Are You Sure You Want to Delete This Product?</h1>
+
+
+        <form asp-action="Delete" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ProductName" class="form-label">Name</label>
+                <input asp-for="ProductName" class="form-control" readonly />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="form-label">Price</label>
+                <input asp-for="Price" class="form-control" readonly />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ProductDescription" class="form-label">Description</label>
+                <textarea asp-for="ProductDescription" class="form-control" rows="3" readonly></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" asp-for="Supplier"></label>
+                <select class="form-control" asp-for="SupplierId" asp-items="@suppliers" disabled>
+                    <option value="Null"> -- Select Supplier Name -- </option>
+                </select>
+                <!-- Hidden field to submit value -->
+                <input type="hidden" asp-for="SupplierId" />
+            </div>
+
+            
+            <input asp-for="ProductId" type="hidden" /> @* hieddin product id *@
+            <input asp-for="CategoryId" value="@Model.CategoryId" hidden class="form-control" /> @* Hidden  Category ID*@
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
+                <a asp-action="Index" class="btn btn-secondary" asp-route-id="@Model.CategoryId">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+</div>

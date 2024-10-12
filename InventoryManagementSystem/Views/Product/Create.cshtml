@@ -1,0 +1,50 @@
+﻿@model Product
+@inject ISupplierService _isupplierService;
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_Layout";
+    var suppliers = new SelectList(_isupplierService.GetAll(), nameof(Supplier.Id), nameof(Supplier.Name));
+}
+   
+ 
+
+<h1>Add new Product</h1>
+<br />
+<br/>
+
+<form asp-action="Create" method="post">
+
+ 
+    <div class="form-group">
+        <label class="col-form-label" asp-for="ProductName"></label>
+        <input asp-for="ProductName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="col-form-label" asp-for="ProductDescription"></label>
+        <input asp-for="ProductDescription" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label class="col-form-label" asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="col-form-label" asp-for="stockQuantity"></label>
+        <input asp-for="stockQuantity" class="form-control" />
+    </div>
+
+     <div class="form-group">
+        <label class="col-form-label" asp-for="Supplier"></label>
+        <select class="form-control" asp-for="SupplierId" asp-items="@suppliers">
+        <option value="Null" > -- Select Supplier Name -- </option>
+        </select>
+    </div> 
+
+    
+    <input asp-for="CategoryId" value="@Model.CategoryId" hidden class="form-control" /> @* Hidden  Category ID*@
+
+    <input type="submit" value="Create" class="btn btn-primary"/>
+    <a asp-action="Index" class="btn btn-light" asp-route-id="@Model.CategoryId">Back to list</a>
+    
+</form>

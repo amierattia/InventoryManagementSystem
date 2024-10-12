@@ -10,7 +10,7 @@ namespace InventoryManagementSystem.BLL.sln.Services
 {
     public interface IUserService
     {
-        Task<IdentityResult> RegisterCustomerAsync(User User, string password );
-        Task<User> LoginCustomerAsync(string email, string password  , bool RememberMe);
+        Task<IdentityResult> RegisterCustomerAsync(Users User, string password );
+        Task<Users> LoginCustomerAsync(string email, string password  , bool RememberMe);
     }
 }
