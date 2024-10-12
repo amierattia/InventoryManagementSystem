@@ -185,7 +185,6 @@ namespace UsersApp.Controllers
             {
                 Name = user.FullName ?? "Name not available",
                 Email = user.Email ?? "Email not available",
-                Phone = user.PhoneNumber
             };
 
             return View(userDto);

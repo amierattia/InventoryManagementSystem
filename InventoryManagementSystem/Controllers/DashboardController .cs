@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagementSystem.PL.sln.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "User")]
     public class DashboardController : Controller
     {
         private readonly IInventoryService _inventoryService;

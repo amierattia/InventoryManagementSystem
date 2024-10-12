@@ -32,7 +32,7 @@
                         </li>
 
                         <li class="nav-item">
-                            @if (User.IsInRole("Admin"))
+                            @if (User.IsInRole("User"))
                             {
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">
                                     <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -48,7 +48,7 @@
 
                         <!-- Link to Manage Roles -->
                         <li class="nav-item">
-                            @if(User.IsInRole("User"))
+                            @if (User.IsInRole("User"))
                             {
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">
                                     <i class="fas fa-user-shield"></i> Manage Roles
