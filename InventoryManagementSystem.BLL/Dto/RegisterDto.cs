@@ -31,9 +31,9 @@ namespace InventoryManagementSystem.BLL.Dto
 
     public static class RegisterDtoExtensions
     {
-        public static Users ToUser(this RegisterDto dto)
+        public static User ToUser(this RegisterDto dto)
         {
-            return new Users
+            return new User
             {
                 FullName = dto.FullName,
                 Email = dto.Email,

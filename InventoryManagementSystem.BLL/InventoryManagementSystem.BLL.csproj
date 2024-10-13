@@ -13,9 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\InventoryManagementSystem\DataAccessLayer\InventoryManagementSystem.DAL.csproj" />
-    <ProjectReference Include="..\..\InventoryManagementSystem\InventoryManagementSystem.EntitiesLayer\InventoryManagementSystem.EntitiesLayer.csproj" />
+    <ProjectReference Include="..\InventoryManagementSystem.DAL\InventoryManagementSystem.DAL.csproj" />
+    <ProjectReference Include="..\InventoryManagementSystem.EntitiesLayer\InventoryManagementSystem.EntitiesLayer.csproj" />
   </ItemGroup>
+
 
 
 </Project>

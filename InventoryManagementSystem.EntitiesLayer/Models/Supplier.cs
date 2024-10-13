@@ -1,37 +1,12 @@
-<<<<<<< HEAD
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InventoryManagementSystem.EntitiesLayer.Models;
 
-namespace InventoryManagementSystem.EntitiesLayer.Models
+public class Supplier
 {
-    public class Supplier
-    {
-        public int SupplierId { get; set; }
-        public string Name { get; set; }
-        public string ContactName { get; set; }
-        public string Email { get; set; }
-        public string phone { get; set; }
-    }
-}
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string ContactName { get; set; }
+    public string Email { get; set; }
+    public string phone { get; set; }
 
-namespace InventoryManagementSystem.EntitiesLayer.Models
-{
-    public class Supplier
-    {
-        public int SupplierId { get; set; }
-        public string Name { get; set; }
-        public string ContactName { get; set; }
-        public string Email { get; set; }
-        public string phone { get; set; }
-    }
+    public ICollection<Product>? Products { get; set; } 
 }
->>>>>>> 5e9904703590e84da3312971fd01f46e05187cb4

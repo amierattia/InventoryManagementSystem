@@ -1,11 +1,9 @@
 ﻿using InventoryManagementSystem.EntitiesLayer.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 namespace InventoryManagementSystem.DAL.Db
 {
-    public class ApplicationContext : IdentityDbContext<Users> 
+    public class ApplicationContext : IdentityDbContext<User> 
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
@@ -24,12 +22,12 @@ namespace InventoryManagementSystem.DAL.Db
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
-                .WithMany(c => c.Products) 
+                .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
 
             modelBuilder.Entity<Stock>()
                 .HasOne(s => s.Product)
-                .WithMany(p => p.Stocks) 
+                .WithMany(p => p.Stocks)
                 .HasForeignKey(s => s.ProductId);
 
             modelBuilder.Entity<Supplier>()
@@ -37,6 +35,5 @@ namespace InventoryManagementSystem.DAL.Db
               .WithOne(p => p.Supplier)
               .HasForeignKey(p => p.SupplierId);
         }
-
     }
 }

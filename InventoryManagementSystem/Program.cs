@@ -1,11 +1,11 @@
 using InventoryManagementSystem.BLL;
 using InventoryManagementSystem.BLL.Services;
 using InventoryManagementSystem.BLL.sln.Services;
-using InventoryManagementSystem.DAL.Db;
-using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using InventoryManagementSystem.DAL.Db;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +17,7 @@ builder.Services.AddDbContextFactory<ApplicationContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefultConection")));
 
 // Identity setup for User management
-builder.Services.AddIdentity<Users, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
         .AddEntityFrameworkStores<ApplicationContext>()
         .AddDefaultTokenProviders();
 

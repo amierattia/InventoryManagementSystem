@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.Pl", "InventoryManagementSystem\InventoryManagementSystem.Pl.csproj", "{5298B388-38F8-42BB-AEEE-0A02D17CFF32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagementSystem.Pl", "InventoryManagementSystem\InventoryManagementSystem.Pl.csproj", "{5298B388-38F8-42BB-AEEE-0A02D17CFF32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagementSystem.DAL", "C:\Users\ALJAZEERA\source\repos\InventoryManagementSystem\DataAccessLayer\InventoryManagementSystem.DAL.csproj", "{DFD51296-0F78-4063-89E3-B8A1BBCE3724}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagementSystem.BLL", "InventoryManagementSystem.BLL\InventoryManagementSystem.BLL.csproj", "{0E727809-3ACE-415A-B20E-AD04CB093F07}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagementSystem.EntitiesLayer", "C:\Users\ALJAZEERA\source\repos\InventoryManagementSystem\InventoryManagementSystem.EntitiesLayer\InventoryManagementSystem.EntitiesLayer.csproj", "{0B6673AD-6ABC-41C4-9DD1-559D857CA212}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.DAL", "InventoryManagementSystem.DAL\InventoryManagementSystem.DAL.csproj", "{14D059E5-19AA-4513-91AE-D828B6CA9064}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.BLL", "InventoryManagementSystem.BLL\InventoryManagementSystem.BLL.csproj", "{0E727809-3ACE-415A-B20E-AD04CB093F07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagementSystem.EntitiesLayer", "InventoryManagementSystem.EntitiesLayer\InventoryManagementSystem.EntitiesLayer.csproj", "{BFB86884-86EA-48F5-9CD4-93C902440BD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +21,18 @@ Global
 		{5298B388-38F8-42BB-AEEE-0A02D17CFF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5298B388-38F8-42BB-AEEE-0A02D17CFF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5298B388-38F8-42BB-AEEE-0A02D17CFF32}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFD51296-0F78-4063-89E3-B8A1BBCE3724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFD51296-0F78-4063-89E3-B8A1BBCE3724}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFD51296-0F78-4063-89E3-B8A1BBCE3724}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFD51296-0F78-4063-89E3-B8A1BBCE3724}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B6673AD-6ABC-41C4-9DD1-559D857CA212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B6673AD-6ABC-41C4-9DD1-559D857CA212}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B6673AD-6ABC-41C4-9DD1-559D857CA212}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B6673AD-6ABC-41C4-9DD1-559D857CA212}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0E727809-3ACE-415A-B20E-AD04CB093F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E727809-3ACE-415A-B20E-AD04CB093F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E727809-3ACE-415A-B20E-AD04CB093F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E727809-3ACE-415A-B20E-AD04CB093F07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14D059E5-19AA-4513-91AE-D828B6CA9064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14D059E5-19AA-4513-91AE-D828B6CA9064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14D059E5-19AA-4513-91AE-D828B6CA9064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14D059E5-19AA-4513-91AE-D828B6CA9064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB86884-86EA-48F5-9CD4-93C902440BD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB86884-86EA-48F5-9CD4-93C902440BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB86884-86EA-48F5-9CD4-93C902440BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB86884-86EA-48F5-9CD4-93C902440BD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

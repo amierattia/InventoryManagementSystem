@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HixlUGAUVOg=",
+  "dgSpecHash": "7riuHwcK3WA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ALJAZEERA\\source\\repos\\InventoryManagementSystem\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj",
+  "projectFilePath": "C:\\Users\\ALJAZEERA\\source\\repos\\GRP1\\zzz\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
@@ -40,8 +40,6 @@
     "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.extensions.options\\8.0.2\\microsoft.extensions.options.8.0.2.nupkg.sha512",
     "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.extensions.webencoders\\2.2.0\\microsoft.extensions.webencoders.2.2.0.nupkg.sha512",
-    "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.1.0\\microsoft.identitymodel.abstractions.8.1.0.nupkg.sha512",
-    "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.identitymodel.logging\\8.1.0\\microsoft.identitymodel.logging.8.1.0.nupkg.sha512",
     "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\ALJAZEERA\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",

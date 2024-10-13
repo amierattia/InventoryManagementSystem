@@ -2,7 +2,6 @@
 using InventoryManagementSystem.BLL.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using InventoryManagementSystem.DAL.Db;
 using Microsoft.EntityFrameworkCore; 
 
 namespace InventoryManagementSystem.PL.sln.Controllers

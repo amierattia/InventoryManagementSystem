@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.EntitiesLayer.Models
 {
-    public class Category
+    internal class Class1
     {
-        public int CategoryId { get; set; }
-        public string Name { get; set; }
-        public ICollection<Product> Products { get; set; }
     }
 }

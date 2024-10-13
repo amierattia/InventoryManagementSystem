@@ -10,7 +10,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.5",
-          "Microsoft.IdentityModel.Logging": "8.1.0"
+          "Microsoft.Extensions.Identity.Stores": "8.0.5"
         },
         "runtime": {
           "InventoryManagementSystem.EntitiesLayer.dll": {}
@@ -438,25 +438,6 @@
           }
         }
       },
-      "Microsoft.IdentityModel.Abstractions/8.1.0": {
-        "runtime": {
-          "lib/net8.0/Microsoft.IdentityModel.Abstractions.dll": {
-            "assemblyVersion": "8.1.0.0",
-            "fileVersion": "8.1.0.50924"
-          }
-        }
-      },
-      "Microsoft.IdentityModel.Logging/8.1.0": {
-        "dependencies": {
-          "Microsoft.IdentityModel.Abstractions": "8.1.0"
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.IdentityModel.Logging.dll": {
-            "assemblyVersion": "8.1.0.0",
-            "fileVersion": "8.1.0.50924"
-          }
-        }
-      },
       "Microsoft.Net.Http.Headers/2.2.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "8.0.0",
@@ -791,20 +772,6 @@
       "sha512": "sha512-V8XcqYcpcdBAxUhLeyYcuKmxu4CtNQA9IphTnARpQGhkop4A93v2XgM3AtaVVJo3H2cDWxWM6aeO8HxkifREqw==",
       "path": "microsoft.extensions.webencoders/2.2.0",
       "hashPath": "microsoft.extensions.webencoders.2.2.0.nupkg.sha512"
-    },
-    "Microsoft.IdentityModel.Abstractions/8.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-jZ7UKZNu2tDS2Ft9PxxOdJYUWo6nBEQnv+yz69GpCr4Fs677aq/LP82gp/NOgI5hPIlxIYP1ynLCH1ruGfw2rw==",
-      "path": "microsoft.identitymodel.abstractions/8.1.0",
-      "hashPath": "microsoft.identitymodel.abstractions.8.1.0.nupkg.sha512"
-    },
-    "Microsoft.IdentityModel.Logging/8.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Qrm6jLmzeNnWwKc+KoJT8DQgnVXsNR3LBSU2LXnA9RDs8eflBNrQOifxJn9r4k5+rdRq3mUu3GJNGKlWIQzguA==",
-      "path": "microsoft.identitymodel.logging/8.1.0",
-      "hashPath": "microsoft.identitymodel.logging.8.1.0.nupkg.sha512"
     },
     "Microsoft.Net.Http.Headers/2.2.0": {
       "type": "package",
