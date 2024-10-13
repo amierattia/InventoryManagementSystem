@@ -19,9 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\InventoryManagementSystem\DataAccessLayer\InventoryManagementSystem.DAL.csproj" />
+    <ProjectReference Include="..\..\InventoryManagementSystem\InventoryManagementSystem.EntitiesLayer\InventoryManagementSystem.EntitiesLayer.csproj" />
     <ProjectReference Include="..\InventoryManagementSystem.BLL\InventoryManagementSystem.BLL.csproj" />
-    <ProjectReference Include="C:\Users\ALJAZEERA\source\repos\InventoryManagementSystem\DataAccessLayer\InventoryManagementSystem.DAL.csproj" />
-    <ProjectReference Include="C:\Users\ALJAZEERA\source\repos\InventoryManagementSystem\InventoryManagementSystem.EntitiesLayer\InventoryManagementSystem.EntitiesLayer.csproj" />
   </ItemGroup>
+
+
 
 </Project>
