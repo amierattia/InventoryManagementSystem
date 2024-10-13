@@ -1,5 +1,5 @@
 ﻿using InventoryManagementSystem.BLL.sln.Services;
-using InventoryManagementSystem.BLL.sln.Dto;
+using InventoryManagementSystem.BLL.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using InventoryManagementSystem.DAL.Db;
