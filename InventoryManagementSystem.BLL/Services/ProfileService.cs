@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Threading.Tasks;
+using InventoryManagementSystem.BLL.interfaces;
 
 namespace InventoryManagementSystem.BLL.Services
 {

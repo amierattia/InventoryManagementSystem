@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace InventoryManagementSystem.BLL.Services
+namespace InventoryManagementSystem.BLL.interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<Product>> GetAllAsync(); 
+        Task<IEnumerable<Product>> GetAllAsync();
         Task<Product> GetProductByIdAsync(int id);
         Task<int> DeleteAsync(Product product);
         Task<int> AddAsync(Product product);

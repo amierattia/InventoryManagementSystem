@@ -15,6 +15,7 @@ namespace InventoryManagementSystem.DAL.Db
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<ActivityModel> Activities { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

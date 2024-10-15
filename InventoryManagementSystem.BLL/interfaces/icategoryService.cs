@@ -1,0 +1,15 @@
+﻿using InventoryManagementSystem.EntitiesLayer.Models;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+namespace InventoryManagementSystem.BLL.interfaces
+{
+    public interface ICategoryService
+    {
+        Task AddAsync(Category entity);
+        Task DeleteAsync(Category entity);
+        Task<Category?> GetByIdAsync(int id);
+        Task<IEnumerable<Category>> GetAllAsync();
+        Task UpdateAsync(Category entity);
+    }
+}

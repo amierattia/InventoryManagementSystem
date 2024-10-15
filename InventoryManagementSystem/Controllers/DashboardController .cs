@@ -1,8 +1,8 @@
-﻿using InventoryManagementSystem.BLL.sln.Services;
-using InventoryManagementSystem.BLL.Dto;
+﻿using InventoryManagementSystem.BLL.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using InventoryManagementSystem.BLL.interfaces;
 
 namespace InventoryManagementSystem.PL.sln.Controllers
 {

@@ -43,7 +43,7 @@
                             <!-- Update -->
                             <a href="@Url.Action("Edit", "Category", new { id = category.CategoryId })" class="btn btn-warning btn-sm">Update</a>
                             <!-- Delete -->
-                            <form asp-action="DeleteConfirme" asp-controller="Category" method="post" style="display:inline;">
+                            <form asp-action="DeleteConfirmed" asp-controller="Category" method="post" style="display:inline;">
                                 <input type="hidden" name="id" value="@category.CategoryId" />
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button>
                             </form>

@@ -1,150 +1,166 @@
-﻿using InventoryManagementSystem.BLL.Services;
+﻿using InventoryManagementSystem.BLL.interfaces;
 using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductService _iproductService;
+        private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ISupplierService _supplierService;
-        private readonly ApplicationContext _context;
+        private readonly IActivityService _activityService;
+        private readonly UserManager<User> _userManager;
 
-        public ProductController(ApplicationContext context, IProductService iproductService, ICategoryService categoryService, ISupplierService supplierService)
+        public ProductController(IProductService productService, ICategoryService categoryService, ISupplierService supplierService, IActivityService activityService, UserManager<User> userManager)
         {
-            _iproductService = iproductService;
+            _productService = productService;
             _categoryService = categoryService;
             _supplierService = supplierService;
-            _context = context;
+            _activityService = activityService;
+            _userManager = userManager;
         }
 
-        
         public async Task<IActionResult> Index()
         {
-            var products = await _iproductService.GetAllAsync();
+            var products = await _productService.GetAllAsync();
             return View(products);
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var categories = await _categoryService.GetAll();
-            var suppliers = await _supplierService.GetAllAsync();
-
-            ViewBag.Categories = categories;
-            ViewBag.Suppliers = suppliers;
-
+            await LoadCategoriesAndSuppliersToViewBag();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (!_context.Categories.Any(c => c.CategoryId == product.CategoryId))
-                {
-                    ModelState.AddModelError("CategoryId", "The selected category is invalid.");
-                    ViewBag.Categories = await _categoryService.GetAll();
-                    return View(product);
-                }
-
-                await _iproductService.AddAsync(product);
-                return RedirectToAction(nameof(Index));
+                await LoadCategoriesAndSuppliersToViewBag();
+                return View(product);
             }
 
-            ViewBag.Categories = await _categoryService.GetAll();
-            return View(product);
+            if (!await IsValidCategory(product.CategoryId))
+            {
+                ModelState.AddModelError("CategoryId", "The selected category is invalid.");
+                await LoadCategoriesAndSuppliersToViewBag();
+                return View(product);
+            }
+
+            await _productService.AddAsync(product);
+
+            var userId = _userManager.GetUserId(User);
+            var userName = _userManager.GetUserName(User);
+            await _activityService.LogActivity($"Product {product.ProductName} created by {userName}.", userName);
+
+            return RedirectToAction(nameof(Index));
         }
-
-
-
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Details(int? id, string viewName = "Details")
+        public async Task<IActionResult> Details(int? id)
         {
             if (!id.HasValue)
                 return BadRequest();
 
-            var product = _iproductService.GetProductByIdAsync(id.Value);
+            var product = await _productService.GetProductByIdAsync(id.Value);
             if (product == null)
                 return NotFound();
 
-            return View(viewName, product);
+            return View(product);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var product = await _iproductService.GetProductByIdAsync(id);
+            var product = await _productService.GetProductByIdAsync(id);
             if (product == null)
-            {
                 return NotFound();
-            }
 
-            ViewBag.Categories = await _categoryService.GetAll();
-            ViewBag.Suppliers = await _supplierService.GetAllAsync(); 
-
+            await LoadCategoriesAndSuppliersToViewBag();
             return View(product);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Product product, [FromRoute] int id)
+        public async Task<IActionResult> Edit(Product product)
         {
-            if (id != product.ProductId)
+            if (!ModelState.IsValid || product == null || !await IsProductIdValid(product.ProductId))
                 return BadRequest();
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    await _iproductService.UpdateAsync(product);
-                    TempData["SuccessMessage"] = "Product updated successfully!";
-                    return RedirectToAction(nameof(Index), new { id = product.CategoryId });
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
+                await _productService.UpdateAsync(product);
+
+                var userId = _userManager.GetUserId(User);
+                var userName = _userManager.GetUserName(User);
+                await _activityService.LogActivity($"Product {product.ProductName} edited by {userName}.", userName);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
 
             return View(product);
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> ConfirmDelete(int? id)
         {
-            return Details(id, "Delete");
+            if (!id.HasValue)
+                return NotFound();
+
+            var product = await _productService.GetProductByIdAsync(id.Value);
+            if (product == null)
+                return NotFound();
+
+            return View(product);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete([FromRoute] int? id, Product product)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (id != product.ProductId)
-                return BadRequest();
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+                return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _iproductService.DeleteAsync(product);
-                    TempData["SuccessMessage"] = "Product deleted successfully!";
-                    return RedirectToAction(nameof(Index), new { id = product.CategoryId });
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
-            }
+            await _productService.DeleteAsync(product);
 
-            return View(product);
+            var userId = _userManager.GetUserId(User);
+            var userName = _userManager.GetUserName(User);
+            await _activityService.LogActivity($"Product {product.ProductName} deleted by {userName}.", userName);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Private helper methods
+        private async Task LoadCategoriesAndSuppliersToViewBag()
+        {
+            ViewBag.Categories = await _categoryService.GetAllAsync();
+            ViewBag.Suppliers = await _supplierService.GetAllAsync();
+        }
+
+        private async Task<bool> IsValidCategory(int categoryId)
+        {
+            var categories = await _categoryService.GetAllAsync();
+            return categories.Any(c => c.CategoryId == categoryId);
+        }
+
+        private async Task<bool> IsProductIdValid(int productId)
+        {
+            var product = await _productService.GetProductByIdAsync(productId);
+            return product != null;
         }
     }
 }

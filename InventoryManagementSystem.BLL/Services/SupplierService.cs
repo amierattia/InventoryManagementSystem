@@ -1,4 +1,5 @@
-﻿using InventoryManagementSystem.DAL.Db;
+﻿using InventoryManagementSystem.BLL.interfaces;
+using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

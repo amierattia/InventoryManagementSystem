@@ -1,119 +1,112 @@
-﻿using InventoryManagementSystem.BLL.Services;
-using InventoryManagementSystem.EntitiesLayer.Models;
+﻿using InventoryManagementSystem.BLL.interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
     public class SupplierController : Controller
     {
-        private readonly ISupplierService _isupplierService;
+        private readonly ISupplierService _supplierService;
 
-        public SupplierController(ISupplierService isupplierService)
+        public SupplierController(ISupplierService supplierService)
         {
-            _isupplierService = isupplierService;
+            _supplierService = supplierService;
         }
 
-        // Index action method to get the list of suppliers
+        // GET: Supplier
         public async Task<IActionResult> Index()
         {
-            var suppliers = await _isupplierService.GetAllAsync(); // Await the async method
+            var suppliers = await _supplierService.GetAllAsync();
             return View(suppliers);
         }
 
-        // Get action for creating a new supplier
+        // GET: Supplier/Create
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
-        // Post action for creating a new supplier
+        // POST: Supplier/Create
         [HttpPost]
         public async Task<IActionResult> Create(Supplier supplier)
         {
-            if (ModelState.IsValid)
-            {
-                await _isupplierService.AddAsync(supplier); // Ensure this method is async
-                return RedirectToAction(nameof(Index));
-            }
+            if (!ModelState.IsValid)
+                return View(supplier);
 
-            return View(supplier);
+            await _supplierService.AddAsync(supplier);
+            return RedirectToAction(nameof(Index));
         }
 
-        // Get action for supplier details
+        // GET: Supplier/Details/5
         [HttpGet]
-        public async Task<IActionResult> Details(int? id, string viewName = "Details")
+        public async Task<IActionResult> Details(int? id)
         {
             if (!id.HasValue)
                 return BadRequest();
 
-            var supplier = await _isupplierService.GetSupplierByIdAsync(id.Value); // Ensure async call
-            if (supplier is null)
+            var supplier = await _supplierService.GetSupplierByIdAsync(id.Value);
+            if (supplier == null)
+                return NotFound();
+
+            return View(supplier);
+        }
+
+        // GET: Supplier/Edit/5
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id) => await GetSupplierView(id, "Edit");
+
+        // POST: Supplier/Edit
+        [HttpPost]
+        public async Task<IActionResult> Edit(Supplier supplier)
+        {
+            if (!ModelState.IsValid || supplier == null)
+                return View(supplier);
+
+            try
+            {
+                await _supplierService.UpdateAsync(supplier);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(supplier);
+            }
+        }
+
+        // GET: Supplier/Delete/5
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id) => await GetSupplierView(id, "Delete");
+
+        // POST: Supplier/Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Supplier supplier)
+        {
+            if (!ModelState.IsValid || supplier == null)
+                return View(supplier);
+
+            try
+            {
+                await _supplierService.DeleteAsync(supplier);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(supplier);
+            }
+        }
+
+        // Private helper method to get supplier details for Edit/Delete views
+        private async Task<IActionResult> GetSupplierView(int? id, string viewName)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+
+            var supplier = await _supplierService.GetSupplierByIdAsync(id.Value);
+            if (supplier == null)
                 return NotFound();
 
             return View(viewName, supplier);
-        }
-
-        // Get action for editing a supplier
-        [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            return await Details(id, "Edit"); // Use the details method to get the supplier
-        }
-
-        // Post action for editing a supplier
-        [HttpPost]
-        public async Task<IActionResult> Edit(Supplier supplier, [FromRoute] int id)
-        {
-            if (id != supplier.Id)
-                return BadRequest();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _isupplierService.UpdateAsync(supplier); // Ensure this method is async
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
-            }
-
-            return View(supplier);
-        }
-
-        // Get action for deleting a supplier
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            return await Details(id, "Delete"); // Use the details method to get the supplier
-        }
-
-        // Post action for deleting a supplier
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete([FromRoute] int? id, Supplier supplier)
-        {
-            if (id != supplier.Id)
-                return BadRequest();
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _isupplierService.DeleteAsync(supplier); // Ensure this method is async
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
-            }
-
-            return View(supplier);
         }
     }
 }

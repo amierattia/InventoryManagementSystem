@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.BLL.sln.Services;
+using InventoryManagementSystem.BLL.interfaces;
+using InventoryManagementSystem.Pl.MiddelWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<FileService>();
 
 // AutoMapper configuration
@@ -80,6 +83,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

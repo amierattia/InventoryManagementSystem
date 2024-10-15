@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagementSystem.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241015083139_upda")]
-    partial class upda
+    [Migration("20241015162214_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,16 @@ namespace InventoryManagementSystem.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Activities");
                 });
@@ -176,7 +185,6 @@ namespace InventoryManagementSystem.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CoverPhotoUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -208,14 +216,12 @@ namespace InventoryManagementSystem.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
@@ -401,6 +407,15 @@ namespace InventoryManagementSystem.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("InventoryManagementSystem.EntitiesLayer.Models.ActivityModel", b =>
+                {
+                    b.HasOne("InventoryManagementSystem.EntitiesLayer.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("InventoryManagementSystem.EntitiesLayer.Models.Product", b =>

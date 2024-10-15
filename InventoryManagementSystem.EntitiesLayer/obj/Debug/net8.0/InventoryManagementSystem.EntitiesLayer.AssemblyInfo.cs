@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InventoryManagementSystem.EntitiesLayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c79b7f51db137ca1de9e911493f8ff7458302d40")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bdc3aed2de496a3839cb39ecc1f33ed1f776d00b")]
 [assembly: System.Reflection.AssemblyProductAttribute("InventoryManagementSystem.EntitiesLayer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InventoryManagementSystem.EntitiesLayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

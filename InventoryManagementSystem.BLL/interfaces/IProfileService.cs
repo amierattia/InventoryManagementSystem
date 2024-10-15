@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagementSystem.BLL.Services
+namespace InventoryManagementSystem.BLL.interfaces
 {
     public interface IProfileService
     {

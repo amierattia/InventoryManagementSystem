@@ -25,6 +25,7 @@
                 <h2>Login to Inventory System</h2>
 
                 <form asp-action="Login" method="post" class="form-horizontal">
+                    <div asp-validation-summary="All" class="text-danger"></div>
 
                     <label asp-for="Email"></label>
                     <input asp-for="Email" type="email" id="email" placeholder="Enter your email address" />

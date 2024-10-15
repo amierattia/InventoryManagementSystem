@@ -37,7 +37,16 @@ namespace InventoryManagementSystem.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Activities");
                 });
@@ -173,7 +182,6 @@ namespace InventoryManagementSystem.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CoverPhotoUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -205,14 +213,12 @@ namespace InventoryManagementSystem.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
@@ -398,6 +404,15 @@ namespace InventoryManagementSystem.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("InventoryManagementSystem.EntitiesLayer.Models.ActivityModel", b =>
+                {
+                    b.HasOne("InventoryManagementSystem.EntitiesLayer.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("InventoryManagementSystem.EntitiesLayer.Models.Product", b =>

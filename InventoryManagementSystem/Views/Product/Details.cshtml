@@ -1,4 +1,5 @@
-﻿@model Product
+﻿@using InventoryManagementSystem.BLL.interfaces
+@model Product
 @inject ISupplierService _isupplierService;
 @{
     var suppliers = new SelectList(await _isupplierService.GetAllAsync(), nameof(Supplier.Id), nameof(Supplier.Name));

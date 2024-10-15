@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagementSystem.BLL.sln.Services
+namespace InventoryManagementSystem.BLL.interfaces
 {
     public interface IInventoryService
     {

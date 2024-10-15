@@ -1,4 +1,4 @@
-﻿
+﻿using InventoryManagementSystem.BLL.interfaces;
 using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.EntityFrameworkCore;
@@ -14,40 +14,32 @@ namespace InventoryManagementSystem.BLL.Services
             _context = context;
         }
 
-        public void Add(Category entity)
+        public async Task AddAsync(Category entity)
         {
-            _context.Add(entity);
-            _context.SaveChanges(); 
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public void delete(Category entity)
+        public async Task DeleteAsync(Category entity)
         {
             _context.Categories.Remove(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public Category? GetById(int? id)
+        public async Task<Category?> GetByIdAsync(int id)
         {
-            return _context.Find<Category>(id);
-
+            return await _context.Categories.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
-
-            return await _context.Set<Category>().AsNoTracking().ToListAsync();
+            return await _context.Categories.AsNoTracking().ToListAsync();
         }
 
-        public void Update(Category entity)
+        public async Task UpdateAsync(Category entity)
         {
-            _context.Set<Category>().Update(entity);
-            _context.SaveChanges();
+            _context.Categories.Update(entity);
+            await _context.SaveChangesAsync();
         }
-        public int Save()
-        {
-            return _context.SaveChanges();
-        }
-
     }
 }
-
