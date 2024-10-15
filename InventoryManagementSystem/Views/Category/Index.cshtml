@@ -1,48 +1,63 @@
-﻿@model Product
+﻿@model IEnumerable<InventoryManagementSystem.EntitiesLayer.Models.Category>
+
 @{
-    ViewData["Title"] = "Clothing Store";
-    Layout = "_Layout";
+    ViewData["Title"] = "Categories";
 }
 
-<div class="container mt-5" style="height:fit-content">
-    <h1 class="text-center mb-5">Explore Our Categories </h1>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Categories List</h2>
 
-    <div class="row" style="height:100%; display:flex; gap:30px">
-        <!-- Men Section -->
-        <div style="box-shadow:-3px -2px 30px black; height:100%; flex:1; width:100%;padding:0px">
-            <div class="card text-center shadow-lg" style="width:100%">
-                <img src="~/imgs/man.png" width="100%" height="280" class="card-img-top" alt="Men's Clothing"/>
-                <div class="card-body">
-                    <h5 class="card-title" style="font-size:17px;">Men's Clothing</h5>
-                    <p style="font-size:14px;" class="card-text">Explore our wide range of stylish men's clothing for every occasion.</p>
-                    <a asp-controller="Product" asp-action="Index" class="btn btn-primary" asp-route-id="1" style="background-color: #005f99;">Manage Men's Clothing</a>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- Women Section -->
-        <div class="col-md-4" style="box-shadow:-3px -2px 30px black;flex:1 ;padding:0px">
-            <div class="card text-center shadow-lg">
-                <img src="~/imgs/women.jpg" width="auto" height="280px" class="card-img-top" alt="Women's Clothing">
-                <div class="card-body">
-                    <h5 style="font-size:17px;" class="card-title">Women's Clothing</h5>
-                    <p style="font-size:14px;" class="card-text">Discover the latest trends and timeless pieces in women's fashion.</p>
-                    <a asp-controller="Product" asp-action="index" asp-route-id="2" class="btn btn-primary" style="background-color: #005f99;">Manage Women's Clothing</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Kids Section -->
-        <div class="col-md-4" style="box-shadow:-3px -2px 30px black;height:100%;flex:1; padding:0px">
-            <div class="card text-center shadow-lg">
-                <img src="~/imgs/kid.jpg" width="auto" height="280px" class="card-img-top" alt="Kids' Clothing">
-                <div class="card-body">
-                    <h5 style="font-size:17px;"  class="card-title">Kids' Clothing</h5>
-                    <p style="font-size:14px;" class="card-text">Check out our fun and comfortable clothing options for kids of all ages.</p>
-                    <a asp-controller="Product" asp-action="index" asp-route-id="3" class="btn btn-primary" style="background-color: #005f99;">Manage Kids' Clothing</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                int index = 1;
+                foreach (var category in Model)
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td>@category.Name ?? "No Name"</td>
+                        <td>@category.Description ?? "No Description available."</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(category.PhotoName))
+                            {
+                                <img src="~/images/@category.PhotoName" alt="@category.Name ?? " Category Image"" style="width: 80px; height: 80px; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <span>No Image</span>
+                            }
+                        </td>
+                        <td>
+                            <!-- View Details -->
+                            <a href="@Url.Action("Details", "Category", new { id = category.CategoryId })" class="btn btn-primary btn-sm">View Details</a>
+                            <!-- Update -->
+                            <a href="@Url.Action("Edit", "Category", new { id = category.CategoryId })" class="btn btn-warning btn-sm">Update</a>
+                            <!-- Delete -->
+                            <form asp-action="DeleteConfirme" asp-controller="Category" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@category.CategoryId" />
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    index++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No Categories available</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

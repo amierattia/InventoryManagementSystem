@@ -1,20 +1,15 @@
 ﻿using InventoryManagementSystem.EntitiesLayer.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.BLL.Services
 {
     public interface IProductService
     {
-        IEnumerable<Product> GetAll();
-
-        Product GetProductById(int id);
-        int Delete(Product product);
-        int Add(Product product);
-        int Update(Product product);
-
+        Task<IEnumerable<Product>> GetAllAsync(); 
+        Task<Product> GetProductByIdAsync(int id);
+        Task<int> DeleteAsync(Product product);
+        Task<int> AddAsync(Product product);
+        Task<int> UpdateAsync(Product product);
     }
 }

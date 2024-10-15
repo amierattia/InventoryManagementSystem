@@ -1,7 +1,7 @@
 ﻿@model Product
 @inject ISupplierService _isupplierService;
 @{
-    var suppliers = new SelectList(_isupplierService.GetAll(), nameof(Supplier.Id), nameof(Supplier.Name));
+    var suppliers = new SelectList(await _isupplierService.GetAllAsync(), nameof(Supplier.Id), nameof(Supplier.Name));
     ViewData["Title"] = "Details";
     Layout = "_Layout";
 }

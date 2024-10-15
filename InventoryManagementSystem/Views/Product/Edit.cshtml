@@ -1,59 +1,71 @@
-﻿@model Product
-@inject ISupplierService _isupplierService;
+﻿@model InventoryManagementSystem.EntitiesLayer.Models.Product
+
 @{
-    var suppliers = new SelectList(_isupplierService.GetAll(), nameof(Supplier.Id), nameof(Supplier.Name));
-
-    ViewData["Title"] = "Edit";
-
-    Layout = "_Layout";
+    ViewBag.Title = "Edit Product";
 }
 
-<div class="container mt-5">
-    <div class="card p-4 shadow-lg">
-        <h1 class="text-center mb-4">Edit Product</h1>
+<h2>Edit Product</h2>
 
-        <form asp-action="Edit">
-            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+<form asp-action="Edit" method="post">
+    @Html.HiddenFor(model => model.ProductId)
 
-            <div class="form-group mb-3">
-                <label asp-for="ProductName" class="form-label">Name</label>
-                <input asp-for="ProductName" class="form-control" />
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="Price" class="form-label">Price</label>
-                <input asp-for="Price" class="form-control" />
-            </div>
-
-            <div class="form-group mb-3">
-                <label asp-for="ProductDescription" class="form-label">Description</label>
-                <textarea asp-for="ProductDescription" class="form-control" rows="3"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label class="col-form-label" asp-for="stockQuantity"></label>
-                <input asp-for="stockQuantity" class="form-control" />
-            </div>
-
-            <div class="form-group">
-                <label class="col-form-label" asp-for="Supplier"></label>
-                <select class="form-control" asp-for="SupplierId" asp-items="@suppliers">
-                    <option value="Null"> -- Select Supplier Name -- </option>
-                </select>
-            </div>
-
-
-
-            <!-- Include the ProductId as a hidden input -->
-            <input asp-for="ProductId" hidden class="form-control" />
-
-            <!-- Include the CategoryId as a hidden input -->
-            <input asp-for="CategoryId" value="@Model.CategoryId" hidden class="form-control" />
-
-            <div class="d-flex justify-content-between mt-4">
-                <button type="submit" value="Edit" class="btn btn-primary">Save</button>
-                <a asp-action="Index" class="btn btn-secondary" asp-route-id="@Model.CategoryId">Back To List</a>
-            </div>
-        </form>
+    <!-- Product Name -->
+    <div class="form-group">
+        <label asp-for="ProductName"></label>
+        <input asp-for="ProductName" class="form-control" placeholder="Enter product name" required />
+        <span asp-validation-for="ProductName" class="text-danger"></span>
     </div>
-</div>
+
+    <!-- Product Description -->
+    <div class="form-group">
+        <label asp-for="ProductDescription"></label>
+        <textarea asp-for="ProductDescription" class="form-control" placeholder="Enter product description"></textarea>
+        <span asp-validation-for="ProductDescription" class="text-danger"></span>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" placeholder="Enter price" type="number" step="0.01" required />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <!-- Stock Quantity -->
+    <div class="form-group">
+        <label asp-for="stockQuantity"></label>
+        <input asp-for="stockQuantity" class="form-control" placeholder="Enter stock quantity" type="number" required />
+        <span asp-validation-for="stockQuantity" class="text-danger"></span>
+    </div>
+
+    <!-- Category Selection -->
+    <div class="form-group">
+        <label asp-for="CategoryId">Select Category</label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name", Model.CategoryId))" required>
+            <option value="">Select a category</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <!-- Supplier Selection (Optional) -->
+    <div class="form-group">
+        <label asp-for="SupplierId">Select Supplier (Optional)</label>
+        <select asp-for="SupplierId" class="form-control">
+            <option value="">Select a supplier</option>
+            @foreach (var supplier in ViewBag.Suppliers)
+            {
+                <option value="@supplier.Id" selected="@(supplier.Id == Model.SupplierId ? "selected" : "")">@supplier.Name</option>
+            }
+        </select>
+        <span asp-validation-for="SupplierId" class="text-danger"></span>
+    </div>
+
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Update Product</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

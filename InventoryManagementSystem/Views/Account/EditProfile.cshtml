@@ -1,0 +1,27 @@
+﻿@using InventoryManagementSystem.BLL.Dto;
+@model EditProfileDto
+
+<div class="profile-container">
+    <form asp-action="EditProfile" enctype="multipart/form-data" method="post">
+        <!-- Cover Photo -->
+        <div class="cover-photo">
+            <img src="@Model.CoverPhoto" alt="Cover Photo">
+            <input type="file" name="CoverPhoto">
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="profile-picture">
+            <img src="@Model.ProfilePicture" alt="Profile Picture" class="circle-profile">
+            <input type="file" name="ProfilePicture">
+        </div>
+
+        <!-- User Name and Phone Number -->
+        <div class="user-info">
+            <input type="text" name="FullName" value="@Model.FullName" class="edit-name-input" placeholder="Edit Name">
+            <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" class="edit-phone-input" placeholder="Edit Phone Number">
+        </div>
+
+        <!-- Save Button -->
+        <button type="submit" class="save-btn">Save Changes</button>
+    </form>
+</div>

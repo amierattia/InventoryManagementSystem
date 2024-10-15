@@ -1,0 +1,25 @@
+﻿@model Category
+
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Delete Category</h2>
+    <p class="text-center">Are you sure you want to delete this category?</p>
+
+    <div class="card text-center shadow-lg" style="width: 18rem; margin: auto;">
+        <img src="~@Model.PhotoName" class="card-img-top" alt="@Model.Name">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">@Model.Description</p>
+        </div>
+    </div>
+
+    <form asp-action="DeleteConfirmed" asp-controller="Category" method="post" class="text-center mt-4">
+        <input type="hidden" asp-for="CategoryId" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary ms-3">Cancel</a>
+    </form>
+</div>
+ 

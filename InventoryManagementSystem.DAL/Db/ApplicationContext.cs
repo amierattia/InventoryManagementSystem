@@ -15,7 +15,6 @@ namespace InventoryManagementSystem.DAL.Db
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<ActivityModel> Activities { get; set; }
 
-        // Ensure primary keys are set
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -28,12 +27,16 @@ namespace InventoryManagementSystem.DAL.Db
             modelBuilder.Entity<Stock>()
                 .HasOne(s => s.Product)
                 .WithMany(p => p.Stocks)
-                .HasForeignKey(s => s.ProductId);
+                .HasForeignKey(p => p.ProductId);
 
             modelBuilder.Entity<Supplier>()
-              .HasMany(s => s.Products)
-              .WithOne(p => p.Supplier)
-              .HasForeignKey(p => p.SupplierId);
+                .HasMany(s => s.Products)
+                .WithOne(p => p.Supplier)
+                .HasForeignKey(p => p.SupplierId);
+
+
+
+
         }
     }
 }

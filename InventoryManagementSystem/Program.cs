@@ -1,11 +1,11 @@
 using InventoryManagementSystem.BLL;
 using InventoryManagementSystem.BLL.Services;
-using InventoryManagementSystem.BLL.sln.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using InventoryManagementSystem.EntitiesLayer.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using InventoryManagementSystem.DAL.Db;
+using InventoryManagementSystem.BLL.sln.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +24,10 @@ builder.Services.AddIdentity<User, IdentityRole>()
 // Dependency injection for services
 builder.Services.AddScoped<IInventoryService, InventoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<FileService>();
 
 // AutoMapper configuration
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -55,10 +58,10 @@ using (var scope = app.Services.CreateScope())
     await SeedRoles(roleManager);
 }
 
-//create roles (Admin, User)
+// Create roles (Admin, User)
 async Task SeedRoles(RoleManager<IdentityRole> roleManager)
 {
-    string[] roleNames = { "Admin", "User" }; 
+    string[] roleNames = { "Admin", "User" };
     IdentityResult roleResult;
 
     foreach (var roleName in roleNames)

@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using InventoryManagementSystem.BLL.Dto;
 using InventoryManagementSystem.EntitiesLayer.Models;
+using InventoryManagementSystem.BLL.Services;
+
 
 namespace UsersApp.Controllers
 {
@@ -10,16 +11,44 @@ namespace UsersApp.Controllers
     {
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
-
+        private readonly IProfileService _profileService;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public AccountController(IProfileService profileService, SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            _profileService = profileService;
         }
 
+
+
+        [HttpGet]
+        public async Task<IActionResult> EditProfile()
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return NotFound();
+
+            var model = new EditProfileDto
+            {
+                FullName = user.FullName,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(EditProfileDto model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var userId = userManager.GetUserId(User);
+            await _profileService.UpdateProfileAsync(userId, model);
+
+            return RedirectToAction("UserProfile", new { id = userId });
+        }
         public IActionResult Login()
         {
             return View();
