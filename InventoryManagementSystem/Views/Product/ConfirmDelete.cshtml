@@ -1,4 +1,4 @@
-﻿@model Product 
+﻿@model Product
 
 @{
     ViewData["Title"] = "Confirm Delete";
@@ -8,16 +8,16 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card shadow-sm">
-                <div class="card-header bg-danger text-white">
+                <div class="card-header" style="background-color: #dc2626; color: white;">
                     <h4>Confirm Delete</h4>
                 </div>
                 <div class="card-body">
-                    <h5>Are you sure you want to delete the following product?</h5>
+                    <h5 class="text-gray-800">Are you sure you want to delete the following product?</h5>
 
                     <!-- Display product details -->
-                    <p><strong>Product Name:</strong> @Model.ProductName</p>
-                    <p><strong>Product Description:</strong> @Model.ProductDescription</p>
-                    <p><strong>Price:</strong> $@Model.Price</p>
+                    <p class="text-gray-700"><strong>Product Name:</strong> @Model.ProductName</p>
+                    <p class="text-gray-700"><strong>Product Description:</strong> @Model.ProductDescription</p>
+                    <p class="text-gray-700"><strong>Price:</strong> $@Model.Price</p>
 
                     <!-- Confirmation form -->
                     <form asp-action="DeleteConfirmed" method="post">
@@ -25,8 +25,8 @@
                         <input type="hidden" name="id" value="@Model.ProductId" />
 
                         <div class="d-flex justify-content-between">
-                            <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Cancel</a>
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <a href="@Url.Action("Index", "Product")" class="btn" style="background-color: #4b5563; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Cancel</a>
+                            <button type="submit" class="btn" style="background-color: #dc2626; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Delete</button>
                         </div>
                     </form>
                 </div>

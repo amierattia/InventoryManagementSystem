@@ -1,6 +1,66 @@
 ﻿@model InventoryManagementSystem.BLL.Dto.LoginDto
+
+<style>
+    body {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .container {
+        display: flex;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 50%; /* Increase the width of the sidebar */
+        background-color: #1f2937;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Align items to center */
+        padding: 20px 0;
+        position: fixed;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        justify-content:center;
+    }
+
+    .main-content {
+        margin-left: 400px; /* Adjust margin to accommodate the wider sidebar */
+        flex: 1;
+        padding: 20px;
+        background-color: #f3f4f6;
+        overflow-y: auto;
+    }
+
+    .logo {
+        font-size: 2em; /* Increase font size */
+        font-weight: bold;
+        padding-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Button Styles */
+    .login-btn, .create-account-btn {
+        background-color: #10b981;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+        .login-btn:hover, .create-account-btn:hover {
+            background-color: #4b5563;
+        }
+</style>
+
 @{
-    Layout =null;
+    Layout = null;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -13,47 +73,44 @@
 <body>
 
     <div class="container">
-        <!-- Left Side (Graphic / Branding Area) -->
-        <div class="left-side">
-            <h1>Manage Your Inventory</h1>
-            <p>Efficient, Reliable, and Fast</p>
-        </div>
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">Inventory Management System</div> <!-- Centered title -->
+        </nav>
 
-        <!-- Right Side (Login Form) -->
-        <div class="right-side">
-            <div class="login-container">
-                <h2>Login to Inventory System</h2>
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="right-side">
+                <div class="login-container">
+                    <h2>Login to Inventory System</h2>
 
-                <form asp-action="Login" method="post" class="form-horizontal">
-                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <form asp-action="Login" method="post" class="form-horizontal">
+                        <div asp-validation-summary="All" class="text-danger"></div>
 
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" type="email" id="email" placeholder="Enter your email address" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" type="email" id="email" placeholder="Enter your email address" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
 
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" type="password" id="password" placeholder="Enter your password" class="form-control" required />
+                        <span asp-validation-for="Password" class="text-danger"></span>
 
-                    <label asp-for="Password" type="password" id="password" placeholder="Enter your password" required></label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe" asp-for="RememberMe" />
+                            @Html.DisplayNameFor(a => a.RememberMe)
+                        </div>
 
-                    <div class="remember-me">
-                        <input type="checkbox" id="rememberMe">
-                        @Html.DisplayNameFor(a => a.RememberMe)
-                    </div>
+                        <a asp-controller="Account" asp-action="VerifyEmail" class="text-decoration-none">
+                            Forgot password?
+                        </a>
 
+                        <button type="submit" class="login-btn" style="color: #ffffff;">Login</button>
+                    </form>
 
-                    <a asp-controller="Account" asp-action="VerifyEmail" class="text-decoration-none">
-                        Forgot password?
-                    </a>
+                    <div class="divider">OR</div>
 
-
-
-                    <button type="submit" class="login-btn">Login</button>
-                </form>
-
-                <div class="divider">OR</div>
-
-                <button class="create-account-btn" onclick="window.location.href='/Account/Register'">Create Account</button>
+                    <button class="create-account-btn" onclick="window.location.href='/Account/Register'">Create Account</button>
+                </div>
             </div>
         </div>
     </div>
