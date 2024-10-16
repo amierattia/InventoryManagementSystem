@@ -3,44 +3,182 @@
 
 @{
     ViewData["Title"] = "Manage User Roles";
+    Layout = null; /* Using null layout to apply custom sidebar and design */
 }
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Manage Roles for @Model.UserName</h2>
+<style>
+    .container {
+        display: flex;
+        width: 100%;
+    }
 
-    <div class="card">
-        <div class="card-body">
-            <form method="post">
-                <input type="hidden" name="UserId" asp-for="UserId" />
-                <table class="table table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Role</th>
-                            <th>Assigned</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int i = 0; i < Model.Roles.Count; i++)
-                        {
-                            <tr>
-                                <td>
-                                    <input type="hidden" asp-for="@Model.Roles[i].RoleName" />
-                                    <span class="font-weight-bold">@Model.Roles[i].RoleName</span>
-                                </td>
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" asp-for="@Model.Roles[i].IsSelected" class="form-check-input" id="role_@i" />
-                                        <label class="form-check-label" for="role_@i">@Model.Roles[i].RoleName</label>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div class="text-center mb-4">
-                    <button type="submit" class="btn btn-primary btn-lg">Update Roles</button>
+    /* Sidebar */
+    .sidebar {
+        width: 250px; /* Sidebar width to match the previous design */
+        background-color: #1f2937;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+        position: fixed;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        text-align: center;
+    }
+
+    .main-content {
+        margin-left: 250px; /* Adjusted margin to match sidebar width */
+        flex: 1;
+        padding: 20px;
+        background-color: #f3f4f6;
+        overflow-y: auto;
+    }
+
+    .logo {
+        font-size: 1.8em;
+        text-align: center;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+
+    /* Sidebar Links */
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    .sidebar ul li {
+        padding: 0;
+        margin-bottom: 10px;
+    }
+
+    .sidebar ul li a {
+        display: block;
+        padding: 15px 20px;
+        color: #ffffff;
+        text-decoration: none;
+        text-align: left;
+        transition: background 0.3s;
+    }
+
+    .sidebar ul li a.active,
+    .sidebar ul li a:hover {
+        background-color: #4b5563;
+        border-left: 3px solid #10b981;
+    }
+
+    .logout {
+        margin-top: auto;
+        padding: 15px 20px;
+        text-align: center;
+    }
+
+    .logout a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .logout a:hover {
+        text-decoration: underline;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f5f9;
+    }
+
+    .btn-primary {
+        background-color: #10b981;
+        border-color: #10b981;
+        padding: 10px 15px;
+        font-size: 1em;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background-color: #4b5563;
+        border-color: #4b5563;
+    }
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage User Roles</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">Investo</div> <!-- Sidebar Logo -->
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Inventory</a></li>
+                <li><a href="#">Category</a></li>
+                <li><a href="#">Suppliers</a></li>
+                <li><a href="#" class="active">User Role Management</a></li>
+            </ul>
+            <div class="logout"><a href="#">Logout</a></div> <!-- Logout Button -->
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h2 class="text-center mb-4">Manage Roles for @Model.UserName</h2>
+
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" name="UserId" asp-for="UserId" />
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Assigned</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Roles.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" asp-for="@Model.Roles[i].RoleName" />
+                                            <span class="font-weight-bold">@Model.Roles[i].RoleName</span>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" asp-for="@Model.Roles[i].IsSelected" class="form-check-input" id="role_@i" />
+                                                <label class="form-check-label" for="role_@i">@Model.Roles[i].RoleName</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="text-center mb-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Update Roles</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
