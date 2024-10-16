@@ -3,9 +3,6 @@
 @using System.Security.Claims
 @inject SignInManager<User> signInManager
 
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> signInManager
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,11 +10,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/dashboardstyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #1f2937;
+            color: white;
+            padding: 20px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+        .sidebar .logout {
+            margin-top: 20px;
+        }
+
+        .sidebar .logout-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Hamburger icon for mobile */
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            margin: 10px;
+            color: #333;
+        }
+
+        /* Media Queries */
+        @@media (max-width: 768px) {
+            /* Make sidebar hidden initially on mobile */
+            .sidebar {
+                transform: translateX(-100%);
+                position: absolute;
+            }
+
+            /* Show the hamburger icon */
+            .hamburger {
+                display: block;
+            }
+
+            /* Sidebar toggle for mobile */
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <!-- Hamburger icon for mobile -->
+        <div class="hamburger" onclick="toggleSidebar()">&#9776;</div>
+
         <!-- Sidebar -->
-        <nav class="sidebar">
+        <nav class="sidebar" id="sidebar">
             <div class="logo">
                 <a asp-area="" asp-controller="Dashboard" asp-action="Index">
                     <img src="~/images/Logo.jpg" alt="Inventory Control Logo" style="width: 150px; height: auto; border-radius: 50%;">
@@ -70,6 +173,16 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Toggle Sidebar Script -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+        }
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

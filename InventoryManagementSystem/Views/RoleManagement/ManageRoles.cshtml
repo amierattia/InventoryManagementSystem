@@ -5,88 +5,20 @@
     ViewData["Title"] = "Manage User Roles";
 
 
-    Layout = null; /* Using null layout to apply custom sidebar and design */
+    Layout = "_InventoryLayout"; 
 
 }
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 <style>
+
+    .main-content{
+        margin-left:100px;
+    }
+
     .container {
         display: flex;
         width: 100%;
-    }
-
-    /* Sidebar */
-    .sidebar {
-        width: 250px; /* Sidebar width to match the previous design */
-        background-color: #1f2937;
-        color: #ffffff;
-        display: flex;
-        flex-direction: column;
-        padding: 20px 0;
-        position: fixed;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-        text-align: center;
-    }
-
-    .main-content {
-        margin-left: 250px; /* Adjusted margin to match sidebar width */
-        flex: 1;
-        padding: 20px;
-        background-color: #f3f4f6;
-        overflow-y: auto;
-    }
-
-    .logo {
-        font-size: 1.8em;
-        text-align: center;
-        font-weight: bold;
-        padding-bottom: 20px;
-    }
-
-    /* Sidebar Links */
-    .sidebar ul {
-        list-style: none;
-        padding: 0;
-        margin-top: 20px;
-    }
-
-    .sidebar ul li {
-        padding: 0;
-        margin-bottom: 10px;
-    }
-
-    .sidebar ul li a {
-        display: block;
-        padding: 15px 20px;
-        color: #ffffff;
-        text-decoration: none;
-        text-align: left;
-        transition: background 0.3s;
-    }
-
-    .sidebar ul li a.active,
-    .sidebar ul li a:hover {
-        background-color: #4b5563;
-        border-left: 3px solid #10b981;
-    }
-
-    .logout {
-        margin-top: auto;
-        padding: 15px 20px;
-        text-align: center;
-    }
-
-    .logout a {
-        color: #ffffff;
-        text-decoration: none;
-    }
-
-    .logout a:hover {
-        text-decoration: underline;
     }
 
     .card {
@@ -126,19 +58,7 @@
 </head>
 <body>
 
-    <div class="container">
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <div class="logo">Investo</div> <!-- Sidebar Logo -->
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Inventory</a></li>
-                <li><a href="#">Category</a></li>
-                <li><a href="#">Suppliers</a></li>
-                <li><a href="#" class="active">User Role Management</a></li>
-            </ul>
-            <div class="logout"><a href="#">Logout</a></div> <!-- Logout Button -->
-        </nav>
+   
 
         <!-- Main Content -->
         <div class="main-content">

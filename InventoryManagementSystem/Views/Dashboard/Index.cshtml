@@ -11,6 +11,7 @@
         font-family: Arial, sans-serif;
     }
 
+    /* Container for the main content */
     .main-content {
         padding: 20px;
         background-color: #f3f4f6;
@@ -18,6 +19,7 @@
         width: 100%;
     }
 
+    /* Dashboard cards layout */
     .dashboard-cards {
         display: flex;
         justify-content: space-between;
@@ -27,7 +29,7 @@
         width: 100%;
     }
 
-    /* Header */
+    /* Header styles */
     .header {
         display: flex;
         justify-content: space-between;
@@ -35,11 +37,12 @@
         margin-bottom: 20px;
     }
 
-        .header h1 {
-            font-size: 1.5em;
-            color: #000000;
-        }
+    .header h1 {
+        font-size: 1.5em;
+        color: #000000;
+    }
 
+    /* User profile in the header */
     .user-profile {
         display: flex;
         align-items: center;
@@ -47,66 +50,142 @@
         color: #333;
     }
 
-        .user-profile span {
-            margin-right: 10px;
-        }
+    .user-profile span {
+        margin-right: 10px;
+    }
 
+    /* Card styling */
     .card {
         background-color: #ffffff;
         border-radius: 8px;
         padding: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         text-align: center;
-        flex: 1;
+        flex: 1 1 200px; /* Allow it to grow, with a minimum width of 200px */
         min-width: 200px;
     }
 
-        .card h2 {
-            font-size: 1.2em;
-            color: #4b5563;
-        }
+    .card h2 {
+        font-size: 1.2em;
+        color: #4b5563;
+    }
 
-        .card p {
-            font-size: 1em;
-            color: #9ca3af;
-        }
+    .card p {
+        font-size: 1em;
+        color: #9ca3af;
+    }
 
-    /* Recent Activity Table */
+    /* Recent activity table */
     .recent-activity {
         margin-top: 20px;
         padding: 20px;
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 100%;
     }
 
+    .recent-activity h2 {
+        font-size: 1.2em;
+        color: #4b5563;
+        margin-bottom: 15px;
+    }
+
+    .recent-activity table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .recent-activity table th,
+    .recent-activity table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .recent-activity table th {
+        background-color: #1f2937;
+        color: #ffffff;
+    }
+
+    .recent-activity table tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Media Queries for responsiveness */
+    @@media (max-width: 1200px) {
+        .dashboard-cards {
+            justify-content: space-around;
+        }
+    }
+
+    @@media (max-width: 992px) {
+        .dashboard-cards {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card {
+            width: 80%; /* Take up more space on smaller screens */
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .card {
+            width: 100%; /* Cards take full width on small screens */
+        }
+
+        .header h1 {
+            font-size: 1.3em;
+        }
+
+        .recent-activity {
+            padding: 15px;
+        }
+
         .recent-activity h2 {
+            font-size: 1.1em;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .header h1 {
             font-size: 1.2em;
-            color: #4b5563;
-            margin-bottom: 15px;
         }
 
-        .recent-activity table {
-            width: 100%;
-            border-collapse: collapse;
+        .user-profile span {
+            font-size: 0.9em;
         }
 
-            .recent-activity table th,
-            .recent-activity table td {
-                padding: 12px 15px;
-                text-align: left;
-                border-bottom: 1px solid #e5e7eb;
-            }
+        .card {
+            padding: 15px;
+        }
 
-            .recent-activity table th {
-                background-color: #1f2937;
-                color: #ffffff;
-            }
+        .recent-activity table th,
+        .recent-activity table td {
+            padding: 10px;
+        }
+    }
 
-            .recent-activity table tr:last-child td {
-                border-bottom: none;
-            }
+    @@media (max-width: 768px) {
+        .sidebar
+
+    {
+        transform: translateX(-100%); /* Hide the sidebar */
+        position: absolute; /* Allow it to slide in and out */
+        width: 250px;
+    }
+
+        .main-content {
+            margin-left: 0; /* Reset margin */
+            width: 100%; /* Make the main content full width */
+        }
+    }
+
 </style>
+
+
+<div class="land" >
 
 <div class="header">
     <h1>Dashboard</h1>
@@ -115,6 +194,8 @@
         <i class="bi bi-person-circle" style="font-size: 30px;"></i>
     </div>
 </div>
+
+
 
 <section class="dashboard-cards">
     <div class="card">
@@ -155,3 +236,10 @@
         </tbody>
     </table>
 </section>
+</div>
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('show');
+    }
+</script>

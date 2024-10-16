@@ -5,228 +5,240 @@
 }
 
 <style>
-    /* General Styles */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-    }
+   /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-    body {
-        display: flex;
-        height: 100vh;
-        width: 100%;
-        overflow: hidden;
-    }
+body {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
 
-    .container {
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-    }
+.container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
 
-    /* Sidebar */
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 1.5em;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile span {
+    margin-right: 10px;
+}
+
+.inventory-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.summary-item h2 {
+    font-size: 1em;
+    color: #4b5563;
+}
+
+.summary-item p {
+    font-size: 0.9em;
+    color: #9ca3af;
+}
+
+.add-product-btn {
+    background-color: #10b981;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.inventory-items .table-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.table-actions input[type="text"] {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #d1d5db;
+}
+
+.table-actions button {
+    background-color: #4b5563;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+table thead {
+    background-color: #f3f4f6;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+table th {
+    font-weight: bold;
+    color: #4b5563;
+}
+
+/* Action Buttons in Table */
+.text-center {
+    text-align: center;
+}
+
+.btn {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-sm {
+    font-size: 0.9em;
+}
+
+.btn-primary {
+    background-color: #3498db;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+}
+
+.btn-warning:hover {
+    background-color: #e67e22;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* RESPONSIVE STYLES */
+
+/* For tablets and smaller screens */
+@@media (max-width: 768px) {
     .sidebar {
-        width: 220px;
-        background-color: #1f2937;
-        color: #ffffff;
-        display: flex;
-        flex-direction: column;
-        padding: 20px 0;
-        position: fixed;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        position: absolute;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
     }
 
     .main-content {
-        margin-left: 220px;
-        flex: 1;
-        padding: 20px;
-        background-color: #f3f4f6;
-        overflow-y: auto;
+        margin-left: 0;
     }
 
-    .logo {
-        font-size: 1.5em;
-        text-align: center;
-        font-weight: bold;
-        padding-bottom: 20px;
+    .header h1 {
+        font-size: 1.2em;
     }
-
-    .sidebar ul {
-        list-style: none;
-    }
-
-        .sidebar ul li a {
-            display: block;
-            padding: 15px 20px;
-            color: #ffffff;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-            .sidebar ul li a.active,
-            .sidebar ul li a:hover {
-                background-color: #4b5563;
-                border-left: 3px solid #10b981;
-            }
-
-    .logout {
-        padding: 15px 20px;
-        text-align: center;
-    }
-
-        .logout a {
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-            .logout a:hover {
-                text-decoration: underline;
-            }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-        .header h1 {
-            font-size: 1.5em;
-        }
-
-    .user-profile {
-        display: flex;
-        align-items: center;
-    }
-
-        .user-profile span {
-            margin-right: 10px;
-        }
 
     .inventory-summary {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
     }
 
-    .summary-item h2 {
-        font-size: 1em;
-        color: #4b5563;
-    }
-
-    .summary-item p {
-        font-size: 0.9em;
-        color: #9ca3af;
-    }
-
-    .add-product-btn {
-        background-color: #10b981;
-        color: #ffffff;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .inventory-items .table-actions {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
+    .table-actions {
+        flex-direction: column;
     }
 
     .table-actions input[type="text"] {
-        padding: 8px;
-        border-radius: 4px;
-        border: 1px solid #d1d5db;
-    }
-
-    .table-actions button {
-        background-color: #4b5563;
-        color: #ffffff;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-left: 10px;
-    }
-
-    /* Table Styles */
-    table {
+        margin-bottom: 10px;
         width: 100%;
-        border-collapse: collapse;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
+    }
+}
+
+/* For mobile screens */
+@@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1em;
     }
 
-        table thead {
-            background-color: #f3f4f6;
-        }
-
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        table th {
-            font-weight: bold;
-            color: #4b5563;
-        }
-
-    /* Action Buttons in Table */
-    .text-center {
-        text-align: center;
-    }
-
-    .btn {
-        padding: 6px 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        color: #ffffff;
-        text-decoration: none;
-        display: inline-block;
-    }
-
-    .btn-sm {
+    .summary-item h2 {
         font-size: 0.9em;
     }
 
-    .btn-primary {
-        background-color: #3498db;
+    .summary-item p {
+        font-size: 0.8em;
     }
 
-        .btn-primary:hover {
-            background-color: #2980b9;
-        }
-
-    .btn-warning {
-        background-color: #f39c12;
+    .add-product-btn {
+        width: 100%;
     }
 
-        .btn-warning:hover {
-            background-color: #e67e22;
-        }
-
-    .btn-danger {
-        background-color: #e74c3c;
+    .inventory-items .table-actions {
+        flex-direction: column;
     }
 
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
+    .table-actions input[type="text"] {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .table-actions button {
+        width: 100%;
+    }
+
+    .btn {
+        font-size: 0.8em;
+    }
+}
 
 </style>
 
