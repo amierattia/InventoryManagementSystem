@@ -1,9 +1,95 @@
 ﻿@model InventoryManagementSystem.BLL.Dto.RegisterDto
 
 @{
+<<<<<<< HEAD
     Layout = "/Views/Shared/_AccountLayout.cshtml";
     Layout = "/Views/Shared/_AccountLayout.cshtml";
+=======
+    Layout = null; /* Using null layout to ensure sidebar consistency */
+>>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
 }
+
+<style>
+    body {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .container {
+        display: flex;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 50%; /* Increase the width of the sidebar */
+        background-color: #1f2937;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Align items to center */
+        padding: 20px 0;
+        position: fixed;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        justify-content: center; /* Center content vertically */
+    }
+
+    .main-content {
+        margin-left: 50%; /* Adjust margin to accommodate the wider sidebar */
+        flex: 1;
+        padding: 20px;
+        background-color: #f3f4f6;
+        overflow-y: auto;
+    }
+
+    .logo {
+        font-size: 2em; /* Increase font size */
+        font-weight: bold;
+        padding-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Button Styles */
+    .register-btn {
+        background-color: #10b981;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+        .register-btn:hover {
+            background-color: #4b5563;
+        }
+
+    /* Additional form styling */
+    .register-container {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .login-link {
+        margin-top: 10px;
+    }
+</style>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,48 +97,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management - Register</title>
-    <link rel="stylesheet" href="/css/Register.css">
 </head>
 <body>
 
     <div class="container">
-        <!-- Left Side (Graphic / Branding Area) -->
-        <div class="left-side">
-            <h1>Join Us</h1>
-            <p>Sign up to manage your inventory efficiently.</p>
-        </div>
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">Join Us </div> <!-- Centered title -->
+        </nav>
 
-        <!-- Right Side (Registration Form) -->
-        <div class="right-side">
+        <!-- Main Content -->
+        <div class="main-content">
             <div class="register-container">
                 <h2>Create Your Account</h2>
 
                 <form asp-action="Register" method="post" class="form-horizontal">
                     <div asp-validation-summary="All" class="text-danger"></div>
 
-                    <label asp-for="FullName" for="name">Full Name</label>
-                    <input asp-for="FullName" asp-action="" type="text" id="name" placeholder="Enter your full name" required>
+                    <label asp-for="FullName">Full Name</label>
+                    <input asp-for="FullName" type="text" placeholder="Enter your full name" required>
                     <span asp-validation-for="FullName" class="text-danger"></span>
 
-                    <label asp-for="Phone" for="name">Phone Number</label>
-                    <input asp-for="Phone" asp-action="" type="number" id="name" placeholder="Enter your Phone number" required>
+                    <label asp-for="Phone">Phone Number</label>
+                    <input asp-for="Phone" type="number" placeholder="Enter your phone number" required>
                     <span asp-validation-for="Phone" class="text-danger"></span>
 
-                    <label asp-for="Email" for="email">Email</label>
-                    <input asp-for="Email" type="email" id="email" placeholder="Enter your email address" required>
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" type="email" placeholder="Enter your email address" required>
                     <span asp-validation-for="Email" class="text-danger"></span>
 
-                    <label asp-for="Password" for="password">Password</label>
-                    <input asp-for="Password" type="password" id="password" placeholder="Create a password" required>
+                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" type="password" placeholder="Create a password" required>
                     <span asp-validation-for="Password" class="text-danger"></span>
 
-
-
-                    <label asp-for="ConfirmPassword" for="confirm-password">Confirm Password</label>
-                    <input asp-for="ConfirmPassword" type="password" id="confirm-password" placeholder="Re-enter your password" required>
+                    <label asp-for="ConfirmPassword">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" type="password" placeholder="Re-enter your password" required>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 
-                    <button type="submit" class="register-btn">Register</button>
+                    <button type="submit" style="color:#ffffff" class="register-btn">Register</button>
                 </form>
 
                 <p class="login-link">Already have an account? <a href="/Account/Login">Login here</a></p>
@@ -65,6 +147,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
     }
 
-    
 </body>
 </html>

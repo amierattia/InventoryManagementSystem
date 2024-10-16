@@ -4,45 +4,50 @@
     ViewBag.Title = "Edit Product";
     Layout = "_InventoryLayout";
 }
+<<<<<<< HEAD
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+=======
+
+<h2 class="text-gray-800">Edit Product</h2>
+>>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
 
 <form asp-action="Edit" method="post">
     @Html.HiddenFor(model => model.ProductId)
 
     <div class="form-group">
-        <label asp-for="ProductName"></label>
+        <label asp-for="ProductName" class="text-gray-700"></label>
         <input asp-for="ProductName" class="form-control" placeholder="Enter product name" required />
         <span asp-validation-for="ProductName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="ProductDescription"></label>
+        <label asp-for="ProductDescription" class="text-gray-700"></label>
         <textarea asp-for="ProductDescription" class="form-control" placeholder="Enter product description"></textarea>
         <span asp-validation-for="ProductDescription" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Price"></label>
+        <label asp-for="Price" class="text-gray-700"></label>
         <input asp-for="Price" class="form-control" placeholder="Enter price" type="number" step="0.01" required />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="stockQuantity"></label>
+        <label asp-for="stockQuantity" class="text-gray-700"></label>
         <input asp-for="stockQuantity" class="form-control" placeholder="Enter stock quantity" type="number" required />
         <span asp-validation-for="stockQuantity" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="CategoryId">Select Category</label>
-        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name", Model.CategoryId))" required>
+        <label asp-for="CategoryId" class="text-gray-700">Select Category</label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name", Model.CategoryId))" required class="form-control">
             <option value="">Select a category</option>
         </select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="SupplierId">Select Supplier (Optional)</label>
+        <label asp-for="SupplierId" class="text-gray-700">Select Supplier (Optional)</label>
         <select asp-for="SupplierId" class="form-control">
             <option value="">Select a supplier</option>
             @foreach (var supplier in ViewBag.Suppliers)
@@ -53,5 +58,10 @@
         <span asp-validation-for="SupplierId" class="text-danger"></span>
     </div>
 
+<<<<<<< HEAD
     <button type="submit" class="btn btn-primary">Update Product</button>
+=======
+    <!-- Submit Button -->
+    <button type="submit" class="btn" style="background-color: #10b981; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Update Product</button>
+>>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
 </form>

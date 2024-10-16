@@ -3,45 +3,192 @@
 
 @{
     ViewData["Title"] = "User Roles Management";
+<<<<<<< HEAD
     Layout = "_InventoryLayout";
+=======
+    Layout = null; /* Using null layout to apply custom sidebar and design */
+>>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
 }
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">User Roles Management</h2>
+<style>
+    .container {
+        display: flex;
+        width: 100%;
+    }
 
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Role Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.Email</td>
-                    <td>
-                        @user.Name
-                    </td>
+    /* Sidebar */
+    .sidebar {
+        width: 250px; /* Updated width */
+        background-color: #1f2937;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+        position: fixed;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        text-align: center;
+    }
 
-                    <td>
-                        @string.Join(" , ", user.Roles.ToList())
-                    </td>
+    .main-content {
+        margin-left: 250px; /* Adjusted margin to match sidebar width */
+        flex: 1;
+        padding: 20px;
+        background-color: #f3f4f6;
+        overflow-y: auto;
+    }
 
+    .logo {
+        font-size: 1.8em;
+        text-align: center;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
 
-                    <td>
+    /* Sidebar Links */
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
 
-                        <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn btn-primary">Manage Roles</a>
-                    </td>
-                </tr>
+        .sidebar ul li {
+            padding: 0;
+            margin-bottom: 10px;
+        }
+
+            .sidebar ul li a {
+                display: block;
+                padding: 15px 20px;
+                color: #ffffff;
+                text-decoration: none;
+                text-align: left;
+                transition: background 0.3s;
             }
-        </tbody>
-    </table>
 
-</div>
+                .sidebar ul li a.active,
+                .sidebar ul li a:hover {
+                    background-color: #4b5563;
+                    border-left: 3px solid #10b981;
+                }
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    .logout {
+        margin-top: auto;
+        padding: 15px 20px;
+        text-align: center;
+    }
+
+        .logout a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+            .logout a:hover {
+                text-decoration: underline;
+            }
+
+    /* Table Styles */
+    .table-container {
+        width: 90%;
+        background-color: #ffffff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .table {
+        width: 100%;
+        background-color: #ffffff;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 0;
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .table th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+
+    .btn-primary {
+        background-color: #10b981;
+        border-color: #10b981;
+        padding: 8px 12px;
+        font-size: 0.9em;
+        border-radius: 5px;
+    }
+
+        .btn-primary:hover {
+            background-color: #4b5563;
+            border-color: #4b5563;
+        }
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Roles Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">Investo</div> <!-- Sidebar Logo -->
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Inventory</a></li>
+                <li><a href="#">Category</a></li>
+                <li><a href="#">Suppliers</a></li>
+                <li><a href="#" class="active">User Role Management</a></li>
+            </ul>
+            <div class="logout"><a href="#">Logout</a></div> <!-- Logout Button -->
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h2 class="text-center mb-4">User Roles Management</h2>
+
+            <div class="table-container">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Role Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.Email</td>
+                                <td>@user.Name</td>
+                                <td>@string.Join(" , ", user.Roles.ToList())</td>
+                                <td>
+                                    <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn btn-primary">Manage Roles</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
