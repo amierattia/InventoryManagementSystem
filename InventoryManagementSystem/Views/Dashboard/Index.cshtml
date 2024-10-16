@@ -1,6 +1,6 @@
 ﻿@model InventoryManagementSystem.BLL.Dto.DashboardDto
 @{
-    Layout = "_InventoryLayout";
+    Layout = "_InventoryLayout"; // Reference the layout file with the sidebar
 }
 
 <style>
@@ -12,8 +12,6 @@
     }
 
     .main-content {
-        margin-left: 220px;
-        flex: 1;
         padding: 20px;
         background-color: #f3f4f6;
         overflow-y: auto;
@@ -110,59 +108,50 @@
             }
 </style>
 
-<div class="container">
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Header -->
-        <header class="header">
-            <h1>Dashboard</h1>
-            <div class="user-profile">
-                <span>Bravaa shop</span>
-                <i class="bi bi-person-circle" style="font-size: 30px;"></i>
-            </div>
-        </header>
-
-        <!-- Dashboard Cards -->
-        <section class="dashboard-cards">
-            <div class="card">
-                <h2>Products</h2>
-                <p>Total: @Model.TotalItems</p>
-            </div>
-            <div class="card">
-                <h2>Categories</h2>
-                <p>Total: @Model.CategoryCount</p>
-            </div>
-            <div class="card">
-                <h2>Users</h2>
-                <p>Total: @Model.UsersCount</p>
-            </div>
-            <div class="card">
-                <h2>Low Stock</h2>
-                <p>Total: @Model.LowStockItems</p>
-            </div>
-        </section>
-
-        <!-- Recent Activity Table -->
-        <section class="recent-activity">
-            <h2>Recent Activity</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Activity</th>
-                        <th>Date & Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var activity in Model.RecentActivities)
-                    {
-                        <tr>
-                            <td>@activity.Description</td>
-                            <td>@activity.Date.ToString("yyyy-MM-dd HH:mm tt")</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </section>
+<div class="header">
+    <h1>Dashboard</h1>
+    <div class="user-profile">
+        <span>Bravaa shop</span>
+        <i class="bi bi-person-circle" style="font-size: 30px;"></i>
     </div>
 </div>
+
+<section class="dashboard-cards">
+    <div class="card">
+        <h2>Products</h2>
+        <p>Total: @Model.TotalItems</p>
+    </div>
+    <div class="card">
+        <h2>Categories</h2>
+        <p>Total: @Model.CategoryCount</p>
+    </div>
+    <div class="card">
+        <h2>Users</h2>
+        <p>Total: @Model.UsersCount</p>
+    </div>
+    <div class="card">
+        <h2>Low Stock</h2>
+        <p>Total: @Model.LowStockItems</p>
+    </div>
+</section>
+
+<section class="recent-activity">
+    <h2>Recent Activity</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Activity</th>
+                <th>Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var activity in Model.RecentActivities)
+            {
+                <tr>
+                    <td>@activity.Description</td>
+                    <td>@activity.Date.ToString("yyyy-MM-dd HH:mm tt")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

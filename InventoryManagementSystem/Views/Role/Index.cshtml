@@ -2,12 +2,11 @@
 @{
     Layout = "_InventoryLayout";
 }
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <style>
-
-
     h2 {
         margin-bottom: 30px;
-        color: #17a2b8;
+        color: #000000;
         font-weight: 600;
         text-align: center;
     }
@@ -39,11 +38,18 @@
         transform: scale(1.05);
     }
 
-    table {
+    .table-container {
         background-color: white;
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
     }
 
     th, td {
@@ -60,38 +66,50 @@
         color: #495057;
     }
 
-    .table thead th {
-        border-bottom: none;
+    .text-center {
+        margin-bottom: 20px;
+    }
+
+    .action-btns {
+        display: flex;
+        justify-content: center;
+        gap: 10px; /* Space between action buttons */
     }
 </style>
-
-<div class="container">
-    <h2>Role Management</h2>
-    <div class="text-center mb-4">
-        <a href="/Role/Create" class="btn btn-success"><i class="fas fa-plus-circle"></i> Add Role</a>
-    </div>
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Role Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var role in Model)
-            {
+<h2>Role Management</h2>
+<div class="container my-4">
+    
+    <div style="height:400px" class="table-container">
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td>@role.Name</td>
-                    <td>
-                        <a href="@Url.Action("Edit", new { id = role.Id })" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                        <a href="@Url.Action("Delete", new { id = role.Id })" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
-                    </td>
+                    <th>Role Name</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.Name</td>
+                        <td class="action-btns">
+                            <a href="@Url.Action("Edit", new { id = role.Id })" class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="@Url.Action("Delete", new { id = role.Id })" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <a href="/Role/Create" class="btn btn-success">
+                <i class="fas fa-plus-circle"></i> Add Role
+            </a>
+        </table>
+    </div>
 </div>
 
+<!-- Scripts for Bootstrap and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-

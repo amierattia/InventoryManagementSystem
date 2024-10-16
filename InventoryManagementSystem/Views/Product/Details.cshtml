@@ -14,11 +14,8 @@
         <h1 class="text-center mb-4 text-gray-800">Product Details</h1>
 
         <div class="form-group mb-3">
-<<<<<<< HEAD
-            <label asp-for="CategoryId" class="form-label">Category</label>
-=======
+
             <label asp-for="CategoryId" class="form-label text-gray-700">Category Id</label>
->>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
             <input asp-for="CategoryId" class="form-control" readonly />
         </div>
 
@@ -37,25 +34,17 @@
             <textarea asp-for="ProductDescription" class="form-control" rows="3" readonly></textarea>
         </div>
 
-<<<<<<< HEAD
-        <div class="form-group">
-            <label class="col-form-label" asp-for="Supplier"></label>
-            <select class="form-control" asp-for="SupplierId" readonly>
-=======
+
         <div class="form-group mb-3">
             <label class="col-form-label text-gray-700" asp-for="Supplier"></label>
             <select class="form-control" asp-for="SupplierId" asp-items="@suppliers" disabled>
->>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
+
                 <option value="Null"> -- Select Supplier Name -- </option>
             </select>
         </div>
 
         <div class="d-flex justify-content-between mt-4">
-<<<<<<< HEAD
-            <a asp-controller="Product" asp-action="Edit" class="btn btn-success" asp-route-id="@Model.ProductId">Edit</a>
-=======
-            <a asp-controller="Product" asp-action="Edit" class="btn" style="background-color: #10b981; color: white;">Edit</a>
->>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
+            <a asp-controller="Product" asp-action="Edit" class="btn btn-success" asp-route-id="@Model.ProductId" style="background-color: #10b981; color: white;">Edit</a>
             <a asp-action="Index" class="btn btn-secondary" asp-route-id="@Model.CategoryId">Back To List</a>
         </div>
     </div>

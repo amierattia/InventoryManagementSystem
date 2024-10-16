@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ALJAZEERA\\source\\repos\\GRP1\\zzz\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj": {}
+    "C:\\Users\\omar2\\OneDrive\\Desktop\\New folder (2)\\InventoryManagementSystem\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ALJAZEERA\\source\\repos\\GRP1\\zzz\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj": {
+    "C:\\Users\\omar2\\OneDrive\\Desktop\\New folder (2)\\InventoryManagementSystem\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ALJAZEERA\\source\\repos\\GRP1\\zzz\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj",
+        "projectUniqueName": "C:\\Users\\omar2\\OneDrive\\Desktop\\New folder (2)\\InventoryManagementSystem\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj",
         "projectName": "InventoryManagementSystem.EntitiesLayer",
-        "projectPath": "C:\\Users\\ALJAZEERA\\source\\repos\\GRP1\\zzz\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj",
-        "packagesPath": "C:\\Users\\ALJAZEERA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ALJAZEERA\\source\\repos\\GRP1\\zzz\\InventoryManagementSystem.EntitiesLayer\\obj\\",
+        "projectPath": "C:\\Users\\omar2\\OneDrive\\Desktop\\New folder (2)\\InventoryManagementSystem\\InventoryManagementSystem.EntitiesLayer\\InventoryManagementSystem.EntitiesLayer.csproj",
+        "packagesPath": "C:\\Users\\omar2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\omar2\\OneDrive\\Desktop\\New folder (2)\\InventoryManagementSystem\\InventoryManagementSystem.EntitiesLayer\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ALJAZEERA\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\omar2\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -79,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

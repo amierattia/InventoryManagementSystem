@@ -3,6 +3,9 @@
 @using System.Security.Claims
 @inject SignInManager<User> signInManager
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> signInManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +20,9 @@
         <nav class="sidebar">
             <div class="logo">
                 <a asp-area="" asp-controller="Dashboard" asp-action="Index">
-                    <img src="~/images/Logo.jpg" alt="Inventory Control Logo" style="width: 150px; height: auto; border-radius:50%">
+                    <img src="~/images/Logo.jpg" alt="Inventory Control Logo" style="width: 150px; height: auto; border-radius: 50%;">
                 </a>
             </div>
-
             <ul>
                 <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
@@ -35,17 +37,15 @@
             {
                 <!-- Logout Section -->
                 <div class="logout">
-                    <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                    <form asp-controller="Account" asp-action="Logout" method="post" style="display: inline;">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="logout-btn">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </button>
                     </form>
                 </div>
-
             }
         </nav>
-
 
         <!-- Main Content -->
         <div class="main-content">
@@ -60,13 +60,13 @@
 
             <div class="container">
                 <main role="main" class="pb-3">
-                    @RenderBody()
+                    @RenderBody() <!-- This renders the body content of the individual views -->
                 </main>
             </div>
         </div>
     </div>
 
-
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
