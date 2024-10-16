@@ -13,6 +13,7 @@ namespace InventoryManagementSystem.BLL.interfaces
         Task<int> GetTotalItemsAsync();
         Task<int> GetLowStockItemsAsync();
         Task<int> GetUsersCountAsync();
+        Task<int> GetCategoryAsync();
         Task<List<ActivityModel>> GetRecentActivityAsync();
     }
 

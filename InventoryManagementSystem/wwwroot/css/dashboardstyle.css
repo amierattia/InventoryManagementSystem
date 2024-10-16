@@ -1,0 +1,214 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Container */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #1f2937;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease; /* Transition for smooth animation */
+}
+
+.logo {
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 0; /* Remove default padding */
+}
+
+    .sidebar ul li {
+        position: relative; /* Position for the hover effect */
+    }
+
+        .sidebar ul li a {
+            display: block;
+            padding: 15px 20px;
+            color: #ffffff;
+            text-decoration: none;
+            transition: background 0.3s, padding-left 0.3s; /* Transition for background and padding */
+        }
+
+            .sidebar ul li a.active,
+            .sidebar ul li a:hover {
+                background-color: #4b5563;
+                border-left: 3px solid #10b981;
+                padding-left: 30px; /* Adding padding for effect */
+            }
+
+            /* Hover effect for icons */
+            .sidebar ul li a i {
+                margin-right: 10px;
+                transition: transform 0.3s ease; /* Adding transition for icons */
+            }
+
+            .sidebar ul li a:hover i {
+                transform: scale(1.2); /* Scale effect on hover */
+            }
+
+.logout {
+    padding: 15px 20px;
+    text-align: center;
+}
+
+    .logout a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+        .logout a:hover {
+            text-decoration: underline;
+        }
+
+/* Main Content */
+.main-content {
+    margin-left: 220px;
+    flex: 1;
+    padding: 20px;
+    background-color: #f3f4f6;
+    overflow-y: auto;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .header h1 {
+        font-size: 1.5em;
+        color: #000000;
+    }
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    color: #333;
+}
+
+    .user-profile span {
+        margin-right: 10px;
+    }
+
+/* Dashboard Card Section */
+.dashboard-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+}
+
+    .card h2 {
+        font-size: 1.2em;
+        color: #4b5563;
+    }
+
+    .card p {
+        font-size: 1em;
+        color: #9ca3af;
+    }
+
+/* Recent Activity Table */
+.recent-activity {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .recent-activity h2 {
+        font-size: 1.2em;
+        color: #4b5563;
+        margin-bottom: 15px;
+    }
+
+    .recent-activity table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .recent-activity table th,
+        .recent-activity table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .recent-activity table th {
+            background-color: #1f2937;
+            color: #ffffff;
+        }
+
+        .recent-activity table tr:last-child td {
+            border-bottom: none;
+        }
+
+.logout {
+    padding: 15px 20px;
+    text-align: center;
+    margin-top: auto;
+}
+
+.logout-btn {
+    background-color: transparent;
+    color: #ffffff;
+    border: none;
+    text-decoration: none;
+    font-size: 1em;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+    .logout-btn:hover {
+        color: #10b981;
+        transform: scale(1.05);
+    }
+
+    .logout-btn i {
+        margin-right: 5px;
+        transition: transform 0.3s;
+    }
+
+    .logout-btn:hover i {
+        transform: rotate(15deg);
+    }

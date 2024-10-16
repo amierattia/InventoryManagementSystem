@@ -2,8 +2,8 @@
 using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using InventoryManagementSystem.DAL.Db;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
@@ -106,5 +106,19 @@ namespace InventoryManagementSystem.Pl.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var category = await _categoryService.GetCategoryWithProductsAsync(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
     }
 }

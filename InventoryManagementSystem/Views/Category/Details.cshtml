@@ -1,0 +1,29 @@
+﻿@model InventoryManagementSystem.EntitiesLayer.Models.Category
+
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<h1>@Model.Name</h1>
+<p>@Model.Description</p>
+
+
+
+<h2>Products in this Category</h2>
+@if (Model.Products != null && Model.Products.Any())
+{
+    <ul class="list-group">
+        @foreach (var product in Model.Products)
+        {
+            <li class="list-group-item">
+                <strong>@product.ProductName</strong> - Price: @product.Price 
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No products found in this category.</p>
+}
+
+<a asp-action="Index" asp-controller="Category" class="btn btn-primary">Back to Categories</a>

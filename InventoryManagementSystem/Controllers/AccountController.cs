@@ -66,7 +66,7 @@ namespace UsersApp.Controllers
             {
                 var userId = _userManager.GetUserId(User);
                 await _activityService.LogActivity($"User {model.Email} logged in.", userId);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             ModelState.AddModelError("", "Email or password is incorrect.");
@@ -156,7 +156,7 @@ namespace UsersApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         [HttpGet]

@@ -41,5 +41,12 @@ namespace InventoryManagementSystem.BLL.Services
             _context.Categories.Update(entity);
             await _context.SaveChangesAsync();
         }
+        public async Task<Category> GetCategoryWithProductsAsync(int id)
+        {
+            return await _context.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.CategoryId == id);
+        }
+
     }
 }

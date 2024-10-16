@@ -15,5 +15,6 @@ namespace InventoryManagementSystem.BLL.Dto
         public int UsersCount { get; set; }
         public int PendingOrders { get; set; }
         public List<ActivityModel> RecentActivities { get; set; }
+        public int CategoryCount { get; set; }
     }
 }

@@ -22,13 +22,15 @@ namespace InventoryManagementSystem.PL.sln.Controllers
             var lowStockItems = await _inventoryService.GetLowStockItemsAsync();
             var usersCount = await _inventoryService.GetUsersCountAsync();
             var recentActivities = await _inventoryService.GetRecentActivityAsync();
+            var CategoryCount = await _inventoryService.GetCategoryAsync();
 
             var model = new DashboardDto
             {
                 TotalItems = totalItems,
                 LowStockItems = lowStockItems,  
                 UsersCount = usersCount,
-                RecentActivities = recentActivities
+                RecentActivities = recentActivities,
+                CategoryCount = CategoryCount
             };
 
             return View(model);

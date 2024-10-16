@@ -1,6 +1,8 @@
 ﻿@using InventoryManagementSystem.BLL.Dto;
 @model EditProfileDto
-
+@{
+    Layout = "_InventoryLayout";
+}
 <div class="profile-container">
     <form asp-action="EditProfile" enctype="multipart/form-data" method="post">
         <!-- Cover Photo -->

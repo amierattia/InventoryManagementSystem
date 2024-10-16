@@ -2,42 +2,37 @@
 
 @{
     ViewBag.Title = "Edit Product";
+    Layout = "_InventoryLayout";
 }
-
-<h2>Edit Product</h2>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 <form asp-action="Edit" method="post">
     @Html.HiddenFor(model => model.ProductId)
 
-    <!-- Product Name -->
     <div class="form-group">
         <label asp-for="ProductName"></label>
         <input asp-for="ProductName" class="form-control" placeholder="Enter product name" required />
         <span asp-validation-for="ProductName" class="text-danger"></span>
     </div>
 
-    <!-- Product Description -->
     <div class="form-group">
         <label asp-for="ProductDescription"></label>
         <textarea asp-for="ProductDescription" class="form-control" placeholder="Enter product description"></textarea>
         <span asp-validation-for="ProductDescription" class="text-danger"></span>
     </div>
 
-    <!-- Price -->
     <div class="form-group">
         <label asp-for="Price"></label>
         <input asp-for="Price" class="form-control" placeholder="Enter price" type="number" step="0.01" required />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
-    <!-- Stock Quantity -->
     <div class="form-group">
         <label asp-for="stockQuantity"></label>
         <input asp-for="stockQuantity" class="form-control" placeholder="Enter stock quantity" type="number" required />
         <span asp-validation-for="stockQuantity" class="text-danger"></span>
     </div>
 
-    <!-- Category Selection -->
     <div class="form-group">
         <label asp-for="CategoryId">Select Category</label>
         <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name", Model.CategoryId))" required>
@@ -46,7 +41,6 @@
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
 
-    <!-- Supplier Selection (Optional) -->
     <div class="form-group">
         <label asp-for="SupplierId">Select Supplier (Optional)</label>
         <select asp-for="SupplierId" class="form-control">
@@ -59,13 +53,5 @@
         <span asp-validation-for="SupplierId" class="text-danger"></span>
     </div>
 
-
-    <!-- Submit Button -->
     <button type="submit" class="btn btn-primary">Update Product</button>
 </form>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

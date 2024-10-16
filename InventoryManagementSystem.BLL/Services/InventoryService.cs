@@ -33,6 +33,11 @@ namespace InventoryManagementSystem.BLL.sln.Services
             return await _context.Users.CountAsync();
         }
 
+        public async Task<int> GetCategoryAsync()
+        {
+            return await _context.Categories.CountAsync();
+        }
+
         public async Task<List<ActivityModel>> GetRecentActivityAsync()
         {
             return await _context.Activities.OrderByDescending(a => a.Date).Take(5).ToListAsync();

@@ -1,0 +1,75 @@
+﻿@using InventoryManagementSystem.EntitiesLayer.Models
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject SignInManager<User> signInManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/dashboardstyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <a asp-area="" asp-controller="Dashboard" asp-action="Index">
+                    <img src="~/images/Logo.jpg" alt="Inventory Control Logo" style="width: 150px; height: auto; border-radius:50%">
+                </a>
+            </div>
+
+            <ul>
+                <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                <li><a asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
+                <li><a asp-area="" asp-controller="Supplier" asp-action="Index">Suppliers</a></li>
+                <li><a asp-area="" asp-controller="Product" asp-action="Index">Product</a></li>
+                <li><a asp-area="" asp-controller="Account" asp-action="Login">User Authentication</a></li>
+                <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
+                <li><a asp-area="" asp-controller="RoleManagement" asp-action="Index">Role Management</a></li>
+            </ul>
+
+            @if (signInManager.IsSignedIn(User))
+            {
+                <!-- Logout Section -->
+                <div class="logout">
+                    <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                </div>
+
+            }
+        </nav>
+
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>@ViewData["Title"]</h1>
+                <div class="user-profile">
+                    <span>Welcome, @User.Identity.Name</span>
+                    <i class="bi bi-person-circle" style="font-size: 30px;"></i>
+                </div>
+            </header>
+
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
