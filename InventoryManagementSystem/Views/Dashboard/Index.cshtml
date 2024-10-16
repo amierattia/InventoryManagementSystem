@@ -10,7 +10,9 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
     }
-
+    .land{
+        width:1050px
+    }
     /* Container for the main content */
     .main-content {
         padding: 20px;
@@ -112,80 +114,15 @@
         border-bottom: none;
     }
 
-    /* Media Queries for responsiveness */
-    @@media (max-width: 1200px) {
-        .dashboard-cards {
-            justify-content: space-around;
-        }
-    }
+   
 
-    @@media (max-width: 992px) {
-        .dashboard-cards {
-            flex-direction: column;
-            align-items: center;
-        }
+  
 
-        .card {
-            width: 80%; /* Take up more space on smaller screens */
-        }
-    }
-
-    @@media (max-width: 768px) {
-        .card {
-            width: 100%; /* Cards take full width on small screens */
-        }
-
-        .header h1 {
-            font-size: 1.3em;
-        }
-
-        .recent-activity {
-            padding: 15px;
-        }
-
-        .recent-activity h2 {
-            font-size: 1.1em;
-        }
-    }
-
-    @@media (max-width: 576px) {
-        .header h1 {
-            font-size: 1.2em;
-        }
-
-        .user-profile span {
-            font-size: 0.9em;
-        }
-
-        .card {
-            padding: 15px;
-        }
-
-        .recent-activity table th,
-        .recent-activity table td {
-            padding: 10px;
-        }
-    }
-
-    @@media (max-width: 768px) {
-        .sidebar
-
-    {
-        transform: translateX(-100%); /* Hide the sidebar */
-        position: absolute; /* Allow it to slide in and out */
-        width: 250px;
-    }
-
-        .main-content {
-            margin-left: 0; /* Reset margin */
-            width: 100%; /* Make the main content full width */
-        }
-    }
 
 </style>
 
 
-<div class="land" >
+<div class="land">
 
 <div class="header">
     <h1>Dashboard</h1>
@@ -194,8 +131,6 @@
         <i class="bi bi-person-circle" style="font-size: 30px;"></i>
     </div>
 </div>
-
-
 
 <section class="dashboard-cards">
     <div class="card">
@@ -237,6 +172,7 @@
     </table>
 </section>
 </div>
+
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
