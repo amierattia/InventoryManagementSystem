@@ -2,7 +2,11 @@
 @using Microsoft.AspNetCore.Identity
 @using System.Security.Claims
 @inject SignInManager<User> signInManager
+@inject UserManager<User> userManager
 
+@{
+    var currentUser = await userManager.GetUserAsync(User);
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +14,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/dashboardstyle.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.0/signalr.min.js"></script>
+
 </head>
 <body>
     <div class="container">
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="logo">
-                <a asp-area="" asp-controller="Dashboard" asp-action="Index">
-                    <img src="~/images/Logo.jpg" alt="Inventory Control Logo" style="width: 150px; height: auto; border-radius:50%">
+                <a class="nav-link text-dark" asp-controller="Account" asp-action="UserProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
+                    <span>Welcome, @currentUser?.FullName</span>
+                    @if (!string.IsNullOrEmpty(currentUser?.ProfilePictureUrl))
+                    {
+                        <img src="~/images/@currentUser.ProfilePictureUrl" alt="Profile Picture" style="width: 150px; height: auto; border-radius: 50%;">
+                    }
+                    else
+                    {
+                        <img src="~/images/1780ad8d-601a-4c1f-bb54-30ce5d05d7c6_programmer.png" alt="Default Profile Picture" style="width: 150px; height: auto; border-radius: 50%;">
+                    }
                 </a>
+               
             </div>
 
             <ul>
@@ -29,6 +44,7 @@
                 <li><a asp-area="" asp-controller="Account" asp-action="Login">User Authentication</a></li>
                 <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
                 <li><a asp-area="" asp-controller="RoleManagement" asp-action="Index">Role Management</a></li>
+                <li><a asp-area="" asp-controller="Stock" asp-action="Index">Low Stock</a></li>
             </ul>
 
             @if (signInManager.IsSignedIn(User))
@@ -53,8 +69,10 @@
             <header class="header">
                 <h1>@ViewData["Title"]</h1>
                 <div class="user-profile">
-                    <span>Welcome, @User.Identity.Name</span>
-                    <i class="bi bi-person-circle" style="font-size: 30px;"></i>
+                    <a class="nav-link text-dark" asp-controller="Account" asp-action="UserProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
+                        <span>Welcome, @currentUser?.FullName</span>
+
+                    </a>
                 </div>
             </header>
 
@@ -70,6 +88,53 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lowStockBtn = document.getElementById('lowStockBtn');
+
+            // create connection with SignalR Hub
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/stockHub")
+                .build();
+
+            // receive low stock notification
+            connection.on("ReceiveLowStockNotification", (productName, stock) => {
+                showLowStockNotification(productName, stock);
+            });
+
+            // start connection
+            connection.start().then(() => {
+                console.log("Connected to SignalR Hub");
+            }).catch(err => console.error(err.toString()));
+
+            // display notification
+            function showLowStockNotification(productName, stock) {
+                if (Notification.permission === 'granted') {
+                    new Notification("Low Stock Alert!", {
+                        body: `${productName} has only ${stock} items left in stock!`,
+                        icon: "https://via.placeholder.com/100"
+                    });
+                }
+            }
+
+            // confirm from notification permission
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    lowStockBtn.disabled = false;
+                }
+            });
+
+            // check stock
+            lowStockBtn.addEventListener('click', () => {
+                fetch('/api/stock/update-stock', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productName: 'Product A', stock: 5 })
+                });
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

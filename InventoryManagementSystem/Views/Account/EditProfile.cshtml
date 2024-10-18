@@ -2,28 +2,129 @@
 @model EditProfileDto
 @{
     Layout = "_InventoryLayout";
-}
-<div class="profile-container">
+}<div class="profile-container">
     <form asp-action="EditProfile" enctype="multipart/form-data" method="post">
-        <!-- Cover Photo -->
-        <div class="cover-photo">
-            <img src="@Model.CoverPhoto" alt="Cover Photo">
-            <input type="file" name="CoverPhoto">
-        </div>
 
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <!-- Profile Picture -->
         <div class="profile-picture">
-            <img src="@Model.ProfilePicture" alt="Profile Picture" class="circle-profile">
-            <input type="file" name="ProfilePicture">
+            <label for="ProfilePicture" class="file-label">Change Profile Picture</label>
+            <input type="file" id="ProfilePicture" name="ProfilePicture">
         </div>
 
-        <!-- User Name and Phone Number -->
+        <!-- User Name, Email, and Phone Number -->
         <div class="user-info">
-            <input type="text" name="FullName" value="@Model.FullName" class="edit-name-input" placeholder="Edit Name">
-            <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" class="edit-phone-input" placeholder="Edit Phone Number">
+            <input type="text" name="FullName" value="@Model.FullName" class="edit-input" placeholder="Edit Name">
+            <input type="email" name="Email" value="@Model.Email" class="edit-input" placeholder="Edit Email">
+            <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" class="edit-input" placeholder="Edit Phone Number">
         </div>
 
         <!-- Save Button -->
         <button type="submit" class="save-btn">Save Changes</button>
     </form>
 </div>
+
+<!-- CSS Styling -->
+<style>
+    /* General Page Styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f5f7;
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        text-align: center;
+    }
+
+   
+    .file-label {
+        display: inline-block;
+        background-color: #3b82f6;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .file-label:hover {
+        background-color: #2563eb;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    /* Profile Picture */
+    .profile-picture {
+        margin-bottom: 20px;
+    }
+
+    /* User Info Input Fields */
+    .user-info {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .edit-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .edit-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Save Button */
+    .save-btn {
+        background-color: #3b82f6;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .save-btn:hover {
+        background-color: #2563eb;
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .profile-container {
+            padding: 20px;
+        }
+
+        .user-info {
+            grid-template-columns: 1fr;
+        }
+
+        .file-label {
+            width: 100%;
+            text-align: center;
+        }
+
+        .save-btn {
+            width: 100%;
+        }
+    }
+</style>

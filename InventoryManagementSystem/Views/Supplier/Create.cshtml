@@ -1,43 +1,114 @@
 ﻿@model Supplier
 @{
-
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Supplier";
     Layout = "_InventoryLayout";
-
 }
 
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<h1>Add New Supplier</h1>
+<div class="container">
 
 
-<h1>Add new Supplier</h1>
-<br />
-<br />
-
-<form asp-controller="Supplier" asp-action="Create" method="post">
-
-
+<form asp-controller="Supplier" asp-action="Create" method="post" class="full-width-form">
     <div class="form-group">
-        <label class="col-form-label" asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="input-field" />
     </div>
 
     <div class="form-group">
-        <label class="col-form-label" asp-for="ContactName"></label>
-        <input asp-for="ContactName" class="form-control" />
+        <label asp-for="ContactName"></label>
+        <input asp-for="ContactName" class="input-field" />
     </div>
 
     <div class="form-group">
-        <label class="col-form-label" asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="input-field" />
     </div>
+
     <div class="form-group">
-        <label class="col-form-label" asp-for="phone"></label>
-        <input asp-for="phone" class="form-control" />
+        <label asp-for="phone"></label>
+        <input asp-for="phone" class="input-field" />
     </div>
+
+    <div class="form-actions">
+        <input type="submit" value="Create" class="btn-submit" />
+        <a asp-controller="Supplier" asp-action="Index" class="btn-back">Back to List</a>
+    </div>
+</form>
+</div>
+<style>
+    .Container {
+        font-family: Arial, sans-serif;
+        width:100%;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        color: #333;
+    }
 
    
 
-    <input type="submit" value="Create" class="btn btn-primary mt-3"  />
-    <a asp-controller="Supplier" asp-action="Index" class="btn btn-light" >Back to list</a>
+    .form-group {
+        margin-bottom: 20px;
+    }
 
-</form>
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+        .input-field:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .btn-submit, .btn-back {
+        padding: 10px 20px;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-submit {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-back {
+        background-color: #f1f1f1;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+        .btn-back:hover {
+            background-color: #ddd;
+        }
+</style>

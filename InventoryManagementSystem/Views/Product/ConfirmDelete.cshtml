@@ -16,16 +16,14 @@
                 <div class="card-body">
                     <h5 class="text-gray-800">Are you sure you want to delete the following product?</h5>
 
-<<<<<<< HEAD
                     <p><strong>Product Name:</strong> @Model.ProductName</p>
                     <p><strong>Product Description:</strong> @Model.ProductDescription</p>
                     <p><strong>Price:</strong> $@Model.Price</p>
-=======
+
                     <!-- Display product details -->
                     <p class="text-gray-700"><strong>Product Name:</strong> @Model.ProductName</p>
                     <p class="text-gray-700"><strong>Product Description:</strong> @Model.ProductDescription</p>
                     <p class="text-gray-700"><strong>Price:</strong> $@Model.Price</p>
->>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
 
                     <form asp-action="DeleteConfirmed" method="post">
                         @Html.AntiForgeryToken()

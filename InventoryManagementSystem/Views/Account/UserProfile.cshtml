@@ -1,3 +1,4 @@
+﻿
 ﻿@using InventoryManagementSystem.BLL.Dto
 @model UserDto
 @{
@@ -139,7 +140,7 @@
     <div class="profile-container">
         <div class="profile-card">
             <div class="profile-image-section">
-                <img src="~/images/working.png" alt="Profile Picture" class="profile-image" />
+                <img src="~/images/@Model.ProfilePicture" alt="Profile Picture" class="profile-image" />
             </div>
 
             <div class="profile-name">@Model.Name</div>
@@ -147,12 +148,13 @@
 
             <div class="profile-actions">
                 <a class="btn btn-message" href="@Url.Action("ChangePassword", "Account")">Change Password</a>
-                <a href="@Url.Action("Index", "Home")" class="btn btn-follow">Back</a>
+                <a href="@Url.Action("EditProfile", "Account")" class="btn btn-follow">Edit Profile</a>
             </div>
 
             <div class="skills-section">
                 <div class="skills">
                     <div class="profile-detail">Email: @Model.Email</div>
+                    <div class="profile-detail">Phone: @Model.Phone</div>
                 </div>
             </div>
         </div>

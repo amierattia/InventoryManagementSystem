@@ -1,14 +1,11 @@
 ﻿using InventoryManagementSystem.BLL.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using InventoryManagementSystem.BLL.Services;
 using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.BLL.interfaces
 {
     public interface IProfileService
     {
-        Task UpdateProfileAsync(string userId, EditProfileDto dto);
+        Task<UpdateProfileResult> UpdateProfileAsync(string userId, EditProfileDto dto);
     }
 }

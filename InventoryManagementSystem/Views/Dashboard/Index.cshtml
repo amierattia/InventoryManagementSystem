@@ -1,4 +1,5 @@
-﻿@model InventoryManagementSystem.BLL.Dto.DashboardDto
+﻿@model InventoryManagementSystem.BLL.Dto.DashboardDto;
+
 @{
     Layout = "_InventoryLayout";
 }
@@ -114,6 +115,8 @@
 
     <!-- Main Content -->
     <div class="main-content">
+        <div id="notification-bar"></div>
+
         <!-- Header -->
         <header class="header">
             <h1>Dashboard</h1>
@@ -166,3 +169,22 @@
         </section>
     </div>
 </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+
+<script type="text/javascript">
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/stockHub")
+        .build();
+
+    connection.on("ReceiveNotification", function (message) {
+        var notificationBar = document.getElementById('notification-bar');
+        notificationBar.innerHTML = "<div class='alert alert-warning'>" + message + "</div>";
+    });
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+</script>
+

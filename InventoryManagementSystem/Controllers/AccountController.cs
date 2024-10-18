@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using InventoryManagementSystem.BLL.Dto;
 using InventoryManagementSystem.EntitiesLayer.Models;
 using InventoryManagementSystem.BLL.interfaces;
+using InventoryManagementSystem.BLL.Services;
 
 namespace UsersApp.Controllers
 {
@@ -13,12 +14,14 @@ namespace UsersApp.Controllers
         private readonly IProfileService _profileService;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IActivityService _activityService;
+        private readonly FileService _fileService;
 
         public AccountController(
             IActivityService activityService,
             IProfileService profileService,
             SignInManager<User> signInManager,
             UserManager<User> userManager,
+            FileService fileService,
             RoleManager<IdentityRole> roleManager)
         {
             _activityService = activityService;
@@ -26,6 +29,7 @@ namespace UsersApp.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
             _profileService = profileService;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -46,13 +50,26 @@ namespace UsersApp.Controllers
         [HttpPost]
         public async Task<IActionResult> EditProfile(EditProfileDto model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)  ModelState.AddModelError(string.Empty, "invalid data !");
 
             var userId = _userManager.GetUserId(User);
-            await _profileService.UpdateProfileAsync(userId, model);
+            var result = await _profileService.UpdateProfileAsync(userId, model);
+
+            if (result == UpdateProfileResult.UserNotFound)
+            {
+                ModelState.AddModelError(string.Empty, "User not found.");
+                return View(model);
+            }
+
+            if (result == UpdateProfileResult.EmailExists)
+            {
+                ModelState.AddModelError("Email", "This email is already in use.");
+                return View(model);
+            }
 
             return RedirectToAction(nameof(UserProfile), new { id = userId });
         }
+
 
         public IActionResult Login() => View();
 
@@ -85,12 +102,14 @@ namespace UsersApp.Controllers
                 ModelState.AddModelError("", "This email is already registered.");
                 return View(model);
             }
-
+            string? image = _fileService.UploadFile(model.ProfilePicture, "images");
             var newUser = new User
             {
                 FullName = model.FullName,
                 Email = model.Email,
+                PhoneNumber = model.Phone,
                 UserName = model.Email,
+                ProfilePictureUrl = image
             };
 
             var result = await _userManager.CreateAsync(newUser, model.Password);
@@ -174,18 +193,19 @@ namespace UsersApp.Controllers
             if (user == null)
             {
                 ModelState.AddModelError("", "User not found.");
-                return View();
+                return NotFound();
             }
 
             var userDto = new UserDto
             {
                 Name = user.FullName ?? "Name not available",
                 Email = user.Email ?? "Email not available",
+                Phone = user.PhoneNumber ?? "Phone not available",
+                ProfilePicture = user.ProfilePictureUrl,
             };
 
             return View(userDto);
         }
-
         private async Task<User> GetCurrentUserAsync() => await _userManager.GetUserAsync(User);
 
         private async Task<bool> IsEmailRegistered(string email) => await _userManager.FindByEmailAsync(email) != null;

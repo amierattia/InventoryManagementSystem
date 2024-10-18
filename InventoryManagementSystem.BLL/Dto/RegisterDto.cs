@@ -1,4 +1,5 @@
 ﻿using InventoryManagementSystem.EntitiesLayer.Models;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace InventoryManagementSystem.BLL.Dto
@@ -11,6 +12,10 @@ namespace InventoryManagementSystem.BLL.Dto
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
+
+        public IFormFile? ProfilePicture { get; set; }
+        public string? ProfilePictureUrl { get; set; }
+
 
         [Required(ErrorMessage = "Phone number is required")]
         [RegularExpression(@"^01[0-9]{9}$", ErrorMessage = "Invalid phone number")]

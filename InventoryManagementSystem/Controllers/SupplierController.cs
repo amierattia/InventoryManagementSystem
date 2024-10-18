@@ -1,16 +1,23 @@
 ﻿using InventoryManagementSystem.BLL.interfaces;
+using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
     public class SupplierController : Controller
     {
         private readonly ISupplierService _supplierService;
+        private readonly IActivityService _activityService;
+        private readonly UserManager<User> _userManager;
 
-        public SupplierController(ISupplierService supplierService)
+        public SupplierController(ISupplierService supplierService, IActivityService activityService, UserManager<User> userManager)
         {
             _supplierService = supplierService;
+            _activityService = activityService;
+            _userManager = userManager;
         }
 
         // GET: Supplier
@@ -32,6 +39,11 @@ namespace InventoryManagementSystem.Pl.Controllers
                 return View(supplier);
 
             await _supplierService.AddAsync(supplier);
+
+            // Logging activity
+            var userName = _userManager.GetUserName(User);
+            await _activityService.LogActivity($"Supplier {supplier.Name} was created by {userName}.", userName);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -63,6 +75,11 @@ namespace InventoryManagementSystem.Pl.Controllers
             try
             {
                 await _supplierService.UpdateAsync(supplier);
+
+                // Logging activity
+                var userName = _userManager.GetUserName(User);
+                await _activityService.LogActivity($"Supplier {supplier.Name} was edited by {userName}.", userName);
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -87,6 +104,11 @@ namespace InventoryManagementSystem.Pl.Controllers
             try
             {
                 await _supplierService.DeleteAsync(supplier);
+
+                // Logging activity
+                var userName = _userManager.GetUserName(User);
+                await _activityService.LogActivity($"Supplier {supplier.Name} was deleted by {userName}.", userName);
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

@@ -4,12 +4,9 @@
     ViewBag.Title = "Edit Product";
     Layout = "_InventoryLayout";
 }
-<<<<<<< HEAD
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-=======
 
 <h2 class="text-gray-800">Edit Product</h2>
->>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
 
 <form asp-action="Edit" method="post">
     @Html.HiddenFor(model => model.ProductId)
@@ -58,10 +55,7 @@
         <span asp-validation-for="SupplierId" class="text-danger"></span>
     </div>
 
-<<<<<<< HEAD
     <button type="submit" class="btn btn-primary">Update Product</button>
-=======
     <!-- Submit Button -->
     <button type="submit" class="btn" style="background-color: #10b981; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Update Product</button>
->>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
 </form>

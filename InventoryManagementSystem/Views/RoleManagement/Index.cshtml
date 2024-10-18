@@ -3,192 +3,103 @@
 
 @{
     ViewData["Title"] = "User Roles Management";
-<<<<<<< HEAD
     Layout = "_InventoryLayout";
-=======
-    Layout = null; /* Using null layout to apply custom sidebar and design */
->>>>>>> 1c92b8858ad11bcb3a3bf3a9f0babd20472b2087
 }
 
 <style>
-    .container {
-        display: flex;
+    .page-wrapper {
         width: 100%;
-    }
-
-    /* Sidebar */
-    .sidebar {
-        width: 250px; /* Updated width */
-        background-color: #1f2937;
-        color: #ffffff;
-        display: flex;
-        flex-direction: column;
-        padding: 20px 0;
-        position: fixed;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-        text-align: center;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
     }
 
     .main-content {
-        margin-left: 250px; /* Adjusted margin to match sidebar width */
-        flex: 1;
+        background-color: #f9f9f9;
         padding: 20px;
-        background-color: #f3f4f6;
-        overflow-y: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .logo {
-        font-size: 1.8em;
-        text-align: center;
-        font-weight: bold;
-        padding-bottom: 20px;
-    }
-
-    /* Sidebar Links */
-    .sidebar ul {
-        list-style: none;
-        padding: 0;
-        margin-top: 20px;
-    }
-
-        .sidebar ul li {
-            padding: 0;
-            margin-bottom: 10px;
+        .main-content h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
-            .sidebar ul li a {
-                display: block;
-                padding: 15px 20px;
-                color: #ffffff;
-                text-decoration: none;
-                text-align: left;
-                transition: background 0.3s;
-            }
-
-                .sidebar ul li a.active,
-                .sidebar ul li a:hover {
-                    background-color: #4b5563;
-                    border-left: 3px solid #10b981;
-                }
-
-    .logout {
-        margin-top: auto;
-        padding: 15px 20px;
-        text-align: center;
-    }
-
-        .logout a {
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-            .logout a:hover {
-                text-decoration: underline;
-            }
-
-    /* Table Styles */
     .table-container {
-        width: 90%;
-        background-color: #ffffff;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        border-radius: 10px;
+        overflow-x: auto;
     }
 
-    .table {
+    .custom-table {
         width: 100%;
-        background-color: #ffffff;
-        border-collapse: separate;
-        border-spacing: 0;
-        margin-bottom: 0;
+        border-collapse: collapse;
+        margin-bottom: 20px;
     }
 
-        .table th, .table td {
-            padding: 12px;
+        .custom-table th,
+        .custom-table td {
+            padding: 12px 15px;
             text-align: left;
-            border-bottom: 1px solid #dddddd;
+            border: 1px solid #ddd;
         }
 
-        .table th {
-            background-color: #f1f5f9;
-            font-weight: 600;
+        .custom-table th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
         }
 
-    .btn-primary {
-        background-color: #10b981;
-        border-color: #10b981;
+        .custom-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .custom-table tr:hover {
+            background-color: #ddd;
+        }
+
+    .btn-custom {
         padding: 8px 12px;
-        font-size: 0.9em;
-        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        display: inline-block;
     }
 
-        .btn-primary:hover {
-            background-color: #4b5563;
-            border-color: #4b5563;
+        .btn-custom:hover {
+            background-color: #0056b3;
         }
-
 </style>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Roles Management</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+<div class="page-wrapper">
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>User Roles Management</h2>
 
-    <div class="container">
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <div class="logo">Investo</div> <!-- Sidebar Logo -->
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Inventory</a></li>
-                <li><a href="#">Category</a></li>
-                <li><a href="#">Suppliers</a></li>
-                <li><a href="#" class="active">User Role Management</a></li>
-            </ul>
-            <div class="logout"><a href="#">Logout</a></div> <!-- Logout Button -->
-        </nav>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            <h2 class="text-center mb-4">User Roles Management</h2>
-
-            <div class="table-container">
-                <table class="table table-bordered table-striped">
-                    <thead>
+        <div class="table-container">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Role Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
                         <tr>
-                            <th>Email</th>
-                            <th>Name</th>
-                            <th>Role Name</th>
-                            <th>Actions</th>
+                            <td>@user.Email</td>
+                            <td>@user.Name</td>
+                            <td>@string.Join(", ", user.Roles.ToList())</td>
+                            <td>
+                                <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn-custom">Manage Roles</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var user in Model)
-                        {
-                            <tr>
-                                <td>@user.Email</td>
-                                <td>@user.Name</td>
-                                <td>@string.Join(" , ", user.Roles.ToList())</td>
-                                <td>
-                                    <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn btn-primary">Manage Roles</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>

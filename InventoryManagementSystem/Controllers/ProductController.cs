@@ -1,9 +1,11 @@
 ﻿using InventoryManagementSystem.BLL.interfaces;
 using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.EntitiesLayer.Models;
+using InventoryManagementSystem.Pl.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,21 +16,27 @@ namespace InventoryManagementSystem.Pl.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly IInventoryService _inventoryService;
         private readonly ISupplierService _supplierService;
         private readonly IActivityService _activityService;
         private readonly UserManager<User> _userManager;
+        private readonly IHubContext<StockHub> _hubContext;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ISupplierService supplierService, IActivityService activityService, UserManager<User> userManager)
+
+        public ProductController(IHubContext<StockHub> hubContext, IInventoryService inventoryService, IProductService productService, ICategoryService categoryService, ISupplierService supplierService, IActivityService activityService, UserManager<User> userManager)
         {
             _productService = productService;
             _categoryService = categoryService;
             _supplierService = supplierService;
             _activityService = activityService;
             _userManager = userManager;
+            _hubContext = hubContext;
+            _inventoryService = inventoryService;
         }
 
         public async Task<IActionResult> Index()
         {
+            await UpdateStockAsync();
             var products = await _productService.GetAllAsync();
             return View(products);
         }
@@ -57,6 +65,7 @@ namespace InventoryManagementSystem.Pl.Controllers
             }
 
             await _productService.AddAsync(product);
+            await UpdateStockAsync();
 
             var userId = _userManager.GetUserId(User);
             var userName = _userManager.GetUserName(User);
@@ -99,7 +108,7 @@ namespace InventoryManagementSystem.Pl.Controllers
             try
             {
                 await _productService.UpdateAsync(product);
-
+                await UpdateStockAsync();
                 var userId = _userManager.GetUserId(User);
                 var userName = _userManager.GetUserName(User);
                 await _activityService.LogActivity($"Product {product.ProductName} edited by {userName}.", userName);
@@ -144,6 +153,10 @@ namespace InventoryManagementSystem.Pl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        
+
+
+
         // Private helper methods
         private async Task LoadCategoriesAndSuppliersToViewBag()
         {
@@ -162,5 +175,20 @@ namespace InventoryManagementSystem.Pl.Controllers
             var product = await _productService.GetProductByIdAsync(productId);
             return product != null;
         }
+
+        // stock 
+        public async Task UpdateStockAsync()
+        {
+            var products = await _productService.GetAllAsync();
+
+            foreach (var product in products)
+            {
+                if (product.stockQuantity < 5)
+                {
+                    await _hubContext.Clients.All.SendAsync("ReceiveLowStockNotification", product.ProductName, product.stockQuantity);
+                }
+            }
+        }
+
     }
 }

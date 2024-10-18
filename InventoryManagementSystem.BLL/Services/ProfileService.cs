@@ -2,7 +2,6 @@
 using InventoryManagementSystem.EntitiesLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Threading.Tasks;
 using InventoryManagementSystem.BLL.interfaces;
@@ -12,78 +11,78 @@ namespace InventoryManagementSystem.BLL.Services
     public class ProfileService : IProfileService
     {
         private readonly UserManager<User> _userManager;
-     
 
         public ProfileService(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task UpdateProfileAsync(string userId, EditProfileDto dto)
+        public async Task<UpdateProfileResult> UpdateProfileAsync(string userId, EditProfileDto dto)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                throw new Exception("User not found");
+                return UpdateProfileResult.UserNotFound;
+            }
+            string mail = dto.Email;
+            if (mail != null)
+            {
+                if (await _userManager.FindByEmailAsync(dto.Email) != null)
+                {
+                    return UpdateProfileResult.EmailExists;
+                }
             }
 
-            // Update name and phone number
+            // Update user properties
             user.FullName = dto.FullName;
             user.PhoneNumber = dto.PhoneNumber;
+            user.Email = dto.Email;
 
-            // Handle Profile Picture upload
-            if (dto.ProfilePicture != null)
-            {
-                try
-                {
-                    var profilePicPath = await UploadFile(dto.ProfilePicture, "images");
-                    user.ProfilePictureUrl = profilePicPath;
-                }
-                catch (Exception ex)
-                {
-                    // Handle exception (log it or rethrow)
-                    throw new Exception("Error uploading profile picture: " + ex.Message);
-                }
-            }
-
-            // Handle Cover Photo upload
-            if (dto.CoverPhoto != null)
-            {
-                try
-                {
-                    var coverPhotoPath = await UploadFile(dto.CoverPhoto, "images");
-                    user.CoverPhotoUrl = coverPhotoPath;
-                }
-                catch (Exception ex)
-                {
-                    // Handle exception (log it or rethrow)
-                    throw new Exception("Error uploading cover photo: " + ex.Message);
-                }
-            }
+            // Handle file uploads
+            user.ProfilePictureUrl = await HandleFileUpload(dto.ProfilePicture, user.ProfilePictureUrl);
+            user.CoverPhotoUrl = await HandleFileUpload(dto.CoverPhoto, user.CoverPhotoUrl);
 
             await _userManager.UpdateAsync(user);
+            return UpdateProfileResult.Success;
+        }
+
+        private async Task<string> HandleFileUpload(IFormFile file, string existingUrl)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return existingUrl; // Return existing URL if no new file is uploaded
+            }
+
+            try
+            {
+                var filePath = await UploadFile(file, "images");
+                return filePath;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error uploading file: " + ex.Message);
+            }
         }
 
         public async Task<string> UploadFile(IFormFile file, string destinationFolder)
         {
-            string uniqueFileName = string.Empty;
+            string uniqueFileName = Guid.NewGuid() + "_" + file.FileName;
+            string uploadsFolder = Path.Combine(@"./wwwroot/", destinationFolder);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-            if (file != null && file.Length > 0)
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                string uploadsFolder = Path.Combine(@"./wwwroot/", destinationFolder);
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream); // استخدم CopyToAsync لرفع الملف بشكل غير متزامن
-                }
+                await file.CopyToAsync(fileStream);
             }
 
             return uniqueFileName;
         }
+    }
 
-
-       
+    public enum UpdateProfileResult
+    {
+        Success,
+        UserNotFound,
+        EmailExists
     }
 }

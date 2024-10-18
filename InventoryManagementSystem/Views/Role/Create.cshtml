@@ -4,23 +4,24 @@
 }
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-<h2 class="text-center my-4">Add New Role</h2>
+<div class="container-fluid">
+    <h2 class="text-center my-4">Add New Role</h2>
+    <div class="card shadow p-4 rounded bg-white mx-auto" style="max-width: 600px; margin-top: 20px;">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
 
-<div class="container">
-    <form asp-action="Create" method="post" class="shadow p-4 rounded bg-white">
-        @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label asp-for="Name" class="font-weight-bold">Role Name</label>
+                <input asp-for="Name" class="form-control" placeholder="Enter role name" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
 
-        <div class="form-group">
-            <label asp-for="Name" class="font-weight-bold">Role Name</label>
-            <input asp-for="Name" class="form-control" placeholder="Enter role name" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-
-        <div class="text-center">
-            <button type="submit" class="btn btn-success btn-lg px-5 mt-3">Add</button>
-            <a asp-action="Index" class="btn btn-secondary btn-lg px-5 mt-3 ml-2">Cancel</a>
-        </div>
-    </form>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg px-5 mt-3">Add</button>
+                <a asp-action="Index" class="btn btn-secondary btn-lg px-5 mt-3 ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <style>
@@ -29,8 +30,28 @@
         font-family: 'Cairo', sans-serif;
     }
 
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
     h2 {
-        color: #17a2b8;
+        color: #000000;
         font-weight: bold;
     }
 
@@ -40,8 +61,8 @@
 
     .form-control {
         border-radius: 10px;
-        padding: 12px;
-        font-size: 16px;
+        padding: 10px;
+        font-size: 14px;
     }
 
     .btn-success {
@@ -60,12 +81,21 @@
         transform: scale(1.05);
     }
 
-    form {
-        max-width: 500px;
-        margin: auto;
+    /* Adjust card appearance */
+    .card {
+        border: none; /* Remove card border */
+        margin-bottom: 250px; /* Bottom margin to maintain space from footer */
     }
 
-    .container {
-        margin-top: 50px;
+    /* Additional styles for a compact card appearance */
+    .shadow {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 576px) {
+        .card {
+            max-width: 90%; /* Responsive width for small screens */
+        }
     }
 </style>

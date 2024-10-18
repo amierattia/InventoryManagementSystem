@@ -7,9 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using InventoryManagementSystem.DAL.Db;
 using InventoryManagementSystem.BLL.sln.Services;
 using InventoryManagementSystem.BLL.interfaces;
-using InventoryManagementSystem.Pl.MiddelWare;
+using InventoryManagementSystem.Pl.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddSignalR();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -31,6 +34,8 @@ builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<FileService>();
+
+
 
 // AutoMapper configuration
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -54,6 +59,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 var app = builder.Build();
+
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -88,6 +95,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.MapHub<StockHub>("/stockHub");
 app.UseAuthentication();
 app.UseAuthorization();
 

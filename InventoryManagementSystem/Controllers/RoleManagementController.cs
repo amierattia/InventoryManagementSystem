@@ -4,19 +4,28 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using InventoryManagementSystem.BLL.interfaces;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "Admin")]
     public class RoleManagementController : Controller
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IActivityService _activityService;
 
-        public RoleManagementController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public RoleManagementController(
+            UserManager<User> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IActivityService activityService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _activityService = activityService;
         }
 
         // Action to list all users and their roles
@@ -47,6 +56,11 @@ namespace InventoryManagementSystem.Pl.Controllers
             if (user == null) return NotFound();
 
             await UpdateUserRoles(user, model.Roles);
+
+            // Logging activity
+            var currentUser = User.Identity.Name;
+            await _activityService.LogActivity(
+                $"Roles for user {user.UserName} were updated by {currentUser}.", currentUser);
 
             return RedirectToAction(nameof(Index));
         }
@@ -100,10 +114,18 @@ namespace InventoryManagementSystem.Pl.Controllers
                 if (role.IsSelected && !currentRoles.Contains(role.RoleName))
                 {
                     await _userManager.AddToRoleAsync(user, role.RoleName);
+
+                    // Log adding role
+                    await _activityService.LogActivity(
+                        $"Role '{role.RoleName}' was added to user {user.UserName}.", User.Identity.Name);
                 }
                 else if (!role.IsSelected && currentRoles.Contains(role.RoleName))
                 {
                     await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+
+                    // Log removing role
+                    await _activityService.LogActivity(
+                        $"Role '{role.RoleName}' was removed from user {user.UserName}.", User.Identity.Name);
                 }
             }
         }

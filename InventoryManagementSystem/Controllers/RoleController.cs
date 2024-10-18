@@ -3,19 +3,24 @@ using InventoryManagementSystem.BLL.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using System.Linq;
+using InventoryManagementSystem.BLL.interfaces;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IMapper _mapper;
+        private readonly IActivityService _activityService;
 
-        public RoleController(IMapper mapper, RoleManager<IdentityRole> roleManager)
+        public RoleController(IMapper mapper,
+            RoleManager<IdentityRole> roleManager,
+            IActivityService activityService)
         {
             _roleManager = roleManager;
-            _mapper = mapper;
+            _activityService = activityService;
         }
 
         // Action to display all roles
@@ -38,7 +43,10 @@ namespace InventoryManagementSystem.Pl.Controllers
 
             var result = await CreateRoleAsync(model.Name);
             if (result.Succeeded)
+            {
+                await _activityService.LogActivity($"Role '{model.Name}' was created.", User.Identity.Name);
                 return RedirectToAction(nameof(Index));
+            }
 
             AddErrorsToModelState(result);
             return View(model);
@@ -65,7 +73,10 @@ namespace InventoryManagementSystem.Pl.Controllers
 
             var result = await UpdateRoleAsync(id, model.Name);
             if (result.Succeeded)
+            {
+                await _activityService.LogActivity($"Role '{model.Name}' was updated.", User.Identity.Name);
                 return RedirectToAction(nameof(Index));
+            }
 
             AddErrorsToModelState(result);
             return View(model);
@@ -86,9 +97,16 @@ namespace InventoryManagementSystem.Pl.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            var role = await GetRoleByIdAsync(id);
+            if (role == null)
+                return NotFound();
+
             var result = await DeleteRoleAsync(id);
             if (result.Succeeded)
+            {
+                await _activityService.LogActivity($"Role '{role.Name}' was deleted.", User.Identity.Name);
                 return RedirectToAction(nameof(Index));
+            }
 
             AddErrorsToModelState(result);
             return RedirectToAction(nameof(Index));
