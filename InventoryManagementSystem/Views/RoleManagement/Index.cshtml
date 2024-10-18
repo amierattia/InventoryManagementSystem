@@ -28,6 +28,20 @@
 
     .table-container {
         overflow-x: auto;
+        justify-content: flex-start; /* Align items to the left */
+    }
+
+    /* Table Styles */
+    .table-container {
+        width: 95%; /* Adjusted width */
+        max-width: 1400px; /* Set a larger maximum width for large screens */
+        background-color: #ffffff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        padding: 30px; /* Increased padding */
+        border-radius: 10px;
+        margin: 20px 20px 20px -50px; /* Adjusted left margin to move it further left */
+        height: auto; /* Changed height to auto to adapt to content */
+        overflow-y: auto; /* Enable scrolling if content overflows vertically */
     }
 
     .custom-table {
@@ -41,6 +55,21 @@
             padding: 12px 15px;
             text-align: left;
             border: 1px solid #ddd;
+        background-color: #ffffff;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 0;
+        table-layout: fixed; /* Ensures table layout does not exceed container */
+    }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+            overflow: hidden; /* Prevent text overflow */
+            text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+            white-space: nowrap; /* Prevent text wrapping */
         }
 
         .custom-table th {
@@ -64,6 +93,16 @@
         text-decoration: none;
         border-radius: 4px;
         display: inline-block;
+
+    .btn-primary {
+        background-color: #10b981;
+        border-color: #10b981;
+        padding: 8px 12px; /* Button padding */
+        font-size: 0.9em;
+        border-radius: 5px;
+        color: white; /* Text color */
+        text-decoration: none; /* Remove underline */
+        white-space: nowrap; /* Prevent text wrapping */
     }
 
         .btn-custom:hover {
@@ -78,6 +117,11 @@
 
         <div class="table-container">
             <table class="custom-table">
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <div class="table-container">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>Email</th>
@@ -95,6 +139,7 @@
                             <td>@string.Join(", ", user.Roles.ToList())</td>
                             <td>
                                 <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn-custom">Manage Roles</a>
+                                <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn btn-primary">Manage Roles</a>
                             </td>
                         </tr>
                     }
@@ -103,3 +148,9 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+}

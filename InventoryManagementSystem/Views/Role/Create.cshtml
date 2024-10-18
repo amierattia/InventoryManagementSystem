@@ -16,86 +16,83 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-            <div class="text-center">
-                <button type="submit" class="btn btn-success btn-lg px-5 mt-3">Add</button>
-                <a asp-action="Index" class="btn btn-secondary btn-lg px-5 mt-3 ml-2">Cancel</a>
-            </div>
         </form>
     </div>
-</div>
-
-<style>
-    body {
-        background-color: #f8f9fa;
-        font-family: 'Cairo', sans-serif;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-    }
-
-    body {
-        display: flex;
-        height: 100vh;
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .container-fluid {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    h2 {
-        color: #000000;
-        font-weight: bold;
-    }
-
-    .form-group label {
-        color: #343a40;
-    }
-
-    .form-control {
-        border-radius: 10px;
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        border-radius: 50px;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .btn-secondary {
-        border-radius: 50px;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .btn:hover {
-        transform: scale(1.05);
-    }
-
-    /* Adjust card appearance */
-    .card {
-        border: none; /* Remove card border */
-        margin-bottom: 250px; /* Bottom margin to maintain space from footer */
-    }
-
-    /* Additional styles for a compact card appearance */
-    .shadow {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Responsive adjustments */
-    @@media (max-width: 576px) {
-        .card {
-            max-width: 90%; /* Responsive width for small screens */
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Cairo', sans-serif;
         }
-    }
-</style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        h2 {
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .form-group label {
+            color: #343a40;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-secondary {
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Adjust card appearance */
+        .card {
+            border: none; /* Remove card border */
+            margin-bottom: 250px; /* Bottom margin to maintain space from footer */
+        }
+
+        /* Additional styles for a compact card appearance */
+        .shadow {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @@media (max-width: 576px) {
+            .card {
+                max-width: 90%; /* Responsive width for small screens */
+            }
+        }
+
+        /* Responsive adjustments */
+
+    </style>

@@ -1,7 +1,7 @@
 ﻿@model InventoryManagementSystem.BLL.Dto.DashboardDto;
 
 @{
-    Layout = "_InventoryLayout";
+    Layout = "_InventoryLayout"; // Reference the layout file with the sidebar
 }
 
 <style>
@@ -11,16 +11,18 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
     }
-
+    .land{
+        width:1050px
+    }
+    /* Container for the main content */
     .main-content {
-        margin-left: 220px;
-        flex: 1;
         padding: 20px;
         background-color: #f3f4f6;
         overflow-y: auto;
         width: 100%;
     }
 
+    /* Dashboard cards layout */
     .dashboard-cards {
         display: flex;
         justify-content: space-between;
@@ -30,7 +32,7 @@
         width: 100%;
     }
 
-    /* Header */
+    /* Header styles */
     .header {
         display: flex;
         justify-content: space-between;
@@ -38,11 +40,12 @@
         margin-bottom: 20px;
     }
 
-        .header h1 {
-            font-size: 1.5em;
-            color: #000000;
-        }
+    .header h1 {
+        font-size: 1.5em;
+        color: #000000;
+    }
 
+    /* User profile in the header */
     .user-profile {
         display: flex;
         align-items: center;
@@ -50,69 +53,77 @@
         color: #333;
     }
 
-        .user-profile span {
-            margin-right: 10px;
-        }
+    .user-profile span {
+        margin-right: 10px;
+    }
 
+    /* Card styling */
     .card {
         background-color: #ffffff;
         border-radius: 8px;
         padding: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         text-align: center;
-        flex: 1;
+        flex: 1 1 200px; /* Allow it to grow, with a minimum width of 200px */
         min-width: 200px;
     }
 
-        .card h2 {
-            font-size: 1.2em;
-            color: #4b5563;
-        }
+    .card h2 {
+        font-size: 1.2em;
+        color: #4b5563;
+    }
 
-        .card p {
-            font-size: 1em;
-            color: #9ca3af;
-        }
+    .card p {
+        font-size: 1em;
+        color: #9ca3af;
+    }
 
-    /* Recent Activity Table */
+    /* Recent activity table */
     .recent-activity {
         margin-top: 20px;
         padding: 20px;
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 100%;
     }
 
-        .recent-activity h2 {
-            font-size: 1.2em;
-            color: #4b5563;
-            margin-bottom: 15px;
-        }
+    .recent-activity h2 {
+        font-size: 1.2em;
+        color: #4b5563;
+        margin-bottom: 15px;
+    }
 
-        .recent-activity table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    .recent-activity table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-            .recent-activity table th,
-            .recent-activity table td {
-                padding: 12px 15px;
-                text-align: left;
-                border-bottom: 1px solid #e5e7eb;
-            }
+    .recent-activity table th,
+    .recent-activity table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+    }
 
-            .recent-activity table th {
-                background-color: #1f2937;
-                color: #ffffff;
-            }
+    .recent-activity table th {
+        background-color: #1f2937;
+        color: #ffffff;
+    }
 
-            .recent-activity table tr:last-child td {
-                border-bottom: none;
-            }
+    .recent-activity table tr:last-child td {
+        border-bottom: none;
+    }
+
+   
+
+  
+
+
 </style>
 
-<div class="container">
 
+<<<<<<< HEAD
     <!-- Main Content -->
     <div class="main-content">
         <div id="notification-bar"></div>
@@ -125,48 +136,13 @@
                 <i class="bi bi-person-circle" style="font-size: 30px;"></i>
             </div>
         </header>
+<div class="land">
 
-        <!-- Dashboard Cards -->
-        <section class="dashboard-cards">
-            <div class="card">
-                <h2>Products</h2>
-                <p>Total: @Model.TotalItems</p>
-            </div>
-            <div class="card">
-                <h2>Categories</h2>
-                <p>Total: @Model.CategoryCount</p>
-            </div>
-            <div class="card">
-                <h2>Users</h2>
-                <p>Total: @Model.UsersCount</p>
-            </div>
-            <div class="card">
-                <h2>Low Stock</h2>
-                <p>Total: @Model.LowStockItems</p>
-            </div>
-        </section>
-
-        <!-- Recent Activity Table -->
-        <section class="recent-activity">
-            <h2>Recent Activity</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Activity</th>
-                        <th>Date & Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var activity in Model.RecentActivities)
-                    {
-                        <tr>
-                            <td>@activity.Description</td>
-                            <td>@activity.Date.ToString("yyyy-MM-dd HH:mm tt")</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </section>
+<div class="header">
+    <h1>Dashboard</h1>
+    <div class="user-profile">
+        <span>Bravaa shop</span>
+        <i class="bi bi-person-circle" style="font-size: 30px;"></i>
     </div>
 </div>
 
@@ -188,3 +164,50 @@
     });
 </script>
 
+<section class="dashboard-cards">
+    <div class="card">
+        <h2>Products</h2>
+        <p>Total: @Model.TotalItems</p>
+    </div>
+    <div class="card">
+        <h2>Categories</h2>
+        <p>Total: @Model.CategoryCount</p>
+    </div>
+    <div class="card">
+        <h2>Users</h2>
+        <p>Total: @Model.UsersCount</p>
+    </div>
+    <div class="card">
+        <h2>Low Stock</h2>
+        <p>Total: @Model.LowStockItems</p>
+    </div>
+</section>
+
+<section class="recent-activity">
+    <h2>Recent Activity</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Activity</th>
+                <th>Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var activity in Model.RecentActivities)
+            {
+                <tr>
+                    <td>@activity.Description</td>
+                    <td>@activity.Date.ToString("yyyy-MM-dd HH:mm tt")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('show');
+    }
+</script>
