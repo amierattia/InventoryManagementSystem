@@ -9,7 +9,7 @@ using InventoryManagementSystem.BLL.interfaces;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,User")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

@@ -10,130 +10,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/css/dashboardstyle.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.0/signalr.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="~/css/dashboardstyle.css">
+
+	<title>Inventory Management System</title>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <div class="logo">
-                <a class="nav-link text-dark" asp-controller="Account" asp-action="UserProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
-                    <span>Welcome, @currentUser?.FullName</span>
-                    @if (!string.IsNullOrEmpty(currentUser?.ProfilePictureUrl))
-                    {
-                        <img src="~/images/@currentUser.ProfilePictureUrl" alt="Profile Picture" style="width: 150px; height: auto; border-radius: 50%;">
-                    }
-                    else
-                    {
-                        <img src="~/images/1780ad8d-601a-4c1f-bb54-30ce5d05d7c6_programmer.png" alt="Default Profile Picture" style="width: 150px; height: auto; border-radius: 50%;">
-                    }
-                </a>
-               
-            </div>
 
-            <ul>
-                <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Home</a></li>
-                <li><a asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
-                <li><a asp-area="" asp-controller="Supplier" asp-action="Index">Suppliers</a></li>
-                <li><a asp-area="" asp-controller="Product" asp-action="Index">Product</a></li>
-                <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
-                <li><a asp-area="" asp-controller="RoleManagement" asp-action="Index">Role Management</a></li>
-                <li><a asp-area="" asp-controller="Stock" asp-action="Index">Low Stock</a></li>
-            </ul>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">@currentUser?.FullName</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a asp-area="" asp-controller="Dashboard" asp-action="Index">
+					<i class='bx bxs-dashboard'></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Category" asp-action="Index">
+					<i class='bx bxs-shopping-bag-alt'></i>
+					<span class="text">Category</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Supplier" asp-action="Index">
+					<i class='bx bxs-group'></i>
+					<span class="text">Suppliers</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Product" asp-action="Index">
+					<i class='bx bxs-doughnut-chart'></i>
+					<span class="text">Product</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Role" asp-action="Index">
+					<i class='bx bxs-cog'></i>
+					<span class="text">Roles</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="RoleManagement" asp-action="Index">
+					<i class='bx bxs-group'></i>
+					<span class="text">Role Management</span>
+				</a>
+			</li>
+			<li>
+				<a asp-area="" asp-controller="Stock" asp-action="Index">
+					<i class='bx bxs-cog'></i>
+					<span class="text">Low Stock</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a asp-area="" asp-controller="Account" asp-action="UserProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
+					<i class='bx bxs-user'></i>
+					<span class="text">Profile</span>
+				</a>
+			</li>
+			<li>
 
-            @if (signInManager.IsSignedIn(User))
-            {
-                <!-- Logout Section -->
-                <div class="logout">
-                    <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="logout-btn">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    </form>
-                </div>
+				<a href="#" class="logout-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+					<i class="fas fa-sign-out-alt"></i> Logout
+				</a>
 
-            }
-        </nav>
+				<form id="logout-form" asp-controller="Account" asp-action="Logout" method="post" style="display:none;">
+					@Html.AntiForgeryToken()
+				</form>
 
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu'></i>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+				</div>
+			</form>
+			
+			<a href="#" class="profile">
+				@if (!string.IsNullOrEmpty(currentUser?.ProfilePictureUrl))
+				{
+					<img src="~/images/@currentUser.ProfilePictureUrl" alt="Profile Picture">
+				}
+				else
+				{
+					<img src="~/images/default_profile.png" alt="Profile Picture">
+				}
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+		<!-- MAIN -->
+		<main>
+				@RenderBody()
+			
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Header -->
-            <header class="header">
-                <h1>@ViewData["Title"]</h1>
-                <div class="user-profile">
-                    <a class="nav-link text-dark" asp-controller="Account" asp-action="UserProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
-                        <span>Welcome, @currentUser?.FullName</span>
+	
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="~/js/site.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.9/signalr.min.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const lowStockBtn = document.getElementById('lowStockBtn');
 
-                    </a>
-                </div>
-            </header>
+			// create connection with SignalR Hub
+			const connection = new signalR.HubConnectionBuilder()
+				.withUrl("/stockHub")
+				.build();
 
-            <div class="container">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
-        </div>
-    </div>
+			// receive low stock notification
+			connection.on("ReceiveLowStockNotification", (productName, stock) => {
+				showLowStockNotification(productName, stock);
+			});
 
+			// start connection
+			connection.start().then(() => {
+				console.log("Connected to SignalR Hub");
+			}).catch(err => console.error(err.toString()));
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const lowStockBtn = document.getElementById('lowStockBtn');
+			// display notification
+			function showLowStockNotification(productName, stock) {
+				if (Notification.permission === 'granted') {
+					new Notification("Low Stock Alert!", {
+						body: `${productName} has only ${stock} items left in stock!`,
+						icon: "https://via.placeholder.com/100"
+					});
+				}
+			}
 
-            // create connection with SignalR Hub
-            const connection = new signalR.HubConnectionBuilder()
-                .withUrl("/stockHub")
-                .build();
+			// confirm from notification permission
+			Notification.requestPermission().then(permission => {
+				if (permission === 'granted') {
+					lowStockBtn.disabled = false;
+				}
+			});
 
-            // receive low stock notification
-            connection.on("ReceiveLowStockNotification", (productName, stock) => {
-                showLowStockNotification(productName, stock);
-            });
+			// check stock
+			lowStockBtn.addEventListener('click', () => {
+				fetch('/api/stock/update-stock', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ productName: 'Product A', stock: 5 })
+				});
+			});
+		});
+	</script>
 
-            // start connection
-            connection.start().then(() => {
-                console.log("Connected to SignalR Hub");
-            }).catch(err => console.error(err.toString()));
-
-            // display notification
-            function showLowStockNotification(productName, stock) {
-                if (Notification.permission === 'granted') {
-                    new Notification("Low Stock Alert!", {
-                        body: `${productName} has only ${stock} items left in stock!`,
-                        icon: "https://via.placeholder.com/100"
-                    });
-                }
-            }
-
-            // confirm from notification permission
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    lowStockBtn.disabled = false;
-                }
-            });
-
-            // check stock
-            lowStockBtn.addEventListener('click', () => {
-                fetch('/api/stock/update-stock', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ productName: 'Product A', stock: 5 })
-                });
-            });
-        });
-    </script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+

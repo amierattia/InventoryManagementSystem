@@ -11,8 +11,9 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
     }
-    .land{
-        width:1050px
+
+    .land {
+        width: 1050px
     }
     /* Container for the main content */
     .main-content {
@@ -40,10 +41,10 @@
         margin-bottom: 20px;
     }
 
-    .header h1 {
-        font-size: 1.5em;
-        color: #000000;
-    }
+        .header h1 {
+            font-size: 1.5em;
+            color: #000000;
+        }
 
     /* User profile in the header */
     .user-profile {
@@ -53,9 +54,9 @@
         color: #333;
     }
 
-    .user-profile span {
-        margin-right: 10px;
-    }
+        .user-profile span {
+            margin-right: 10px;
+        }
 
     /* Card styling */
     .card {
@@ -68,15 +69,15 @@
         min-width: 200px;
     }
 
-    .card h2 {
-        font-size: 1.2em;
-        color: #4b5563;
-    }
+        .card h2 {
+            font-size: 1.2em;
+            color: #4b5563;
+        }
 
-    .card p {
-        font-size: 1em;
-        color: #9ca3af;
-    }
+        .card p {
+            font-size: 1em;
+            color: #9ca3af;
+        }
 
     /* Recent activity table */
     .recent-activity {
@@ -88,81 +89,67 @@
         width: 100%;
     }
 
-    .recent-activity h2 {
-        font-size: 1.2em;
-        color: #4b5563;
-        margin-bottom: 15px;
+        .recent-activity h2 {
+            font-size: 1.2em;
+            color: #4b5563;
+            margin-bottom: 15px;
+        }
+
+        .recent-activity table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .recent-activity table th,
+            .recent-activity table td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .recent-activity table th {
+                background-color: #1f2937;
+                color: #ffffff;
+            }
+
+            .recent-activity table tr:last-child td {
+                border-bottom: none;
+            }
+
+     .notification {
+        font-size: 20px;
+        position: relative;
     }
 
-    .recent-activity table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .recent-activity table th,
-    .recent-activity table td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid #e5e7eb;
-    }
-
-    .recent-activity table th {
-        background-color: #1f2937;
-        color: #ffffff;
-    }
-
-    .recent-activity table tr:last-child td {
-        border-bottom: none;
-    }
-
-   
-
-  
-
+        .notification .num {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--light);
+            background: var(--red);
+            color: var(--light);
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
 </style>
 
 
-<<<<<<< HEAD
-    <!-- Main Content -->
-    <div class="main-content">
-        <div id="notification-bar"></div>
-
-        <!-- Header -->
-        <header class="header">
-            <h1>Dashboard</h1>
-            <div class="user-profile">
-                <span>Bravaa shop</span>
-                <i class="bi bi-person-circle" style="font-size: 30px;"></i>
-            </div>
-        </header>
-<div class="land">
-
-<div class="header">
+<!-- Header -->
+<header class="header">
     <h1>Dashboard</h1>
-    <div class="user-profile">
-        <span>Bravaa shop</span>
-        <i class="bi bi-person-circle" style="font-size: 30px;"></i>
-    </div>
-</div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
-
-<script type="text/javascript">
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/stockHub")
-        .build();
-
-    connection.on("ReceiveNotification", function (message) {
-        var notificationBar = document.getElementById('notification-bar');
-        notificationBar.innerHTML = "<div class='alert alert-warning'>" + message + "</div>";
-    });
-
-    connection.start().catch(function (err) {
-        return console.error(err.toString());
-    });
-</script>
+    <a asp-controller="Stock" asp-action="Index" class="notification">
+        <i class='bx bxs-bell'></i>
+        <span class="num">@Model.LowStockItems</span>
+    </a>
+</header>
 
 <section class="dashboard-cards">
     <div class="card">
@@ -203,7 +190,24 @@
         </tbody>
     </table>
 </section>
-</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+
+<script type="text/javascript">
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/stockHub")
+        .build();
+
+    connection.on("ReceiveNotification", function (message) {
+        var notificationBar = document.getElementById('notification-bar');
+        notificationBar.innerHTML = "<div class='alert alert-warning'>" + message + "</div>";
+    });
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+</script>
+
 
 <script>
     function toggleSidebar() {

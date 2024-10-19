@@ -15,7 +15,10 @@
                 <input asp-for="Name" class="form-control" placeholder="Enter role name" required />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-
+              <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg px-5 mt-3">Add</button>
+            <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5 mt-3 ml-2">Cancel</a>
+        </div>
         </form>
     </div>
     <style>
