@@ -74,7 +74,7 @@ namespace InventoryManagementSystem.Pl.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Admin")]
+      //  [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {

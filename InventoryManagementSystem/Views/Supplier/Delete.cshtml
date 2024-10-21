@@ -4,8 +4,109 @@
     Layout = "_InventoryLayout";
 
 }
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<style>
+  
 
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1.alert {
+        font-size: 1.5rem;
+        color: #856404;
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        border-radius: 8px;
+    }
+
+    .form-label {
+        font-size: 1rem;
+        color: #7f8c8d;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        color: #34495e;
+        background-color: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        width: 48%;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: #7f8c8d;
+        color: white;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #95a5a6;
+        transform: translateY(-2px);
+    }
+
+    .d-flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+        }
+
+        .form-control {
+            font-size: 0.95rem;
+            padding: 10px;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .d-flex {
+            flex-direction: column;
+        }
+    }
+</style>
 <div class="container mt-5">
     <div class="card p-4 shadow-lg">
         <h1 class="alert alert-warning text-center">Are You Sure You Want to Delete This Product?</h1>

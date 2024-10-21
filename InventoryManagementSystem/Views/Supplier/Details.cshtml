@@ -6,7 +6,131 @@
     Layout = "_InventoryLayout";
 
 }
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<style>
+   
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2rem;
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-size: 1rem;
+        color: #7f8c8d;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        color: #34495e;
+        background-color: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #3498db;
+        background-color: #fff;
+    }
+
+    textarea.form-control {
+        resize: none;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-success {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #2ecc71;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: #7f8c8d;
+        color: white;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #95a5a6;
+        transform: translateY(-2px);
+    }
+
+    .d-flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        .form-control {
+            font-size: 0.95rem;
+            padding: 10px;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 8px 15px;
+        }
+
+        .d-flex {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
 
 <div class="container mt-5">
     <div class="card p-4 shadow-lg">

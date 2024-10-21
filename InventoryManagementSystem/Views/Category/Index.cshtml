@@ -115,6 +115,75 @@
     .btn-success {
         background-color: #2ecc71;
     }
+
+    /* Responsive Styles */
+    @@media (max-width: 768px) {
+        .main-content {
+            margin-left: 0;
+            padding: 15px;
+        }
+
+        .header {
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.3em;
+        }
+
+        table th, table td {
+            padding: 8px;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            padding: 5px 8px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .header h1 {
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .btn {
+            font-size: 0.8em;
+        }
+
+        table th, table td {
+            font-size: 0.8em;
+            padding: 6px;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    @@media (max-width: 320px) {
+        .header h1 {
+            font-size: 1em;
+        }
+
+        .btn {
+            padding: 4px 6px;
+            font-size: 0.7em;
+        }
+
+        table th, table td {
+            font-size: 0.7em;
+            padding: 4px;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
 </style>
 
 <div class="container mt-4">
@@ -182,3 +251,28 @@
         </table>
     </section>
 </div>
+<script>
+    <script>
+        // Get elements
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+    const popupOverlay = document.getElementById('popupOverlay');
+    const closePopup = document.getElementById('closePopup');
+
+    // Show popup when button is clicked
+    addCategoryBtn.addEventListener('click', function () {
+        popupOverlay.style.display = 'flex';
+    });
+
+    // Close popup when 'x' is clicked
+    closePopup.addEventListener('click', function () {
+        popupOverlay.style.display = 'none';
+    });
+
+    // Close popup when clicking outside the content
+    popupOverlay.addEventListener('click', function (event) {
+        if (event.target === popupOverlay) {
+            popupOverlay.style.display = 'none';
+        }
+    });
+</script>
+</script>

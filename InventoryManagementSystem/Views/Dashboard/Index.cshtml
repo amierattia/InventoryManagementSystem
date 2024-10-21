@@ -5,6 +5,7 @@
 }
 
 <style>
+
     * {
         margin: 0;
         padding: 0;
@@ -71,7 +72,7 @@
 
         .card h2 {
             font-size: 1.2em;
-            color: #4b5563;
+            color: #3C91E6;
         }
 
         .card p {
@@ -108,7 +109,7 @@
             }
 
             .recent-activity table th {
-                background-color: #1f2937;
+                background-color: #235485;
                 color: #ffffff;
             }
 
@@ -116,7 +117,7 @@
                 border-bottom: none;
             }
 
-     .notification {
+    .notification {
         font-size: 20px;
         position: relative;
     }
@@ -153,19 +154,31 @@
 
 <section class="dashboard-cards">
     <div class="card">
-        <h2>Products</h2>
+        <h2>
+            <i class='bx bxs-doughnut-chart'></i>
+            Products
+        </h2>
         <p>Total: @Model.TotalItems</p>
     </div>
     <div class="card">
-        <h2>Categories</h2>
+        <h2>
+            <i class='bx bxs-shopping-bag-alt'></i>
+            Categories
+        </h2>
         <p>Total: @Model.CategoryCount</p>
     </div>
     <div class="card">
-        <h2>Users</h2>
+        <h2>
+            <i class='bx bxs-group'></i>
+            Users
+        </h2>
         <p>Total: @Model.UsersCount</p>
     </div>
     <div class="card">
-        <h2>Low Stock</h2>
+        <h2>
+            <i class='bx bxs-cog'></i>
+            Low Stock
+        </h2>
         <p>Total: @Model.LowStockItems</p>
     </div>
 </section>

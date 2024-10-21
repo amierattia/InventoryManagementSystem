@@ -3,9 +3,15 @@
 @using System.Security.Claims
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
+<style>
+	.logout-btn {
+		margin-left: 10px
+	}
+
+</style>
 
 @{
-    var currentUser = await userManager.GetUserAsync(User);
+	var currentUser = await userManager.GetUserAsync(User);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -29,43 +35,43 @@
 			<span class="text">@currentUser?.FullName</span>
 		</a>
 		<ul class="side-menu top">
-			<li class="active">
+			<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Dashboard" ? "active" : "")">
 				<a asp-area="" asp-controller="Dashboard" asp-action="Index">
 					<i class='bx bxs-dashboard'></i>
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
-			<li>
+			<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Category" ? "active" : "")">
 				<a asp-area="" asp-controller="Category" asp-action="Index">
 					<i class='bx bxs-shopping-bag-alt'></i>
 					<span class="text">Category</span>
 				</a>
 			</li>
-			<li>
+			<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Supplier" ? "active" : "")">
 				<a asp-area="" asp-controller="Supplier" asp-action="Index">
 					<i class='bx bxs-group'></i>
 					<span class="text">Suppliers</span>
 				</a>
 			</li>
-			<li>
+			<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Product" ? "active" : "")">
 				<a asp-area="" asp-controller="Product" asp-action="Index">
 					<i class='bx bxs-doughnut-chart'></i>
 					<span class="text">Product</span>
 				</a>
 			</li>
-			<li>
+			<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Role" ? "active" : "")">
 				<a asp-area="" asp-controller="Role" asp-action="Index">
 					<i class='bx bxs-cog'></i>
 					<span class="text">Roles</span>
 				</a>
 			</li>
-			<li>
+			<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "RoleManagement" ? "active" : "")">
 				<a asp-area="" asp-controller="RoleManagement" asp-action="Index">
 					<i class='bx bxs-group'></i>
 					<span class="text">Role Management</span>
 				</a>
 			</li>
-			<li>
+			<li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Stock" ? "active" : "")">
 				<a asp-area="" asp-controller="Stock" asp-action="Index">
 					<i class='bx bxs-cog'></i>
 					<span class="text">Low Stock</span>
@@ -73,26 +79,24 @@
 			</li>
 		</ul>
 		<ul class="side-menu">
-			<li>
+			<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "UserProfile" ? "active" : "")">
 				<a asp-area="" asp-controller="Account" asp-action="UserProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
 					<i class='bx bxs-user'></i>
 					<span class="text">Profile</span>
 				</a>
 			</li>
 			<li>
-
 				<a href="#" class="logout-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-					<i class="fas fa-sign-out-alt"></i> Logout
+					<i class='bx bx-log-out'></i>					<span class="text">Logout</span>
 				</a>
 
 				<form id="logout-form" asp-controller="Account" asp-action="Logout" method="post" style="display:none;">
 					@Html.AntiForgeryToken()
 				</form>
-
 			</li>
 		</ul>
 	</section>
-	<!-- SIDEBAR -->
+
 	<!-- CONTENT -->
 	<section id="content">
 		<!-- NAVBAR -->
@@ -104,7 +108,7 @@
 					<button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
 				</div>
 			</form>
-			
+
 			<a href="#" class="profile">
 				@if (!string.IsNullOrEmpty(currentUser?.ProfilePictureUrl))
 				{
@@ -119,18 +123,18 @@
 		<!-- NAVBAR -->
 		<!-- MAIN -->
 		<main>
-				@RenderBody()
-			
+			@RenderBody()
+
 		</main>
 		<!-- MAIN -->
 	</section>
 	<!-- CONTENT -->
 
-	
+
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-	<script src="~/js/site.js" ></script>
+	<script src="~/js/site.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.9/signalr.min.js"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
@@ -177,7 +181,10 @@
 				});
 			});
 		});
+
 	</script>
+
+	<script src="/js/script.js"></script>
 
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

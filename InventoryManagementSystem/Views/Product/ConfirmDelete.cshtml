@@ -4,38 +4,126 @@
     ViewData["Title"] = "Confirm Delete";
     Layout = "_InventoryLayout";
 }
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card shadow-sm">
-                <div class="card-header" style="background-color: #dc2626; color: white;">
-                    <h4>Confirm Delete</h4>
-                </div>
-                <div class="card-body">
-                    <h5 class="text-gray-800">Are you sure you want to delete the following product?</h5>
+    <div class="confirmation-wrapper">
+        <div class="card">
+            <div class="card-header">
+                <h4>Confirm Delete</h4>
+            </div>
+            <div class="card-body">
+                <h5>Are you sure you want to delete the following product?</h5>
 
-                    <p><strong>Product Name:</strong> @Model.ProductName</p>
-                    <p><strong>Product Description:</strong> @Model.ProductDescription</p>
-                    <p><strong>Price:</strong> $@Model.Price</p>
+                <!-- Display product details -->
+                <p><strong>Product Name:</strong> @Model.ProductName</p>
+                <p><strong>Product Description:</strong> @Model.ProductDescription</p>
+                <p><strong>Price:</strong> $@Model.Price</p>
 
-                    <!-- Display product details -->
-                    <p class="text-gray-700"><strong>Product Name:</strong> @Model.ProductName</p>
-                    <p class="text-gray-700"><strong>Product Description:</strong> @Model.ProductDescription</p>
-                    <p class="text-gray-700"><strong>Price:</strong> $@Model.Price</p>
+                <form asp-action="DeleteConfirmed" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.ProductId" />
 
-                    <form asp-action="DeleteConfirmed" method="post">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="id" value="@Model.ProductId" />
-
-                        <div class="d-flex justify-content-between">
-                            <a href="@Url.Action("Index", "Product")" class="btn" style="background-color: #4b5563; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Cancel</a>
-                            <button type="submit" class="btn" style="background-color: #dc2626; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Delete</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="button-group">
+                        <a href="@Url.Action("Index", "Product")" class="btn-cancel">Cancel</a>
+                        <button type="submit" class="btn-delete">Delete</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .confirmation-wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #dc2626;
+        color: white;
+        padding: 15px;
+        border-radius: 8px 8px 0 0;
+        text-align: center;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-body h5 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .card-body p {
+        font-size: 16px;
+        color: #4b5563;
+        margin-bottom: 10px;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .btn-cancel, .btn-delete {
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        width: 48%;
+    }
+
+    .btn-cancel {
+        background-color: #4b5563;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-cancel:hover {
+        background-color: #374151;
+    }
+
+    .btn-delete {
+        background-color: #dc2626;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-delete:hover {
+        background-color: #b91c1c;
+    }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .confirmation-wrapper {
+            padding: 10px;
+        }
+
+        .card-body h5 {
+            font-size: 1rem;
+        }
+
+        .card-body p {
+            font-size: 14px;
+        }
+
+        .btn-cancel, .btn-delete {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+    }
+</style>
