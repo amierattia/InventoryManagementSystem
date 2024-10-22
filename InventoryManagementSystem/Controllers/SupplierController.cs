@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SupplierController : Controller
     {
         private readonly ISupplierService _supplierService;

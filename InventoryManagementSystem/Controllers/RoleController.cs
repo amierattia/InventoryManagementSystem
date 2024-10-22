@@ -9,7 +9,7 @@ using InventoryManagementSystem.BLL.interfaces;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -29,11 +29,11 @@ namespace InventoryManagementSystem.Pl.Controllers
             var roles = _roleManager.Roles.ToList();
             return View(roles);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET action to display role creation form
         [HttpGet]
         public IActionResult Create() => View();
-
+        [Authorize(Roles = "Admin")]
         // POST action to create a new role
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoleDto model)
@@ -51,7 +51,7 @@ namespace InventoryManagementSystem.Pl.Controllers
             AddErrorsToModelState(result);
             return View(model);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET action to display edit form for a specific role
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
@@ -63,7 +63,7 @@ namespace InventoryManagementSystem.Pl.Controllers
             var model = new CreateRoleDto { Name = role.Name };
             return View(model);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST action to update an existing role
         [HttpPost]
         public async Task<IActionResult> Edit(string id, CreateRoleDto model)
@@ -81,7 +81,7 @@ namespace InventoryManagementSystem.Pl.Controllers
             AddErrorsToModelState(result);
             return View(model);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET action to display role deletion confirmation
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
@@ -92,7 +92,7 @@ namespace InventoryManagementSystem.Pl.Controllers
 
             return View(role);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST action to confirm and delete a role
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -111,7 +111,7 @@ namespace InventoryManagementSystem.Pl.Controllers
             AddErrorsToModelState(result);
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Admin")]
         // Helper method to create a role
         private async Task<IdentityResult> CreateRoleAsync(string roleName)
         {

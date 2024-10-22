@@ -1,9 +1,11 @@
 ﻿using InventoryManagementSystem.BLL.interfaces;
 using InventoryManagementSystem.BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ActivityController : Controller
     {
         private readonly IActivityService _activityService;

@@ -6,7 +6,7 @@ using InventoryManagementSystem.BLL.interfaces;
 
 namespace InventoryManagementSystem.PL.sln.Controllers
 {
-    [Authorize(Roles = "User,Admin")]
+    [Authorize(Roles = "Admin")]
     public class DashboardController : Controller
     {
         private readonly IInventoryService _inventoryService;

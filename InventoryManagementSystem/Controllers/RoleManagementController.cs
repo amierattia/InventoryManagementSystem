@@ -8,7 +8,6 @@ using InventoryManagementSystem.BLL.interfaces;
 
 namespace InventoryManagementSystem.Pl.Controllers
 {
-   // [Authorize(Roles = "Admin")]
     public class RoleManagementController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -33,7 +32,7 @@ namespace InventoryManagementSystem.Pl.Controllers
 
             return View(userDtos);
         }
-
+        [Authorize(Roles = "Admin")]
         // Action to manage roles for a specific user
         public async Task<IActionResult> ManageRoles(string userId)
         {
@@ -43,7 +42,7 @@ namespace InventoryManagementSystem.Pl.Controllers
             var rolesDto = await GetUserRolesDto(user);
             return View(rolesDto);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST action to update user roles
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -100,7 +99,7 @@ namespace InventoryManagementSystem.Pl.Controllers
                 }).ToList()
             };
         }
-
+        [Authorize(Roles = "Admin")]
         // Helper method to update user roles
         private async Task UpdateUserRoles(User user, IEnumerable<RoleDto> roleDtos)
         {
